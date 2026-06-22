@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Spesifikasi & Kapasitas Oli Kendaraan Global</title>
+    <!-- Tailwind CSS untuk styling yang profesional dan responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505; /* Deep Black */
+            color: #ffffff;
+        }
+        h1, h2, .font-futuristic {
+            font-family: 'Orbitron', sans-serif; /* Futuristic Font */
+        }
+        /* Animasi sederhana untuk hasil pencarian */
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px) scale(0.98); } 
+            to { opacity: 1; transform: translateY(0) scale(1); } 
+        }
+        
+        /* Futuristic Glow Effects */
+        .glow-red {
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.15);
+        }
+        .glow-red-focus:focus {
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+            border-color: #dc2626;
+        }
+        
+        /* Custom Scrollbar untuk Select */
+        select::-webkit-scrollbar { width: 8px; }
+        select::-webkit-scrollbar-track { background: #171717; }
+        select::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 4px; }
+    </style>
+</head>
+<body class="selection:bg-red-600 selection:text-white min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-[#050505] to-black relative">
+
+    <!-- Dekorasi Background Futuristik -->
+    <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-70"></div>
+    <div class="absolute top-20 inset-x-0 flex justify-center opacity-5 pointer-events-none">
+        <div class="w-[800px] h-[200px] bg-red-600 blur-[120px] rounded-full"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 w-full relative z-10 flex-grow">
+        
+        <!-- Header Aplikasi -->
+        <header class="text-center mb-10 pt-4">
+            <h1 class="text-3xl md:text-5xl font-black text-white mb-4 tracking-wider uppercase">
+                Global Auto<span class="text-red-600">Fluid</span> Data
+            </h1>
+            <p class="text-neutral-400 leading-relaxed text-sm md:text-base max-w-3xl mx-auto font-light">
+                Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
+                <br>Direkomendasikan oleh <span class="text-white font-semibold">FUCHS Titan</span>, <span class="text-red-500 font-semibold">Shell Helix™</span>, <span class="text-white font-semibold">Mobil 1™</span>, <span class="text-red-500 font-semibold">TotalEnergies</span> & <span class="text-white font-semibold">Valvoline™</span>.
+            </p>
+        </header>
+
+        <!-- Form Pencarian -->
+        <div class="bg-neutral-900/80 backdrop-blur-md rounded-2xl p-6 mb-8 border border-neutral-800 glow-red">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="brandSelect" class="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest font-futuristic">Pilih Merk Mobil</label>
+                    <select id="brandSelect" class="w-full rounded-xl p-4 bg-neutral-950 border border-neutral-700 text-white outline-none glow-red-focus transition-all duration-300 appearance-none cursor-pointer" onchange="populateModels()">
+                        <option value="">-- PILIH MERK --</option>
+                        <!-- Pilihan merk akan diisi oleh JavaScript -->
+                    </select>
+                </div>
+                <div>
+                    <label for="modelSelect" class="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest font-futuristic">Pilih Model & Kategori</label>
+                    <select id="modelSelect" class="w-full rounded-xl p-4 bg-neutral-950 border border-neutral-700 text-white outline-none glow-red-focus transition-all duration-300 appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" disabled onchange="displaySpecs()">
+                        <option value="">-- PILIH MODEL --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hasil Spesifikasi (Disembunyikan secara default) -->
+        <div id="resultContainer" class="hidden fade-in">
+            <!-- Header Kendaraan -->
+            <div class="bg-gradient-to-r from-red-700 to-red-900 text-white rounded-t-2xl p-6 border-b-4 border-black flex flex-col md:flex-row justify-between items-start md:items-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-20 pointer-events-none"></div>
+                <div class="relative z-10">
+                    <h2 id="carTitle" class="text-2xl md:text-3xl font-black font-futuristic tracking-wide uppercase text-white">Nama Mobil</h2>
+                    <p id="carYear" class="text-red-200 mt-1 font-mono text-sm tracking-widest">Tahun Produksi</p>
+                </div>
+                <div class="mt-4 md:mt-0 relative z-10 bg-black/40 backdrop-blur px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-red-500/30 text-red-100">
+                    Sistem Terkalibrasi
+                </div>
+            </div>
+
+            <!-- Grid Spesifikasi -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-px p-px bg-neutral-800 rounded-b-2xl">
+                
+                <!-- Card Mesin -->
+                <div class="bg-neutral-900 p-6 lg:rounded-bl-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center mb-5">
+                        <div class="p-2 bg-red-600/10 rounded-lg mr-3 border border-red-500/20 text-red-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white font-futuristic">MESIN</h3>
+                    </div>
+                    <div class="space-y-4 text-sm md:text-base">
+                        <div>
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Tipe & Konfigurasi</span>
+                            <span id="engSpec" class="font-semibold text-neutral-200"></span>
+                        </div>
+                        <div class="pt-3 border-t border-neutral-800">
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Kapasitas Sump (Volume)</span>
+                            <span id="engOil" class="font-black text-red-500 text-xl font-futuristic tracking-wider"></span>
+                        </div>
+                        <div class="bg-black/50 p-3 rounded-lg border border-red-900/50 mt-2">
+                            <span class="block text-red-500 font-bold mb-1 text-[10px] uppercase tracking-widest">Rekomendasi Premium</span>
+                            <span id="engType" class="font-bold text-white"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Transmisi -->
+                <div class="bg-neutral-900 p-6 hover:bg-neutral-800 transition-colors duration-300 relative group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-white opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center mb-5">
+                        <div class="p-2 bg-white/5 rounded-lg mr-3 border border-white/10 text-white">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white font-futuristic">TRANSMISI</h3>
+                    </div>
+                    <div class="space-y-4 text-sm md:text-base">
+                        <div>
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Tipe Gearbox</span>
+                            <span id="transSpec" class="font-semibold text-neutral-200"></span>
+                        </div>
+                        <div class="pt-3 border-t border-neutral-800">
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Kapasitas Oli Transmisi</span>
+                            <span id="transOil" class="font-black text-white text-xl font-futuristic tracking-wider"></span>
+                        </div>
+                        <div class="bg-black/50 p-3 rounded-lg border border-neutral-700 mt-2">
+                            <span class="block text-neutral-400 font-bold mb-1 text-[10px] uppercase tracking-widest">Spek ATF / CVTF / MTF</span>
+                            <span id="transType" class="font-bold text-white"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Gardan -->
+                <div class="bg-neutral-900 p-6 lg:rounded-br-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center mb-5">
+                        <div class="p-2 bg-neutral-800 rounded-lg mr-3 border border-neutral-700 text-neutral-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white font-futuristic">GARDAN</h3>
+                    </div>
+                    <div class="space-y-4 text-sm md:text-base">
+                        <div>
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Sistem Penggerak</span>
+                            <span id="diffSpec" class="font-semibold text-neutral-200"></span>
+                        </div>
+                        <div class="pt-3 border-t border-neutral-800">
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Kapasitas Oli Gardan</span>
+                            <span id="diffOil" class="font-black text-neutral-300 text-xl font-futuristic tracking-wider"></span>
+                        </div>
+                        <div class="bg-black/50 p-3 rounded-lg border border-neutral-700 mt-2">
+                            <span class="block text-neutral-400 font-bold mb-1 text-[10px] uppercase tracking-widest">Spek Oli Axle / Gardan</span>
+                            <span id="diffType" class="font-bold text-white"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="mt-6 p-4 bg-neutral-900 border border-neutral-800 rounded-xl text-xs md:text-sm text-neutral-500 text-center leading-relaxed font-light">
+                *Kapasitas Volume Karter di atas adalah estimasi presisi data global pabrikan (termasuk filter oli).<br>
+                Selalu gunakan *dipstick* untuk memverifikasi level akhir setelah pengisian.
+            </div>
+        </div>
+        
+        <!-- Footer: Support by drcardata -->
+        <footer class="mt-16 pb-8 text-center">
+            <div class="inline-flex items-center justify-center space-x-2 border border-neutral-800 bg-neutral-900/50 backdrop-blur px-6 py-3 rounded-full">
+                <span class="text-xs text-neutral-400 uppercase tracking-widest">Support by</span>
+                <span class="text-sm font-black text-red-600 tracking-[0.2em] font-futuristic">DRCARDATA</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- SCRIPT LOGIKA APLIKASI & DATABASE (Backend Simulation) -->
+    <script>
+        /**
+         * DATABASE KENDARAAN GLOBAL TERLENGKAP
+         * Dipertahankan 100% dari versi sebelumnya dengan format presisi.
+         */
+        const carDatabase = {
+            // ================== JEPANG ==================
+            "Toyota": [
+                {
+                    model: "Kijang Super / Grand Extra 1.5",
+                    year: "1990 - 1996",
+                    engine: { spec: "1.5L 5K Karburator", capacity: "3.5 Liter", sae: "Shell Helix HX3 / Total Quartz 3000 SJ 20W-50" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2.0 Liter", sae: "Total Traxium Gear 8 75W-80" },
+                    differential: { spec: "RWD", capacity: "1.5 Liter", sae: "Total Traxium Axle 7 80W-90" }
+                },
+                {
+                    model: "Kijang Kapsul 2.0 (Bensin/EFI)",
+                    year: "1997 - 2004",
+                    engine: { spec: "2.0L 1RZ-E 4-Silinder", capacity: "4.5 Liter", sae: "Shell Helix HX7 / Fuchs TITAN SYN 10W-40" },
+                    transmission: { spec: "5-Speed MT / 4-Speed AT", capacity: "MT: 2.2L / AT: 2.5L", sae: "Traxium Gear 8 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD", capacity: "1.8 Liter", sae: "Total Traxium Axle 7 80W-90" }
+                },
+                {
+                    model: "Innova 2.0 (Petrol)",
+                    year: "2004 - 2022",
+                    engine: { spec: "2.0L 1TR-FE Dual VVT-i", capacity: "5.0 Liter", sae: "Shell Helix HX8 5W-30 / Fuchs TITAN SuperSyn" },
+                    transmission: { spec: "5 MT / 6 AT", capacity: "AT: 2.8L (Refill)", sae: "Toyota ATF WS / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD", capacity: "2.8 Liter", sae: "Fuchs TITAN SINTOPOID 75W-90" }
+                },
+                {
+                    model: "Innova / Fortuner 2.4/2.5 Diesel",
+                    year: "2004 - Sekarang",
+                    engine: { spec: "2.5L 2KD / 2.4L 2GD", capacity: "6.9 Liter (2KD) / 7.5 Liter (2GD)", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Mobil 1 0W-40" },
+                    transmission: { spec: "Automatic / MT", capacity: "AT: 3.0L / MT: 2.5L", sae: "Toyota ATF WS / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD / 4WD", capacity: "2.8 - 3.0 Liter", sae: "Total Traxium Axle 7 80W-90" }
+                },
+                {
+                    model: "Corolla Altis / Camry (Petrol)",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "1.8L / 2.0L / 2.4L VVT-i", capacity: "4.0 Liter (Altis) / 5.0 Liter (Camry)", sae: "Fuchs TITAN GT1 FLEX 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "CVT / AT", capacity: "3.5L - 4.0L", sae: "Fuchs TITAN CVTF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan oli transmisi" }
+                },
+                {
+                    model: "Avanza / Veloz (Generasi 3)",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "1.5L 2NR-VE Dual VVT-i", capacity: "4.0 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 / Shell Helix ECO" },
+                    transmission: { spec: "D-CVT", capacity: "3.5 Liter (Refill)", sae: "Toyota CVT Fluid FE / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan oli transmisi" }
+                },
+                {
+                    model: "Kijang Innova Zenix Hybrid",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L M20A-FXS Hybrid", capacity: "4.3 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 / Shell Helix Hybrid" },
+                    transmission: { spec: "e-CVT", capacity: "3.8 Liter", sae: "Toyota ATF WS / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Land Cruiser (LC300) / Prado",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "3.3L Twin-Turbo Diesel / V8", capacity: "7.5 Liter", sae: "Mobil 1 0W-40 / Shell Helix Ultra Professional" },
+                    transmission: { spec: "10-Speed AT", capacity: "10.6 Liter (Kuras)", sae: "Toyota ATF WS / Valvoline L&HD ATF" },
+                    differential: { spec: "4WD Full-Time", capacity: "Depan 1.3L / Belakang 4.2L", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Lexus": [
+                {
+                    model: "RX 300 / NX 200t / ES 250",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "2.0L Turbo / 2.5L 4-Cyl", capacity: "4.5 - 4.8 Liter", sae: "Mobil 1 0W-20 / Fuchs TITAN GT1 FLEX 5" },
+                    transmission: { spec: "6-Speed / 8-Speed AT", capacity: "6.5 Liter (Kuras)", sae: "Toyota ATF WS / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang: 0.5L", sae: "API GL-5 75W-85" }
+                },
+                {
+                    model: "LX 570 / LX 600",
+                    year: "2008 - Sekarang",
+                    engine: { spec: "5.7L V8 / 3.5L V6 Twin-Turbo", capacity: "7.5 Liter", sae: "Shell Helix Ultra 5W-30 / Mobil 1 0W-40" },
+                    transmission: { spec: "8-Speed / 10-Speed AT", capacity: "10.5 Liter (Kuras)", sae: "Toyota ATF WS / Valvoline L&HD ATF" },
+                    differential: { spec: "4WD", capacity: "Depan 1.4L / Belakang 4.2L", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Honda": [
+                {
+                    model: "Brio / Amaze / City / Jazz",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "1.2L / 1.5L i-VTEC", capacity: "3.3 - 3.7 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 / Shell Helix ECO" },
+                    transmission: { spec: "CVT / 5MT", capacity: "3.5L (CVT)", sae: "Honda HCF-2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "CR-V 1.5 Turbo / Civic",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L VTEC Turbo", capacity: "4.2 Liter", sae: "Mobil 1 0W-20 / Fuchs TITAN GT1 FLEX 5" },
+                    transmission: { spec: "CVT", capacity: "3.7 Liter (Refill)", sae: "Honda HCF-2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD (Dual Pump): 1.0L", sae: "Honda DPSF" }
+                }
+            ],
+            "Acura": [
+                {
+                    model: "NSX (Gen 2)",
+                    year: "2016 - 2022",
+                    engine: { spec: "3.5L Twin-Turbo V6 Hybrid", capacity: "7.5 Liter", sae: "Shell Helix Ultra Racing 0W-40 / Mobil 1" },
+                    transmission: { spec: "9-Speed DCT", capacity: "8.0 Liter", sae: "Acura ATF Type 2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "SH-AWD", capacity: "Depan (TMU): 3.0L / Belakang: 1.5L", sae: "Acura DPSF" }
+                }
+            ],
+            "Suzuki": [
+                {
+                    model: "Swift / Ertiga / Jimny / Baleno",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.2L K12 / 1.5L K15B", capacity: "3.1 Liter", sae: "Shell Helix HX8 0W-20 / Fuchs TITAN Flex" },
+                    transmission: { spec: "MT / 4AT / CVT", capacity: "AT: 2.5L / MT: 2.2L", sae: "Suzuki ATF AW-1 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / 4WD", capacity: "Jimny Belakang: 1.3L", sae: "API GL-5 75W-90" }
+                },
+                {
+                    model: "Wagon R / Alto / S-Presso (Petrol)",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.0L K10B / 0.8L / 1.2L", capacity: "2.8 - 3.1 Liter", sae: "SAE 0W-16 / 0W-20 (Fuchs TITAN / Mobil Super)" },
+                    transmission: { spec: "5-Speed Manual / AGS", capacity: "2.2 Liter", sae: "API GL-4 75W-90" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Mitsubishi": [
+                {
+                    model: "Pajero Sport / Triton",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.4L 4N15 MIVEC Diesel", capacity: "8.4 Liter", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Mobil 1" },
+                    transmission: { spec: "8-Speed AT / MT", capacity: "3.5L (Refill AT)", sae: "Mitsubishi ATF-MA1 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang: 2.1L", sae: "API GL-5 80W-90" }
+                },
+                {
+                    model: "Xpander / XForce",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L 4A91", capacity: "4.0 Liter", sae: "Shell Helix ECO 0W-20 / Total Quartz GF6" },
+                    transmission: { spec: "CVT / 4AT", capacity: "4.0 Liter (Refill)", sae: "CVTF-J4 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Datsun": [
+                {
+                    model: "Go / Go+ / Cross",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.2L 3-Silinder", capacity: "3.0 Liter", sae: "Shell Helix HX7 10W-40 / Mobil Super" },
+                    transmission: { spec: "5-Speed MT / CVT", capacity: "CVT: 4.0 Liter", sae: "Nissan NS-3 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Nissan": [
+                {
+                    model: "X-Trail / Serena",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.0L / 2.5L QR25DE", capacity: "5.2L (X-Trail)", sae: "Fuchs TITAN GT1 PRO / Mobil 1 0W-40" },
+                    transmission: { spec: "CVT", capacity: "4.0L (Refill)", sae: "Nissan NS-3 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang: 0.6L", sae: "API GL-5 80W-90" }
+                },
+                {
+                    model: "GT-R (R35)",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "3.8L Twin-Turbo V6 (VR38DETT)", capacity: "5.0 Liter", sae: "Mobil 1 FS 0W-40 (OEM Endorsed)" },
+                    transmission: { spec: "6-Speed Dual Clutch (GR6)", capacity: "9.5 Liter", sae: "Pentosin FFL-4 / Nissan GR6 Fluid" },
+                    differential: { spec: "AWD ATTESA E-TS", capacity: "Depan 0.6L / Belakang 1.5L", sae: "Castrol Syntrax / API GL-5 75W-140" }
+                }
+            ],
+            "Infiniti": [
+                {
+                    model: "QX80 / Q50",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "5.6L V8 (QX80) / 3.0T V6 (Q50)", capacity: "6.5L (V8) / 5.2L (V6)", sae: "Mobil 1 0W-40 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed AT", capacity: "9.0 Liter", sae: "Nissan Matic S / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / AWD", capacity: "1.2 Liter", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Mazda": [
+                {
+                    model: "Mazda2 / Mazda3 / CX-3 / CX-5",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "1.5L / 2.0L / 2.5L Skyactiv-G", capacity: "4.2 Liter - 4.5 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 / Mobil 1 0W-20" },
+                    transmission: { spec: "6-Speed Skyactiv-Drive AT", capacity: "4.0 Liter (Refill)", sae: "Mazda ATF FZ / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang: 0.6L", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Subaru": [
+                {
+                    model: "XV / Forester / WRX STI",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "2.0L / 2.5L Boxer (FB20/EJ25)", capacity: "4.8 Liter - 5.0 Liter", sae: "Fuchs TITAN GT1 FLEX 5 / Mobil 1 5W-30" },
+                    transmission: { spec: "Lineartronic CVT / 6-Speed MT", capacity: "5.5 - 6.0 Liter (CVT)", sae: "Subaru CVTF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "Symmetrical AWD", capacity: "Depan: 1.2L / Belakang: 0.8L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Daihatsu": [
+                {
+                    model: "Terios / Xenia / Ayla / Sirion",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "1.0L / 1.2L / 1.5L", capacity: "3.0 Liter - 4.0 Liter", sae: "Shell Helix HX7 / Fuchs TITAN Flex" },
+                    transmission: { spec: "MT / 4-Speed AT / D-CVT", capacity: "2.5L (AT) / 3.5L (CVT)", sae: "Daihatsu ATF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / RWD", capacity: "2.2 Liter (RWD)", sae: "Total Traxium Axle 7 80W-90" }
+                }
+            ],
+            "Isuzu": [
+                {
+                    model: "D-Max / MU-X",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.9L RZ4E / 3.0L 4JJ3", capacity: "6.0L - 7.5L", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "6-Speed AT / MT", capacity: "4.5 Liter (AT Refill)", sae: "Isuzu ATF WWS / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang: 2.5L", sae: "API GL-5 80W-90" }
+                }
+            ],
+            "Hino": [
+                {
+                    model: "Dutro / Seri 300 (Light Truck)",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "4.0L N04C Diesel", capacity: "8.5 Liter", sae: "Fuchs TITAN Truck / Mobil Delvac 1 15W-40" },
+                    transmission: { spec: "5/6-Speed MT", capacity: "3.5 Liter", sae: "API GL-4 80W-90" },
+                    differential: { spec: "RWD", capacity: "3.0 - 4.0 Liter", sae: "API GL-5 90 / 140" }
+                }
+            ],
+
+            // ================== EROPA ==================
+            "BMW": [
+                {
+                    model: "3-Series / 5-Series / X3 / X5",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.0L 4-Cyl / 3.0L 6-Cyl", capacity: "5.2L - 6.5L", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 (BMW LL-17 FE)" },
+                    transmission: { spec: "8-Speed ZF", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD / xDrive", capacity: "1.0 Liter", sae: "Fuchs TITAN SINTOPOID FE 75W-85" }
+                }
+            ],
+            "MINI": [
+                {
+                    model: "Cooper S (F56)",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Cyl Turbo", capacity: "5.25 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20" },
+                    transmission: { spec: "7-Speed DCT / 8-Speed AT", capacity: "5.5 Liter", sae: "BMW DCTF-2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Rolls-Royce": [
+                {
+                    model: "Phantom / Ghost / Cullinan",
+                    year: "2010 - Sekarang",
+                    engine: { spec: "6.6L / 6.75L Twin-Turbo V12", capacity: "9.5 - 10.5 Liter", sae: "Mobil 1 0W-40 / Shell Helix Ultra 5W-40" },
+                    transmission: { spec: "8-Speed ZF", capacity: "9.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / AWD", capacity: "1.2 Liter", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Mercedes-Benz": [
+                {
+                    model: "C-Class / E-Class / S-Class / GLC",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.0L / 3.0L V6 / 4.0L V8", capacity: "6.0L - 9.0L", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 (MB 229.71)" },
+                    transmission: { spec: "9G-Tronic / 7G-Tronic", capacity: "10.0 Liter", sae: "MB 236.17 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD / 4MATIC", capacity: "1.2 Liter", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Maybach": [
+                {
+                    model: "Maybach S650 / G650",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "6.0L V12 Bi-Turbo", capacity: "10.5 Liter", sae: "Mobil 1 FS 0W-40 / Fuchs TITAN PRO C-3" },
+                    transmission: { spec: "7G-Tronic Plus", capacity: "9.5 Liter", sae: "MB 236.15 / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4MATIC", capacity: "1.5 Liter", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Smart": [
+                {
+                    model: "Fortwo / Forfour",
+                    year: "1998 - 2019",
+                    engine: { spec: "0.9L Turbo / 1.0L 3-Cyl", capacity: "3.5 Liter", sae: "Total Quartz Ineo MC3 5W-30 / Mobil 1" },
+                    transmission: { spec: "6-Speed Twinamic DCT", capacity: "2.5 Liter", sae: "MB 236.21 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Volkswagen": [
+                {
+                    model: "Golf / Tiguan",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "1.4L TSI / 2.0L TFSI", capacity: "4.0L - 5.2L", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 (VW 504/507)" },
+                    transmission: { spec: "DSG (Dry/Wet)", capacity: "1.7 - 5.5 Liter (DSG Wet)", sae: "Fuchs TITAN FFL-2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / 4Motion", capacity: "AWD Haldex: 0.8L", sae: "VW G 060 175 A2" }
+                }
+            ],
+            "Audi": [
+                {
+                    model: "A4 / Q5 / Q7",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.0L TFSI / 3.0L V6 TDI", capacity: "5.2L - 8.2L", sae: "Mobil 1 0W-40 / Fuchs TITAN GT1 PRO C-3" },
+                    transmission: { spec: "S-Tronic / Tiptronic", capacity: "6.0 - 9.0 Liter", sae: "Fuchs FFL-2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "Quattro", capacity: "1.0 Liter", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Porsche": [
+                {
+                    model: "Macan / Cayenne / 911",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "2.0T / 3.0L V6 / 3.8L Flat-6", capacity: "5.2L - 8.5L", sae: "Mobil 1 0W-40 (A40) / Fuchs TITAN C30/C20" },
+                    transmission: { spec: "7-Speed PDK / 8-Speed Tip", capacity: "6.0L - 8.5L", sae: "Fuchs TITAN FFL-3 / Porsche PDK Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "1.1L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Skoda": [
+                {
+                    model: "Octavia / Kodiaq",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "1.4L TSI / 2.0L TDI", capacity: "4.0L - 4.5L", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 (VW 504/507)" },
+                    transmission: { spec: "DSG (Dry/Wet)", capacity: "1.7 - 5.5 Liter", sae: "Fuchs TITAN FFL-2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / 4x4", capacity: "AWD Haldex: 0.8L", sae: "VW G 060 175 A2" }
+                }
+            ],
+            "Bugatti": [
+                {
+                    model: "Chiron / Veyron",
+                    year: "2005 - Sekarang",
+                    engine: { spec: "8.0L W16 Quad-Turbo", capacity: "15.0 - 23.0 Liter (Dry Sump)", sae: "Castrol EDGE 10W-60 / Mobil 1 10W-60" },
+                    transmission: { spec: "7-Speed Ricardo DCT", capacity: "9.0 Liter", sae: "Bugatti OEM DCT Fluid" },
+                    differential: { spec: "AWD Haldex", capacity: "Depan 1.5L / Belakang 2.0L", sae: "Castrol Syntrax Long Life 75W-140" }
+                }
+            ],
+            "Bentley": [
+                {
+                    model: "Continental GT / Bentayga",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "4.0L V8 / 6.0L W12 Twin-Turbo", capacity: "9.5 - 11.5 Liter", sae: "Mobil 1 0W-40 / Fuchs TITAN GT1 PRO C-3" },
+                    transmission: { spec: "8-Speed ZF / 8-Speed Porsche DCT", capacity: "9.0 Liter", sae: "ZF Lifeguard 8 / Fuchs TITAN FFL-8" },
+                    differential: { spec: "AWD", capacity: "1.0L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Ferrari": [
+                {
+                    model: "488 GTB / F8 / Portofino",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "3.9L Twin-Turbo V8", capacity: "10.0 Liter", sae: "Shell Helix Ultra Racing 5W-40" },
+                    transmission: { spec: "7-Speed F1 Dual Clutch", capacity: "7.0 Liter", sae: "Fuchs TITAN FFL-3 / Shell TF1055" },
+                    differential: { spec: "E-Diff", capacity: "Menyatu dengan DCT", sae: "OEM E-Diff Fluid" }
+                }
+            ],
+            "Maserati": [
+                {
+                    model: "Ghibli / Levante",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "3.0L V6 Bi-Turbo", capacity: "7.5 Liter", sae: "Shell Helix Ultra 5W-40 / Mobil 1 0W-40" },
+                    transmission: { spec: "8-Speed ZF", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD / Q4 AWD", capacity: "1.0L", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Alfa Romeo": [
+                {
+                    model: "Giulia / Stelvio",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.0L Turbo / 2.9L V6 Bi-Turbo", capacity: "5.5 - 7.0 Liter", sae: "Mobil 1 FS 0W-40 / Selenia" },
+                    transmission: { spec: "8-Speed ZF", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / Q4", capacity: "1.0L", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Lamborghini": [
+                {
+                    model: "Huracan / Urus",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "5.2L V10 (Huracan) / 4.0L V8 (Urus)", capacity: "8.5 - 9.5 Liter", sae: "Mobil 1 FS 0W-40 / Castrol EDGE 5W-40" },
+                    transmission: { spec: "7-Speed LDF (DCT) / 8-Speed ZF", capacity: "7.5 - 9.0 Liter", sae: "Pentosin FFL-2 / Valvoline L&HD ATF (Urus)" },
+                    differential: { spec: "AWD", capacity: "1.0 - 1.5L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Aston Martin": [
+                {
+                    model: "DB11 / Vantage / DBX",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "4.0L AMG V8 / 5.2L V12 Twin-Turbo", capacity: "9.0 - 11.5 Liter", sae: "Mobil 1 FS 0W-40 / Shell Helix Ultra" },
+                    transmission: { spec: "8-Speed ZF", capacity: "9.0 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / AWD", capacity: "1.2 Liter", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "McLaren": [
+                {
+                    model: "720S / 570S / Artura",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "3.8L / 4.0L Twin-Turbo V8 / V6 Hybrid", capacity: "8.0 - 8.5 Liter", sae: "Mobil 1 FS 0W-40 / Gulf Formula" },
+                    transmission: { spec: "7-Speed SSG (DCT)", capacity: "7.5 Liter", sae: "Fuchs TITAN FFL-4 / Pentosin" },
+                    differential: { spec: "RWD", capacity: "Menyatu dengan Transmisi", sae: "-" }
+                }
+            ],
+            "Lotus": [
+                {
+                    model: "Evora / Emira",
+                    year: "2010 - Sekarang",
+                    engine: { spec: "3.5L Supercharged V6 / 2.0L Turbo", capacity: "5.5 - 6.0 Liter", sae: "Mobil 1 0W-40 / Shell Helix Ultra" },
+                    transmission: { spec: "6-Speed MT / 6-Speed AT", capacity: "2.5 - 6.0 Liter", sae: "API GL-4 / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Jaguar": [
+                {
+                    model: "XF / F-Pace / F-Type",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "2.0L Ingenium / 3.0L V6 / 5.0L V8", capacity: "5.6L - 7.2L", sae: "Fuchs TITAN GT1 FLEX 5 0W-20" },
+                    transmission: { spec: "8-Speed ZF", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / AWD", capacity: "0.8 - 1.2L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Land Rover": [
+                {
+                    model: "Range Rover / Evoque / Discovery",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.0L / 3.0L V6 / 5.0L V8", capacity: "6.5L - 8.0L", sae: "Mobil 1 0W-20 / Shell Helix Ultra Professional" },
+                    transmission: { spec: "8-Speed ZF / 9-Speed ZF", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF" },
+                    differential: { spec: "4WD Full-Time", capacity: "Transfer 1.5L / Axle 1.2L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Peugeot": [
+                {
+                    model: "3008 / 5008 / 208",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.6L THP Turbo / 1.2L PureTech", capacity: "3.5L - 4.25L", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Total Quartz Ineo" },
+                    transmission: { spec: "6-Speed EAT6 / EAT8", capacity: "3.0 Liter (Refill)", sae: "PSA ATF AW-1 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Citroen": [
+                {
+                    model: "C5 Aircross / C3",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.6L THP / 1.2L PureTech", capacity: "3.5L - 4.25L", sae: "Total Quartz Ineo First 0W-20 / Fuchs TITAN" },
+                    transmission: { spec: "EAT6 / EAT8", capacity: "3.0 Liter (Refill)", sae: "PSA ATF AW-1 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Renault": [
+                {
+                    model: "Koleos / Duster / Kwid",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.5L QR25DE / 1.0L / 1.5L dCi", capacity: "3.0L - 4.6L", sae: "Elf Evolution 900 SXR / Total Quartz 9000 5W-30" },
+                    transmission: { spec: "CVT / MT / AMT", capacity: "4.0L (CVT)", sae: "Total Fluidmatic CVT MV / Valvoline L&HD ATF" },
+                    differential: { spec: "FWD / AWD", capacity: "0.6L (Koleos AWD)", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Alpine": [
+                {
+                    model: "A110",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.8L Turbo", capacity: "5.5 Liter", sae: "Elf Evolution / Total Quartz 9000 5W-40" },
+                    transmission: { spec: "7-Speed DCT", capacity: "4.0 Liter", sae: "Fuchs TITAN FFL-7 / Renault DCTF" },
+                    differential: { spec: "RWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Volvo": [
+                {
+                    model: "XC60 / XC90 / S60",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "2.0L Drive-E / Hybrid", capacity: "5.5 - 6.5 Liter", sae: "Fuchs TITAN GT1 PRO V 0W-20 (VCC RBS0-2AE)" },
+                    transmission: { spec: "8-Speed Geartronic", capacity: "7.0 Liter (Refill)", sae: "AW-1 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "AWD", capacity: "1.0 Liter", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Saab": [
+                {
+                    model: "9-3 / 9-5",
+                    year: "1998 - 2012",
+                    engine: { spec: "2.0L / 2.3L Turbo / 2.8L V6", capacity: "4.0L - 6.0L", sae: "Mobil 1 0W-40 / Shell Helix Ultra 5W-40" },
+                    transmission: { spec: "5/6-Speed MT / AT", capacity: "3.5 - 7.0 Liter", sae: "Dexron VI / Valvoline L&HD ATF" },
+                    differential: { spec: "FWD / XWD", capacity: "0.8L (XWD)", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Koenigsegg": [
+                {
+                    model: "Agera / Jesko / Regera",
+                    year: "2010 - Sekarang",
+                    engine: { spec: "5.0L Twin-Turbo V8", capacity: "10.0 - 12.0 Liter", sae: "Motul 10W-60 / Mobil 1 5W-50" },
+                    transmission: { spec: "7-Speed / 9-Speed LST", capacity: "8.0 Liter", sae: "Koenigsegg Transmission Fluid" },
+                    differential: { spec: "RWD", capacity: "1.5 Liter", sae: "API GL-5 75W-140" }
+                }
+            ],
+            "Polestar": [
+                {
+                    model: "Polestar 1 / Polestar 2 (EV/Hybrid)",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L Twin-Charged Hybrid (Polestar 1) / EV", capacity: "5.6L (Polestar 1)", sae: "Fuchs TITAN GT1 PRO V 0W-20 / EV Coolant" },
+                    transmission: { spec: "8-Speed AT / EV Gear", capacity: "7.0L (AT) / 1.0L (EV)", sae: "AW-1 / Total EV Fluid" },
+                    differential: { spec: "AWD / e-AWD", capacity: "1.0L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Fiat": [
+                {
+                    model: "500 / Punto / Linea",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "1.2L / 1.4L FIRE", capacity: "3.2 Liter", sae: "Shell Helix HX7 / Mobil Super 1000 5W-30" },
+                    transmission: { spec: "5-Speed MT / Dualogic", capacity: "1.8 Liter", sae: "API GL-4 75W-85 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Pagani": [
+                {
+                    model: "Huayra / Zonda",
+                    year: "1999 - Sekarang",
+                    engine: { spec: "6.0L AMG Bi-Turbo V12", capacity: "12.0 - 14.0 Liter (Dry Sump)", sae: "Mobil 1 FS 0W-40 / Petronas Syntium" },
+                    transmission: { spec: "7-Speed Xtrac Automated MT", capacity: "6.5 Liter", sae: "Xtrac 75W-90 Racing Fluid" },
+                    differential: { spec: "RWD", capacity: "Menyatu dengan Transmisi", sae: "-" }
+                }
+            ],
+            "Lada": [
+                {
+                    model: "Niva / Vesta",
+                    year: "1977 - Sekarang",
+                    engine: { spec: "1.6L / 1.7L Bensin", capacity: "3.75 Liter", sae: "Shell Helix HX5 15W-40 / Total Quartz 5000" },
+                    transmission: { spec: "5-Speed Manual", capacity: "1.6 Liter", sae: "API GL-4 75W-90" },
+                    differential: { spec: "4WD Full-Time", capacity: "Depan 1.1L / Belakang 1.3L", sae: "API GL-5 80W-90" }
+                }
+            ],
+
+            // ================== AMERIKA SERIKAT ==================
+            "Ford": [
+                {
+                    model: "Everest / Ranger Bi-Turbo",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L EcoBlue Bi-Turbo Diesel", capacity: "7.0 Liter", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix" },
+                    transmission: { spec: "10-Speed SelectShift AT", capacity: "11.0 Liter", sae: "Mercon ULV / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "4WD", capacity: "Depan 1.2L / Belakang 3.1L", sae: "Total Traxium Axle 7 80W-90" }
+                },
+                {
+                    model: "Mustang GT / F-150",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "5.0L Coyote V8", capacity: "9.5 Liter", sae: "Mobil 1 5W-20 / Shell Helix Ultra 5W-30" },
+                    transmission: { spec: "10-Speed AT", capacity: "11.5 Liter", sae: "Mercon ULV" },
+                    differential: { spec: "RWD / 4WD", capacity: "1.6 Liter", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Lincoln": [
+                {
+                    model: "Navigator / Aviator",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.5L Twin-Turbo V6", capacity: "6.0 Liter", sae: "Mobil 1 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "10-Speed AT", capacity: "11.5 Liter", sae: "Mercon ULV / Valvoline L&HD ATF" },
+                    differential: { spec: "AWD", capacity: "1.5 Liter", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Chevrolet": [
+                {
+                    model: "Captiva / Cruze / Trax",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.0L Diesel / 1.4L Turbo", capacity: "7.0L (Captiva) / 4.0L (Trax)", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 (Dexos 2)" },
+                    transmission: { spec: "6-Speed AT", capacity: "4.5 Liter (Refill)", sae: "Dexron VI / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / AWD", capacity: "0.8L (AWD)", sae: "API GL-5 75W-90" }
+                },
+                {
+                    model: "Silverado / Tahoe",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "5.3L / 6.2L EcoTec3 V8", capacity: "8.0 Liter", sae: "Mobil 1 0W-20 (Dexos 1 Gen 2)" },
+                    transmission: { spec: "10-Speed AT", capacity: "11.0 Liter", sae: "Dexron ULV / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4WD", capacity: "1.5 - 2.0L", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "GMC": [
+                {
+                    model: "Sierra / Yukon",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "5.3L / 6.2L EcoTec3 V8", capacity: "8.0 Liter", sae: "Mobil 1 0W-20 (Dexos 1 Gen 2)" },
+                    transmission: { spec: "10-Speed AT", capacity: "11.0 Liter", sae: "Dexron ULV / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4WD", capacity: "1.5 - 2.0L", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Cadillac": [
+                {
+                    model: "Escalade",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "6.2L EcoTec3 V8", capacity: "8.0 Liter", sae: "Mobil 1 0W-20 (Dexos 1 Gen 2)" },
+                    transmission: { spec: "10-Speed AT", capacity: "11.0 Liter", sae: "Dexron ULV / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4WD", capacity: "1.5 - 2.0L", sae: "API GL-5 75W-85" }
+                }
+            ],
+            "Jeep": [
+                {
+                    model: "Wrangler (JK/JL) / Gladiator",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "3.6L Pentastar V6 / 2.0L Turbo", capacity: "5.6 Liter (V6) / 4.7 Liter (2.0T)", sae: "Shell Helix Ultra 5W-30 / Mobil 1 0W-40" },
+                    transmission: { spec: "5-Speed AT / 8-Speed ZF", capacity: "8.5 Liter", sae: "Mopar ATF+4 / Valvoline L&HD ATF CVT (ZF)" },
+                    differential: { spec: "4WD (Dana Axles)", capacity: "Depan 1.4L / Belakang 1.6L", sae: "API GL-5 75W-85 / 75W-140" }
+                }
+            ],
+            "Dodge": [
+                {
+                    model: "Charger / Challenger",
+                    year: "2011 - Sekarang",
+                    engine: { spec: "5.7L / 6.2L / 6.4L HEMI V8", capacity: "6.6 - 7.5 Liter", sae: "Pennzoil / Shell Helix Ultra 0W-40" },
+                    transmission: { spec: "8-Speed TorqueFlite", capacity: "8.5 Liter", sae: "Mopar ZF 8-Speed / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD", capacity: "1.2 - 1.5L", sae: "API GL-5 75W-90 / 75W-140" }
+                }
+            ],
+            "RAM": [
+                {
+                    model: "RAM 1500 / 2500",
+                    year: "2011 - Sekarang",
+                    engine: { spec: "5.7L HEMI V8 / 3.0L EcoDiesel", capacity: "6.6L - 10.0L", sae: "Pennzoil / Mobil Delvac (Diesel)" },
+                    transmission: { spec: "8-Speed TorqueFlite", capacity: "8.5 Liter", sae: "Mopar ZF 8-Speed / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4WD", capacity: "1.2 - 1.5L", sae: "API GL-5 75W-90 / 75W-140" }
+                }
+            ],
+
+            // ================== KOREA SELATAN ==================
+            "Hyundai": [
+                {
+                    model: "Creta / Stargazer",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "1.5L Smartstream", capacity: "3.8 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 / Shell Helix HX8" },
+                    transmission: { spec: "IVT (CVT)", capacity: "4.0 Liter (Refill)", sae: "Hyundai SP-CVT1 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Palisade / Santa Fe",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.2L CRDi Diesel / 2.5L Turbo", capacity: "6.5L - 7.6L", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Mobil 1" },
+                    transmission: { spec: "8-Speed AT / 8-DCT", capacity: "5.0 - 7.0 Liter", sae: "Hyundai SP-IV / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 0.7L", sae: "Fuchs TITAN SINTOPOID 75W-90" }
+                }
+            ],
+            "Genesis": [
+                {
+                    model: "G80 / GV80",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "2.5L Turbo / 3.5L V6 Twin-Turbo", capacity: "6.5L - 7.0L", sae: "Fuchs TITAN GT1 FLEX / Shell Helix Ultra" },
+                    transmission: { spec: "8-Speed AT", capacity: "8.0 Liter", sae: "Hyundai SP-IV / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / AWD", capacity: "AWD Belakang 0.8L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Kia": [
+                {
+                    model: "Picanto / Sonet / Seltos / Carnival",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "1.2L / 1.4L Turbo / 2.2L Diesel", capacity: "3.5L (1.2L) / 7.6L (Diesel)", sae: "Fuchs TITAN GT1 / Mobil 1 5W-30" },
+                    transmission: { spec: "IVT / 7-DCT / 8-AT", capacity: "4.0 - 6.5 Liter", sae: "Kia SP-IV / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD 0.7L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "SsangYong": [
+                {
+                    model: "Rexton / Tivoli / Korando",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.2L e-XDi Diesel / 1.6L Bensin", capacity: "6.0L - 6.5L (Diesel)", sae: "Total Quartz Ineo MC3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed MB AT / 6-Speed Aisin", capacity: "8.5 Liter / 7.0L", sae: "MB 236.14 / AW-1 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD / 4WD", capacity: "Depan 1.4L / Belakang 2.0L", sae: "API GL-5 80W-90" }
+                }
+            ],
+
+            // ================== CHINA ==================
+            "Wuling": [
+                {
+                    model: "Almaz / Cortez / Confero",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L Turbo / 1.5L DVVT / 1.8L", capacity: "3.8 - 4.0 Liter", sae: "Total Quartz 9000 5W-30 / Shell Helix HX7" },
+                    transmission: { spec: "CVT / 5-Speed MT", capacity: "4.0 Liter (CVT Refill)", sae: "Wuling CVT Fluid / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / RWD", capacity: "1.5 Liter (Confero)", sae: "API GL-5 80W-90" }
+                }
+            ],
+            "Chery": [
+                {
+                    model: "Tiggo 7 Pro / Tiggo 8 Pro / Omoda 5",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Turbo / 2.0L TGDI", capacity: "4.5 - 5.0 Liter", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed DCT / CVT", capacity: "4.0 - 4.5 Liter", sae: "Chery DCTF/CVTF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / AWD", capacity: "0.6L (AWD)", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "MG (Morris Garages)": [
+                {
+                    model: "MG ZS / MG HS / MG 5",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.5L VTi-TECH / 1.5L Turbo", capacity: "4.0 - 4.5 Liter", sae: "Total Quartz 9000 Future GF6 / Shell Helix Ultra 5W-30" },
+                    transmission: { spec: "CVT / 7-Speed DCT", capacity: "4.0 Liter (CVT)", sae: "MG CVTF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "GWM (Haval / Tank)": [
+                {
+                    model: "Haval H6 / Tank 300 / Tank 500",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "2.0L Turbo / Hybrid", capacity: "5.5 Liter", sae: "Shell Helix Ultra 0W-20 / Fuchs TITAN FLEX 5" },
+                    transmission: { spec: "7-DCT / 9-Speed AT", capacity: "6.5 - 9.0 Liter", sae: "GWM DCTF / Valvoline L&HD ATF" },
+                    differential: { spec: "FWD / 4WD", capacity: "Depan 1.0L / Belakang 2.0L", sae: "API GL-5 75W-90" }
+                }
+            ],
+
+            // ================== INDIA ==================
+            "Tata Motors": [
+                {
+                    model: "Safari / Harrier / Nexon / Altroz",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.0L Kryotec Diesel / 1.2L Revotron", capacity: "5.0L (Bensin) / 7.5L (Diesel)", sae: "Mobil Delvac MX 15W-40 / Shell Helix HX7" },
+                    transmission: { spec: "6-Speed MT / 6-Speed AT", capacity: "2.5 - 6.0 Liter", sae: "Mobil 1 SHC 75W-90 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / 4WD", capacity: "2.2 Liter (Safari 4WD)", sae: "API GL-5 80W-90" }
+                }
+            ],
+            "Mahindra": [
+                {
+                    model: "Scorpio / Thar / XUV700",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "2.2L mHawk Diesel / 2.0L mStallion", capacity: "6.0L - 6.5L", sae: "Shell Helix HX7 / Mobil Delvac MX 15W-40" },
+                    transmission: { spec: "Manual / 6-Speed AT Aisin", capacity: "2.5L (MT) / 6.0L (AT)", sae: "API GL-4 80W-90 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "RWD / 4WD", capacity: "Depan 1.5L / Belakang 1.8L", sae: "API GL-5 80W-90" }
+                }
+            ],
+
+            // ================== ASIA TENGGARA (LOKAL) ==================
+            "Esemka": [
+                {
+                    model: "Bima 1.2 / 1.3 Pickup",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.2L / 1.3L DOHC 4-Silinder", capacity: "3.5 Liter", sae: "Total Quartz 5000 / Shell Helix HX5 10W-40" },
+                    transmission: { spec: "5-Speed Manual", capacity: "1.5 Liter", sae: "API GL-4 75W-90" },
+                    differential: { spec: "RWD", capacity: "1.5 Liter", sae: "API GL-5 80W-90" }
+                }
+            ],
+            "Timor": [
+                {
+                    model: "S515 / DOHC",
+                    year: "1996 - 2000",
+                    engine: { spec: "1.5L SOHC / DOHC (Sephia Base)", capacity: "3.8 Liter", sae: "Shell Helix HX3 20W-50 / Total Quartz 3000" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2.2 Liter", sae: "API GL-4 75W-90" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Proton": [
+                {
+                    model: "X70 / X50 / Saga / Iriz",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.5L TGDi / 1.3L VVT", capacity: "4.0 - 5.0 Liter", sae: "Shell Helix Ultra 5W-30 / Fuchs TITAN GT1 PRO" },
+                    transmission: { spec: "7-Speed DCT / 4AT", capacity: "5.0 Liter (DCT)", sae: "Proton DCTF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "Perodua": [
+                {
+                    model: "Myvi / Bezza / Ativa",
+                    year: "Berbagai Tahun",
+                    engine: { spec: "1.0L / 1.3L / 1.5L Dual VVT-i", capacity: "3.0 - 3.5 Liter", sae: "Total Quartz 9000 0W-20 / Shell Helix ECO" },
+                    transmission: { spec: "4AT / D-CVT", capacity: "2.5 - 3.5 Liter", sae: "Perodua ATF/CVTF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "VinFast": [
+                {
+                    model: "VF8 / VF9 / VF5 (EV)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (VF8/9)", capacity: "-", sae: "Tidak ada oli mesin (Gunakan Coolant Khusus)" },
+                    transmission: { spec: "Reduction Gear", capacity: "1.5 Liter per Axle", sae: "Shell E-Fluids / Valvoline EV Fluid" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
+
+            // ================== MOBIL LISTRIK (MULTI-BRAND EV) ==================
+            "Mobil Listrik (EV)": [
+                {
+                    model: "Tesla Model 3 / Model Y / Cybertruck",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "Dual Motor AWD / RWD", capacity: "-", sae: "Tidak ada oli mesin (Gunakan Tesla Battery Coolant)" },
+                    transmission: { spec: "Drive Unit (Front & Rear)", capacity: "2.0 - 2.5 Liter per Motor", sae: "Shell E-Fluids / Pentosin ATF 9 / Tesla Drive Unit Fluid" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                },
+                {
+                    model: "BYD Seal / Atto 3 / Dolphin / M6",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Motor Listrik Sinkron Magnet Permanen", capacity: "-", sae: "Tidak ada oli mesin" },
+                    transmission: { spec: "Reduction Gear", capacity: "1.1 - 1.5 Liter", sae: "Shell E-Fluids / Total EV Fluid" },
+                    differential: { spec: "AWD / FWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                },
+                {
+                    model: "Hyundai Ioniq 5 / Ioniq 6 / Kia EV6",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "E-GMP Platform Motor", capacity: "-", sae: "Tidak ada oli mesin (Low Conductivity Coolant)" },
+                    transmission: { spec: "Reduction Gear", capacity: "1.4L - 1.6L per Axle", sae: "Hyundai/Kia EV Reduction Gear Fluid" },
+                    differential: { spec: "AWD / RWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "Wuling Air EV / Binguo / Cloud EV",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "GSEV / Motor Listrik Ringan", capacity: "-", sae: "Tidak ada oli mesin" },
+                    transmission: { spec: "Reduction Gear", capacity: "0.8 - 1.0 Liter", sae: "Total EV Fluid / Wuling EV Gearbox Fluid" },
+                    differential: { spec: "RWD / FWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "Rimac Nevera / Pininfarina Battista",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "Quad Motor Hyper-EV (1914 hp)", capacity: "-", sae: "Rimac specialized Battery Dielectric Coolant" },
+                    transmission: { spec: "Single-speed Reduction Gear (Per Wheel)", capacity: "~1.0 Liter per roda", sae: "Rimac / Castrol EV Hyper Fluid" },
+                    differential: { spec: "All-Wheel Torque Vectoring", capacity: "-", sae: "Menyatu dengan masing-masing motor" }
+                }
+            ]
+        };
+
+        // Inisialisasi Frontend saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", () => {
+            const brandSelect = document.getElementById("brandSelect");
+            
+            // Mengurutkan array keys (Merk) sesuai Alphabet agar rapi (A-Z)
+            const sortedBrands = Object.keys(carDatabase).sort((a, b) => a.localeCompare(b));
+
+            sortedBrands.forEach(brand => {
+                let option = document.createElement("option");
+                option.value = brand;
+                option.textContent = brand;
+                brandSelect.appendChild(option);
+            });
+        });
+
+        // Fungsi untuk mengisi pilihan Model saat Merk dipilih
+        function populateModels() {
+            const brand = document.getElementById("brandSelect").value;
+            const modelSelect = document.getElementById("modelSelect");
+            const resultContainer = document.getElementById("resultContainer");
+            
+            // Reset state
+            modelSelect.innerHTML = '<option value="">-- Pilih Model --</option>';
+            resultContainer.classList.add("hidden");
+
+            if (brand) {
+                modelSelect.disabled = false;
+                carDatabase[brand].forEach((car, index) => {
+                    let option = document.createElement("option");
+                    option.value = index; 
+                    option.textContent = `${car.model} (${car.year})`;
+                    modelSelect.appendChild(option);
+                });
+            } else {
+                modelSelect.disabled = true;
+            }
+        }
+
+        // Fungsi untuk menampilkan data detail saat Model dipilih
+        function displaySpecs() {
+            const brand = document.getElementById("brandSelect").value;
+            const modelIndex = document.getElementById("modelSelect").value;
+            const resultContainer = document.getElementById("resultContainer");
+
+            if (brand && modelIndex !== "") {
+                const data = carDatabase[brand][modelIndex];
+
+                // Update UI Teks
+                document.getElementById("carTitle").textContent = `${brand} ${data.model}`;
+                document.getElementById("carYear").textContent = `Tahun Produksi: ${data.year}`;
+
+                // Update Mesin
+                document.getElementById("engSpec").textContent = data.engine.spec;
+                document.getElementById("engOil").textContent = data.engine.capacity;
+                document.getElementById("engType").textContent = data.engine.sae;
+
+                // Update Transmisi
+                document.getElementById("transSpec").textContent = data.transmission.spec;
+                document.getElementById("transOil").textContent = data.transmission.capacity;
+                document.getElementById("transType").textContent = data.transmission.sae;
+
+                // Update Gardan
+                document.getElementById("diffSpec").textContent = data.differential.spec;
+                document.getElementById("diffOil").textContent = data.differential.capacity;
+                document.getElementById("diffType").textContent = data.differential.sae;
+
+                // Tampilkan container dengan animasi
+                resultContainer.classList.remove("hidden");
+            } else {
+                resultContainer.classList.add("hidden");
+            }
+        }
+    </script>
+</body>
+</html>
