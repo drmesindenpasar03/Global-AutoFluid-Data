@@ -36,6 +36,20 @@
         select::-webkit-scrollbar { width: 8px; }
         select::-webkit-scrollbar-track { background: #171717; }
         select::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 4px; }
+        
+        /* Hasil pencarian dengan scroll */
+        #searchResults::-webkit-scrollbar { width: 6px; }
+        #searchResults::-webkit-scrollbar-track { background: #0a0a0a; }
+        #searchResults::-webkit-scrollbar-thumb { background: #404040; border-radius: 3px; }
+
+        /* Optimasi Cetak / Simpan PDF */
+        @media print {
+            body { background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            body * { visibility: hidden; }
+            #resultContainer, #resultContainer * { visibility: visible; }
+            #resultContainer { position: absolute; left: 0; top: 0; width: 100%; }
+            #resultContainer button { display: none !important; }
+        }
     </style>
 </head>
 <body class="selection:bg-red-600 selection:text-white min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-[#050505] to-black relative">
@@ -57,10 +71,40 @@
                 Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
                 <br>Direkomendasikan oleh <span class="text-white font-semibold">FUCHS Titan</span>, <span class="text-red-500 font-semibold">Shell Helix™</span>, <span class="text-white font-semibold">Mobil 1™</span>, <span class="text-red-500 font-semibold">TotalEnergies</span> & <span class="text-white font-semibold">Valvoline™</span>.
             </p>
+
+            <!-- Stats & Version Bar -->
+            <div class="flex flex-wrap items-center justify-center gap-2 md:gap-3 mt-6">
+                <span class="inline-flex items-center gap-2 bg-neutral-900/80 border border-neutral-800 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-neutral-300">
+                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                    <span id="statBrands" class="text-white">0</span>&nbsp;Merk
+                </span>
+                <span class="inline-flex items-center gap-2 bg-neutral-900/80 border border-neutral-800 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-neutral-300">
+                    <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    <span id="statModels" class="text-white">0</span>&nbsp;Model
+                </span>
+                <span class="inline-flex items-center gap-1.5 bg-red-600/10 border border-red-500/30 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-red-400">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.366-2.446a1 1 0 00-1.175 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.951-.69l1.286-3.957z"></path></svg>
+                    Update v2.0 • Juli 2026
+                </span>
+            </div>
         </header>
 
         <!-- Form Pencarian -->
-        <div class="bg-neutral-900/80 backdrop-blur-md rounded-2xl p-6 mb-8 border border-neutral-800 glow-red">
+        <div class="bg-neutral-900/80 backdrop-blur-md rounded-2xl p-6 mb-8 border border-neutral-800 glow-red relative">
+            <!-- Pencarian Cepat -->
+            <div class="mb-5 relative">
+                <label for="searchInput" class="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest font-futuristic">Pencarian Cepat (Ketik Merk / Model)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </span>
+                    <input id="searchInput" type="text" autocomplete="off" placeholder="Contoh: Hilux, Innova, Tesla, Zeekr, GT-R, Lucid..." class="w-full rounded-xl pl-12 pr-10 p-4 bg-neutral-950 border border-neutral-700 text-white outline-none glow-red-focus transition-all duration-300 placeholder:text-neutral-600" oninput="performSearch()" onfocus="performSearch()">
+                    <button id="clearSearchBtn" type="button" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-red-500 p-1 transition-colors" aria-label="Bersihkan pencarian">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                    <div id="searchResults" class="hidden absolute z-30 left-0 right-0 top-full mt-2 bg-neutral-900 border border-neutral-700 rounded-xl shadow-2xl shadow-black/80 max-h-72 overflow-y-auto divide-y divide-neutral-800"></div>
+                </div>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="brandSelect" class="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest font-futuristic">Pilih Merk Mobil</label>
@@ -93,10 +137,10 @@
             </div>
 
             <!-- Grid Spesifikasi -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-px p-px bg-neutral-800 rounded-b-2xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-px p-px bg-neutral-800 rounded-b-2xl">
                 
                 <!-- Card Mesin -->
-                <div class="bg-neutral-900 p-6 lg:rounded-bl-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
+                <div class="bg-neutral-900 p-6 hover:bg-neutral-800 transition-colors duration-300 relative group">
                     <div class="absolute top-0 left-0 w-full h-1 bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="flex items-center mb-5">
                         <div class="p-2 bg-red-600/10 rounded-lg mr-3 border border-red-500/20 text-red-500">
@@ -146,7 +190,7 @@
                 </div>
 
                 <!-- Card Gardan -->
-                <div class="bg-neutral-900 p-6 lg:rounded-br-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
+                <div class="bg-neutral-900 p-6 md:rounded-bl-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
                     <div class="absolute top-0 left-0 w-full h-1 bg-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="flex items-center mb-5">
                         <div class="p-2 bg-neutral-800 rounded-lg mr-3 border border-neutral-700 text-neutral-400">
@@ -170,11 +214,49 @@
                     </div>
                 </div>
 
+                <!-- Card Servis & Sistem Tambahan -->
+                <div class="bg-neutral-900 p-6 md:rounded-br-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center mb-5">
+                        <div class="p-2 bg-amber-500/10 rounded-lg mr-3 border border-amber-500/20 text-amber-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white font-futuristic">SERVIS &amp; COOLANT</h3>
+                    </div>
+                    <div class="space-y-4 text-sm md:text-base">
+                        <div>
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Interval Penggantian Oli</span>
+                            <span id="svcInterval" class="font-black text-amber-400 text-xl font-futuristic tracking-wider"></span>
+                        </div>
+                        <div class="pt-3 border-t border-neutral-800">
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Kapasitas Coolant (Pendingin)</span>
+                            <span id="svcCoolant" class="font-semibold text-neutral-200"></span>
+                        </div>
+                        <div class="bg-black/50 p-3 rounded-lg border border-amber-900/50 mt-2 space-y-2">
+                            <span class="block text-amber-500 font-bold text-[10px] uppercase tracking-widest">Cairan Tambahan</span>
+                            <div class="flex justify-between items-center gap-3 text-xs">
+                                <span class="text-neutral-400">Rem (Brake Fluid)</span>
+                                <span id="svcBrake" class="font-bold text-white text-right"></span>
+                            </div>
+                            <div class="flex justify-between items-center gap-3 text-xs">
+                                <span class="text-neutral-400">AC Refrigerant</span>
+                                <span id="svcAc" class="font-bold text-white text-right"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             
-            <div class="mt-6 p-4 bg-neutral-900 border border-neutral-800 rounded-xl text-xs md:text-sm text-neutral-500 text-center leading-relaxed font-light">
-                *Kapasitas Volume Karter di atas adalah estimasi presisi data global pabrikan (termasuk filter oli).<br>
-                Selalu gunakan *dipstick* untuk memverifikasi level akhir setelah pengisian.
+            <div class="mt-6 flex flex-col md:flex-row gap-3 items-stretch">
+                <div class="flex-1 p-4 bg-neutral-900 border border-neutral-800 rounded-xl text-xs md:text-sm text-neutral-500 leading-relaxed font-light">
+                    *Kapasitas Volume Karter di atas adalah estimasi presisi data global pabrikan (termasuk filter oli).<br>
+                    Interval servis &amp; kapasitas coolant adalah <span class="text-neutral-300 font-medium">rekomendasi umum</span> — selalu rujuk manual pabrikan &amp; gunakan <em>dipstick</em> untuk verifikasi level.
+                </div>
+                <button onclick="printSpec()" class="shrink-0 inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs md:text-sm uppercase tracking-widest rounded-xl px-5 py-3 transition-colors duration-300 glow-red font-futuristic">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Cetak / Simpan PDF
+                </button>
             </div>
         </div>
         
@@ -252,6 +334,13 @@
                     engine: { spec: "3.3L Twin-Turbo Diesel / V8", capacity: "7.5 Liter", sae: "Mobil 1 0W-40 / Shell Helix Ultra Professional" },
                     transmission: { spec: "10-Speed AT", capacity: "10.6 Liter (Kuras)", sae: "Toyota ATF WS / Valvoline L&HD ATF" },
                     differential: { spec: "4WD Full-Time", capacity: "Depan 1.3L / Belakang 4.2L", sae: "API GL-5 75W-85" }
+                },
+                {
+                    model: "Hilux / Rush / Raize",
+                    year: "2011 - Sekarang",
+                    engine: { spec: "2.4L/2.8L GD Diesel / 1.5L 2NR-VE (Rush)", capacity: "7.5L (2.8 GD) / 4.3L (1.5L)", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "6 MT / 6 AT / D-CVT", capacity: "AT: 2.6L (Refill) / CVT: 3.5L", sae: "Toyota ATF WS / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4WD", capacity: "2.6 - 3.0 Liter", sae: "API GL-5 80W-90 / Total Traxium Axle 7" }
                 }
             ],
             "Lexus": [
@@ -284,6 +373,13 @@
                     engine: { spec: "1.5L VTEC Turbo", capacity: "4.2 Liter", sae: "Mobil 1 0W-20 / Fuchs TITAN GT1 FLEX 5" },
                     transmission: { spec: "CVT", capacity: "3.7 Liter (Refill)", sae: "Honda HCF-2 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD / AWD", capacity: "AWD (Dual Pump): 1.0L", sae: "Honda DPSF" }
+                },
+                {
+                    model: "HR-V / BR-V / Mobilio",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.5L i-VTEC / 1.5L VTEC Turbo", capacity: "3.6 - 4.2 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 / Shell Helix ECO" },
+                    transmission: { spec: "CVT / 6MT", capacity: "3.5 - 3.7 Liter (CVT)", sae: "Honda HCF-2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
                 }
             ],
             "Acura": [
@@ -784,6 +880,38 @@
                     differential: { spec: "RWD / 4WD", capacity: "1.2 - 1.5L", sae: "API GL-5 75W-90 / 75W-140" }
                 }
             ],
+            "Lucid": [
+                {
+                    model: "Air (Pure / Touring / GT / Sapphire)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Dual / Tri-Motor EV (480 - 1234 hp)", capacity: "-", sae: "Tidak ada oli mesin (Lucid Battery Coolant + Thermal)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1.5 - 2.0 Liter per Unit", sae: "Lucid Drive Unit Fluid / Shell E-Fluids" },
+                    differential: { spec: "e-AWD / RWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                },
+                {
+                    model: "Gravity (Electric SUV)",
+                    year: "2024 - Sekarang",
+                    engine: { spec: "Dual-Motor EV (~800 hp)", capacity: "-", sae: "Tidak ada oli mesin (Lucid Thermal Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1.5 - 2.0 Liter per Unit", sae: "Lucid Drive Unit Fluid / Shell E-Fluids" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
+            "Rivian": [
+                {
+                    model: "R1T / R1S (Quad / Dual Motor)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Quad / Dual-Motor EV", capacity: "-", sae: "Tidak ada oli mesin (Rivian Coolant)" },
+                    transmission: { spec: "Reduction Gear (Per Axle)", capacity: "1.3 Liter per Unit", sae: "Rivian Gear Oil / Castrol EV Fluid" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                },
+                {
+                    model: "R2 / R3 (Next-Gen Platform EV)",
+                    year: "2025 - Sekarang",
+                    engine: { spec: "Dual / Tri-Motor EV", capacity: "-", sae: "Tidak ada oli mesin" },
+                    transmission: { spec: "Reduction Gear", capacity: "1.3 - 1.5 Liter per Unit", sae: "Rivian Gear Oil / Shell E-Fluids" },
+                    differential: { spec: "e-AWD / RWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
 
             // ================== KOREA SELATAN ==================
             "Hyundai": [
@@ -865,6 +993,94 @@
                     engine: { spec: "2.0L Turbo / Hybrid", capacity: "5.5 Liter", sae: "Shell Helix Ultra 0W-20 / Fuchs TITAN FLEX 5" },
                     transmission: { spec: "7-DCT / 9-Speed AT", capacity: "6.5 - 9.0 Liter", sae: "GWM DCTF / Valvoline L&HD ATF" },
                     differential: { spec: "FWD / 4WD", capacity: "Depan 1.0L / Belakang 2.0L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Geely": [
+                {
+                    model: "Coolray / Okavango / Tugella",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.5L Turbo 3-Sil / 2.0L Drive-E Turbo", capacity: "4.0L (1.5T) / 5.5L (2.0T)", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed DCT / 6-Speed Aisin AT", capacity: "1.7 - 7.0 Liter", sae: "Geely DCTF / Aisin AW-1 / Valvoline L&HD ATF" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang: 0.8L", sae: "API GL-5 75W-90" }
+                },
+                {
+                    model: "Monjaro (Xingyue L)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L Drive-E Turbo (Volvo Base)", capacity: "5.5 Liter", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed Wet DCT / 8-Speed Aisin AT", capacity: "7.0 Liter", sae: "Geely DCTF / Aisin AW-1" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang: 0.9L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "JETOUR": [
+                {
+                    model: "Dashing / X70 Plus / Ice Magic",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Turbo / 1.6L TGDI", capacity: "4.0 - 4.5 Liter", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed DCT / CVT", capacity: "1.7 - 7.0 Liter (DCT)", sae: "Chery/JETOUR DCTF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "BAIC": [
+                {
+                    model: "BJ40 Plus / B40",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "2.0L Turbo Bensin", capacity: "5.5 Liter", sae: "Shell Helix Ultra 5W-40 / Mobil 1 0W-40" },
+                    transmission: { spec: "8-Speed ZF AT", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4WD", capacity: "Depan 1.2L / Belakang 1.8L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "DFSK": [
+                {
+                    model: "Glory 580 / Super Cab / Gelang",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.5L DVVT / 1.5L Turbo", capacity: "3.8 - 4.0 Liter", sae: "Total Quartz 9000 5W-30 / Shell Helix HX7" },
+                    transmission: { spec: "5-Speed MT / CVT", capacity: "4.0 Liter (CVT)", sae: "DFSK CVT Fluid / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / RWD", capacity: "1.5 Liter (RWD)", sae: "API GL-5 80W-90" }
+                }
+            ],
+            "Haima": [
+                {
+                    model: "8S / S7 / S5",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.6L Turbo HMADO", capacity: "4.5 Liter", sae: "Shell Helix HX7 5W-30 / Total Quartz 9000" },
+                    transmission: { spec: "6-Speed AT", capacity: "6.0 Liter", sae: "Dexron VI / Valvoline L&HD ATF" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "NIO": [
+                {
+                    model: "ET7 / ET5 / ES6 / EC6",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "Dual Motor Listrik (180 - 480 kW)", capacity: "-", sae: "Tidak ada oli mesin (Battery Swap + Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1.5 Liter per Unit", sae: "Shell E-Fluids / NIO Gear Oil" },
+                    differential: { spec: "e-AWD / RWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
+            "XPeng": [
+                {
+                    model: "P7 / G9 / G6 / P7+",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "Motor Listrik Sinkron Magnet Permanen", capacity: "-", sae: "Tidak ada oli mesin" },
+                    transmission: { spec: "Reduction Gear", capacity: "1.2 - 1.5 Liter per Axle", sae: "Shell E-Fluids / XPeng Gear Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                }
+            ],
+            "Zeekr": [
+                {
+                    model: "Zeekr 001 / X / 007",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Motor Listrik (200 - 580 kW)", capacity: "-", sae: "Tidak ada oli mesin" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1.5 - 2.0 Liter per Unit", sae: "Shell E-Fluids / Zeekr Gear Oil" },
+                    differential: { spec: "RWD / AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
+            "AITO (Seres / Huawei)": [
+                {
+                    model: "M5 / M7 / M9 (EREV Range Extender)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Turbo Range Extender + Motor", capacity: "4.5 Liter (Range Extender)", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix" },
+                    transmission: { spec: "Reduction Gear (Single-Speed)", capacity: "1.5 - 2.0 Liter", sae: "Shell E-Fluids / AITO Gear Fluid" },
+                    differential: { spec: "e-AWD / RWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
                 }
             ],
 
@@ -952,6 +1168,13 @@
                     differential: { spec: "AWD / FWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
                 },
                 {
+                    model: "BYD Han EV / Seal U DM-i / Yangwang U8",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "Dual Motor EV / 2.0T PHEV (Yangwang U8)", capacity: "- / 5.5L (Yangwang U8)", sae: "Shell E-Fluids / Fuchs TITAN GT1 PRO C-3 (PHEV)" },
+                    transmission: { spec: "Reduction Gear / 8-Speed AT (Yangwang)", capacity: "1.2 - 1.5 Liter (EV) / 8.0L (AT)", sae: "Shell E-Fluids / ZF Lifeguard 8" },
+                    differential: { spec: "AWD / e-AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                },
+                {
                     model: "Hyundai Ioniq 5 / Ioniq 6 / Kia EV6",
                     year: "2021 - Sekarang",
                     engine: { spec: "E-GMP Platform Motor", capacity: "-", sae: "Tidak ada oli mesin (Low Conductivity Coolant)" },
@@ -987,6 +1210,20 @@
                 option.value = brand;
                 option.textContent = brand;
                 brandSelect.appendChild(option);
+            });
+
+            // Hitung & tampilkan statistik database (Fitur Update v2.0)
+            const totalBrands = sortedBrands.length;
+            const totalModels = sortedBrands.reduce((sum, brand) => sum + carDatabase[brand].length, 0);
+            document.getElementById("statBrands").textContent = totalBrands;
+            document.getElementById("statModels").textContent = totalModels;
+
+            // Tutup hasil pencarian saat klik di luar area pencarian
+            document.addEventListener("click", (e) => {
+                const searchArea = document.getElementById("searchInput").parentElement.parentElement;
+                if (!searchArea.contains(e.target)) {
+                    document.getElementById("searchResults").classList.add("hidden");
+                }
             });
         });
 
@@ -1041,11 +1278,145 @@
                 document.getElementById("diffOil").textContent = data.differential.capacity;
                 document.getElementById("diffType").textContent = data.differential.sae;
 
+                // Update Card Servis & Coolant (Fitur Update v2.0)
+                const svc = deriveService(data);
+                document.getElementById("svcInterval").textContent = svc.interval;
+                document.getElementById("svcCoolant").textContent = svc.coolant;
+                document.getElementById("svcBrake").textContent = svc.brake;
+                document.getElementById("svcAc").textContent = svc.ac;
+
                 // Tampilkan container dengan animasi
                 resultContainer.classList.remove("hidden");
             } else {
                 resultContainer.classList.add("hidden");
             }
+        }
+
+        /**
+         * Derivasi interval servis & cairan tambahan berdasarkan tipe mesin.
+         * Merupakan REKOMENDASI UMUM — selalu rujuk manual pabrikan.
+         */
+        function deriveService(car) {
+            const spec = (car.engine.spec || "").toLowerCase();
+            const cap = (car.engine.capacity || "").trim();
+            const sae = (car.engine.sae || "").toLowerCase();
+
+            // Deteksi kendaraan listrik (EV) murni
+            const evKeywords = ["motor listrik", "dual motor", "tri-motor", "quad-motor", "dual-motor", "e-gmp", "hyper-ev", "sinkron magnet"];
+            const isElectric = cap === "-" || sae.includes("tidak ada oli mesin") || evKeywords.some(k => spec.includes(k));
+
+            // Deteksi karakteristik mesin pembakaran
+            const isDiesel = /diesel|crdi|dci|tdi|cdi|e-xdi|kryotec|mhawk|ecodiesel|ecoblue|2kd|2gd|1kd|4jj|rz4e|4n15|n04c/.test(spec);
+            const isTurbo = /turbo|bi-turbo|twin-turbo|twin turbo|supercharged|twin-charged/.test(spec);
+            const isBig = /v8|v10|v12|w12|w16/.test(spec);
+            const isOld = /karburator/.test(spec);
+
+            let interval, coolant, brake, ac;
+
+            if (isElectric) {
+                interval = "Gear Unit 60.000 km • Coolant 5 thn";
+                coolant = "Battery Coolant Low-Conductivity (cek berkala)";
+                brake = "DOT 4 / Brake-by-Wire (~0.7L)";
+                ac = "R1234yf + Heat Pump (thermal)";
+            } else {
+                if (isOld) interval = "5.000 km / 3 bln (oli mineral)";
+                else if (isBig) interval = "5.000 - 7.500 km / 6 bln";
+                else if (isDiesel) interval = "5.000 - 10.000 km / 6 bln";
+                else if (isTurbo) interval = "5.000 - 7.500 km / 6 bln";
+                else interval = "10.000 km / 6 bln";
+
+                if (isBig) coolant = "~10.0 - 15.0 Liter";
+                else if (isDiesel) coolant = "~7.0 - 10.0 Liter";
+                else if (isTurbo) coolant = "~6.5 - 8.5 Liter";
+                else coolant = "~4.5 - 7.0 Liter";
+
+                brake = "DOT 4 / DOT 5.1 (~0.5L)";
+                ac = "R134a / R1234yf (cek tekanan)";
+            }
+            return { interval, coolant, brake, ac };
+        }
+
+        // ===== Fitur Pencarian Cepat (Update v2.0) =====
+        function performSearch() {
+            const input = document.getElementById("searchInput");
+            const resultsBox = document.getElementById("searchResults");
+            const clearBtn = document.getElementById("clearSearchBtn");
+            const query = input.value.trim().toLowerCase();
+
+            clearBtn.classList.toggle("hidden", query.length === 0);
+
+            if (query.length < 1) {
+                resultsBox.classList.add("hidden");
+                resultsBox.innerHTML = "";
+                return;
+            }
+
+            const matches = [];
+            for (const brand in carDatabase) {
+                carDatabase[brand].forEach((car, index) => {
+                    const haystack = `${brand} ${car.model} ${car.year}`.toLowerCase();
+                    if (haystack.includes(query)) {
+                        matches.push({ brand, index, car });
+                    }
+                });
+            }
+            renderSearchResults(matches.slice(0, 15), query);
+        }
+
+        function renderSearchResults(matches, query) {
+            const resultsBox = document.getElementById("searchResults");
+            if (matches.length === 0) {
+                resultsBox.innerHTML = `<div class="p-4 text-sm text-neutral-500 text-center">Tidak ada hasil untuk "<span class="text-red-400">${escapeHtml(query)}</span>".</div>`;
+                resultsBox.classList.remove("hidden");
+                return;
+            }
+            resultsBox.innerHTML = "";
+            matches.forEach(m => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "w-full text-left px-4 py-3 hover:bg-red-600/10 transition-colors duration-150 flex items-center justify-between gap-3 group";
+                btn.innerHTML = `
+                    <div class="min-w-0">
+                        <div class="text-sm font-bold text-white truncate group-hover:text-red-400 transition-colors">${escapeHtml(m.car.model)}</div>
+                        <div class="text-[11px] text-neutral-500 truncate">${escapeHtml(m.brand)} • ${escapeHtml(m.car.year)}</div>
+                    </div>
+                    <svg class="w-4 h-4 text-neutral-600 group-hover:text-red-500 shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                `;
+                btn.onclick = () => selectSearchResult(m.brand, m.index);
+                resultsBox.appendChild(btn);
+            });
+            resultsBox.classList.remove("hidden");
+        }
+
+        function selectSearchResult(brand, index) {
+            document.getElementById("brandSelect").value = brand;
+            populateModels();
+            document.getElementById("modelSelect").value = String(index);
+            displaySpecs();
+            document.getElementById("searchResults").classList.add("hidden");
+            document.getElementById("resultContainer").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function clearSearch() {
+            const input = document.getElementById("searchInput");
+            input.value = "";
+            document.getElementById("clearSearchBtn").classList.add("hidden");
+            document.getElementById("searchResults").classList.add("hidden");
+            input.focus();
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        // ===== Fitur Cetak / Simpan PDF (Update v2.0) =====
+        function printSpec() {
+            const container = document.getElementById("resultContainer");
+            if (container.classList.contains("hidden")) {
+                alert("Silakan pilih merk & model kendaraan terlebih dahulu sebelum mencetak.");
+                return;
+            }
+            window.print();
         }
     </script>
 </body>
