@@ -84,7 +84,7 @@
                 </span>
                 <span class="inline-flex items-center gap-1.5 bg-red-600/10 border border-red-500/30 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-red-400">
                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.366-2.446a1 1 0 00-1.175 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.951-.69l1.286-3.957z"></path></svg>
-                    Update v2.4 • Juli 2026
+                    Update v2.5 • Juli 2026
                 </span>
             </div>
         </header>
@@ -509,6 +509,193 @@
                     engine: { spec: "5.7L V8 / 3.5L V6 Twin-Turbo", capacity: "7.5 Liter", sae: "Shell Helix Ultra 5W-30 / Mobil 1 0W-40" },
                     transmission: { spec: "8-Speed / 10-Speed AT", capacity: "10.5 Liter (Kuras)", sae: "Toyota ATF WS / Valvoline L&HD ATF" },
                     differential: { spec: "4WD", capacity: "Depan 1.4L / Belakang 4.2L", sae: "API GL-5 75W-85" }
+                },
+
+                // ================== LEXUS MASTER DATA v2.5 (Passenger • SUV • Hybrid • F Sport) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (ATF WS / Direct Shift / Hybrid) & gardan AWD/4WD.
+                {
+                    model: "CT200h",
+                    year: "2011 - 2022",
+                    engine: { spec: "1.8L 2ZR-FXE Hybrid", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,0 Liter", sae: "Lexus/Toyota Hybrid Transaxle Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "UX200",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L M20A-FKS Dynamic Force", capacity: "4,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Direct Shift CVT (Launch Gear)", capacity: "6,9 Liter", sae: "Toyota Genuine CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "UX250h AWD",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L M20A-FXS Hybrid (e-Four)", capacity: "4,2 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,0 Liter", sae: "Lexus Hybrid Transaxle Fluid" },
+                    differential: { spec: "AWD (e-Four)", capacity: "Belakang: 0,4 Liter", sae: "Toyota ATF WS" }
+                },
+                {
+                    model: "IS300",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.0L 8AR-FTS Turbo / 2.5L 2GR-FSE V6", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,5 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "IS350",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.5L 2GR-FKS V6 D-4S", capacity: "6,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD / AWD", capacity: "AWD Belakang: 0,5 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "ES250",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.5L A25A-FKS Dynamic Force", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "7,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "ES300h",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.5L A25A-FXS Hybrid", capacity: "4,5 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,0 Liter", sae: "Lexus Hybrid Transaxle Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "GS300",
+                    year: "2016 - 2020",
+                    engine: { spec: "2.0L 8AR-FTS Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "GS450h",
+                    year: "2012 - 2018",
+                    engine: { spec: "3.5L 2GR-FXS Hybrid V6", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Hybrid Multi-Stage Transmission", capacity: "4,0 Liter", sae: "Lexus Hybrid Fluid" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "LS500",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.5L V35A-FTS Twin-Turbo V6", capacity: "6,1 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "10-Speed AT (Direct Shift)", capacity: "9,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD / AWD", capacity: "AWD Belakang: 0,7 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "LS500h",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.5L 8GR-FXS Hybrid V6", capacity: "6,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Hybrid Multi-Stage Transmission", capacity: "5,0 Liter", sae: "Lexus Hybrid Multi-Stage Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "AWD Belakang: 0,7 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "NX250",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.5L A25A-FKS Dynamic Force", capacity: "4,5 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "7,0 Liter", sae: "Toyota Direct Shift ATF" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "NX350 AWD",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.4L T24A-FTS Turbo Hybrid", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT (Direct Shift)", capacity: "7,5 Liter", sae: "Toyota Direct Shift ATF" },
+                    differential: { spec: "AWD", capacity: "0,6 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "NX350h AWD",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.5L A25A-FXS Hybrid (e-Four)", capacity: "4,5 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,0 Liter", sae: "Lexus Hybrid Fluid" },
+                    differential: { spec: "AWD (e-Four)", capacity: "0,6 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "RX350",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "2.4L T24A-FTS Turbo / 2.5L A25A-FKS", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "RX350 AWD",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "2.4L T24A-FTS Turbo (Direct4 AWD)", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "AWD (Direct4)", capacity: "0,8 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "RX500h",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "2.4L T24A-FTS Hybrid Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT (Hybrid Direct Shift)", capacity: "4,0 Liter", sae: "Lexus Hybrid Fluid" },
+                    differential: { spec: "AWD (Direct4 + e-Axle)", capacity: "0,8 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "GX460",
+                    year: "2010 - 2023",
+                    engine: { spec: "4.6L 1UR-FE V8", capacity: "7,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT", capacity: "10,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "4WD Full-Time", capacity: "Belakang 1,5L / Transfer 1,5L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "LX570",
+                    year: "2008 - 2021",
+                    engine: { spec: "5.7L 3UR-FE V8", capacity: "7,9 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "11,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "4WD Full-Time", capacity: "Belakang 1,6L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "LX600",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "3.5L V35A-FTS Twin-Turbo V6", capacity: "7,7 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "10-Speed AT", capacity: "11,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "4WD Full-Time", capacity: "Belakang 1,6L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "LC500",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "5.0L 2UR-GSE V8 (Performance)", capacity: "8,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "10-Speed AT (Direct Shift)", capacity: "8,0 Liter", sae: "Toyota Direct Shift ATF" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "RC350",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "3.5L 2GR-FKS V6 D-4S", capacity: "6,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD / AWD", capacity: "Belakang 1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "RC F",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "5.0L 2UR-GSE V8 (Performance)", capacity: "8,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD (Torsten LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "IS500 F Sport",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "5.0L 2UR-FSE V8 (Performance)", capacity: "8,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD (Torsten LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS LEXUS ----------
+                {
+                    model: "📖 Referensi Standar Oli Lexus (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-30 (API SP) • Hybrid: 0W-16 (CT200h, UX250h, ES300h, NX350h, RX500h, LS500h)", capacity: "Toyota Genuine Motor Oil + ILSAC GF-6A/6B", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B • V8 Performance & F Sport: 0W-20 High Performance" },
+                    transmission: { spec: "Toyota ATF WS (IS, ES, RX, GX, LX, RC, GS): 7-11L • Direct Shift ATF (NX250, NX350, LC500): 7-8L", capacity: "Hybrid Transaxle Fluid (CT200h, UX250h, ES300h, NX350h, RX500h): 4-5L • Interval 40.000-60.000 km", sae: "Hybrid Multi-Stage Transmission Fluid (GS450h, LS500h): 4-5L • Direct Shift CVT Fluid FE (UX200): 6,9L" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 (GL-5) — NX AWD, RX AWD, GX460, LX570/600, LC500, RC350 • 75W-85: 0,6-1,6L", capacity: "Kapasitas: NX AWD 0,6L • RX AWD 0,8L • GX460 1,5L • LX570/600 1,6L • LC500 1,0L • RC F / IS500 1,2L", sae: "LSD: SAE 75W-140 GL-5 LSD (RC F, IS500 F Sport, LC500 Performance) • Transfer Case: GX460 1,5L / LX570 1,8L / LX600 1,8L (SAE 75W-90 GL-5)" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Lexus",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 80.000 km • Busi Iridium 100.000 km", capacity: "Interval ATF WS / Direct Shift: 40.000-60.000 km • Hybrid Fluid: 40.000 km", sae: "Per teknologi: Dynamic Force 0W-16 • Hybrid 0W-16 • V6 Twin-Turbo 0W-20 • V8 Performance 0W-20 • AWD 0W-20 • F Sport 0W-20" },
+                    transmission: { spec: "Master Mesin: Dynamic Force (A25A-FKS/FXS, M20A-FKS/FXS), GR Series (2GR-FKS/FSE), V35A (V35A-FTS Twin-Turbo)", capacity: "UR Series (2UR-GSE Performance, 3UR-FE, 2UR-FSE), 1UR-FE • Turbo: 8AR-FTS, T24A-FTS", sae: "Hybrid Series (2AR-FXE, A25A-FXS, M20A-FXS, 8GR-FXS) — Teknologi e-Four & Direct4 AWD" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/RWD/AWD/Hybrid AWD/Direct4)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Lexus" }
                 }
             ],
             "Honda": [
@@ -1423,6 +1610,151 @@
                     engine: { spec: "2.0L 4-Cyl / 3.0L 6-Cyl", capacity: "5.2L - 6.5L", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 (BMW LL-17 FE)" },
                     transmission: { spec: "8-Speed ZF", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "RWD / xDrive", capacity: "1.0 Liter", sae: "Fuchs TITAN SINTOPOID FE 75W-85" }
+                },
+
+                // ================== BMW MASTER DATA v2.5 (Passenger • M Series • SUV • Performance) ==================
+                // Data presisi per model: SAE + BMW Longlife (LL), kapasitas oli, transmisi (ZF Lifeguard/DCT/Manual) & gardan xDrive/M Differential.
+                {
+                    model: "116i (F20)",
+                    year: "2015 - 2021",
+                    engine: { spec: "1.5L B38 3-Silinder Turbo", capacity: "4,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP45)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "118i",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.5L B38 3-Silinder Turbo", capacity: "4,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP45)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "120i",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,0 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "320i (F30)",
+                    year: "2012 - 2019",
+                    engine: { spec: "2.0L N20 / B48 4-Silinder Turbo", capacity: "5,0 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP45)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "330i (G20)",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "520i (G30)",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "530i",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "730Li",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.0L B58 Inline-6 Turbo", capacity: "6,5 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "9,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,2 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "X1 sDrive",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.5L B38 / 2.0L B48 Turbo", capacity: "5,0 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "X3 xDrive",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "AWD (xDrive)", capacity: "Transfer 0,8L / Belakang 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "X5 xDrive",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L B58 Inline-6 Turbo / 4.4L V8", capacity: "6,5 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "9,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "AWD (xDrive)", capacity: "Transfer 0,9L / Belakang 0,9L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "X7 xDrive",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L B58 Inline-6 / 4.4L V8", capacity: "6,5 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "9,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "AWD (xDrive)", capacity: "Transfer 0,9L / Belakang 0,9L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "M2",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.0L N55 / S55 Inline-6 Twin-Turbo (M)", capacity: "6,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "7-Speed M DCT", capacity: "7,5 Liter", sae: "BMW M DCT Fluid" },
+                    differential: { spec: "RWD (M Differential LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "M3 Competition",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "3.0L S58 Inline-6 Twin-Turbo (M)", capacity: "6,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP M)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 (M)" },
+                    differential: { spec: "RWD / M xDrive (LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "M4 Competition",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "3.0L S58 Inline-6 Twin-Turbo (M)", capacity: "6,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP M)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 (M)" },
+                    differential: { spec: "RWD / M xDrive (LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "M5",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "4.4L S63 V8 Twin-Turbo (M)", capacity: "9,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP M)", capacity: "10,0 Liter", sae: "ZF Lifeguard 8 (M)" },
+                    differential: { spec: "M xDrive (LSD)", capacity: "1,5 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "M8",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "4.4L S63 V8 Twin-Turbo (M)", capacity: "9,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP M)", capacity: "10,0 Liter", sae: "ZF Lifeguard 8 (M)" },
+                    differential: { spec: "M xDrive (LSD)", capacity: "1,5 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "Z4",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L B48 / 3.0L B58 Turbo (Roadster)", capacity: "5,25 Liter", sae: "0W-20 (BMW LL-17 FE+)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS BMW ----------
+                {
+                    model: "📖 Referensi Standar Oli BMW (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "BMW Longlife: LL-01 (5W-30), LL-04 (0W-30/5W-30), LL-12 FE (0W-30), LL-17 FE+ (0W-20), M TwinPower Turbo (0W-30)", capacity: "Bensin Modern: 0W-20/0W-30 (BMW LL-17 FE+/LL-04) • Diesel N57/B57: 5W-30/0W-30 LL-04", sae: "API SP • ACEA C3 • ACEA A3/B4 • BMW Approved Longlife — per kode mesin (B38/B48/B58/N-series/S-series)" },
+                    transmission: { spec: "ZF Lifeguard 6 (BMW E-Series lama) • ZF Lifeguard 8 (F/G/X-Series, M Performance): 8-10L • 60.000-80.000 km", capacity: "BMW M DCT Fluid (M2, M3, M4, M5 tertentu): low viscosity, high temp protection", sae: "Manual Gear Oil 75W-80/85/90 GL-4 (M3 Manual, Z4 Manual, 1-Series Manual) — Genuine BMW MTF" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 75W-140 (GL-5) — X-Series xDrive, M Performance, M Series, Rear Differential", capacity: "BMW M Differential Fluid (M2/M3/M4/M5/M8): SAE 75W-140 GL-5 LSD — M2/M3/M4 1,2L, M5/M8 1,5L", sae: "Transfer Case xDrive: BMW Transfer Case Fluid / ATC Transfer Oil — kapasitas 0,7-1,0L • Interval 60.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin BMW",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000-15.000 km (CBS Condition Based Service) • Coolant 80.000 km", capacity: "Interval Matic (ZF Lifeguard) / DCT / Manual / Gardan / Transfer Case: 60.000 km", sae: "Per teknologi: TwinPower Turbo 0W-30 • M TwinPower Turbo 0W-30 • EfficientDynamics 0W-20 • xDrive 0W-30 • BMW Diesel 5W-30 • Hybrid Plug-in 0W-20" },
+                    transmission: { spec: "Master Mesin: B-Series (B38/B46/B48/B57/B58), N-Series (N13/N20/N46/N52/N54/N55/N57)", capacity: "S-Series BMW M (S55/S58/S63/S65/S85) • Twin-Turbo & TwinPower Turbo", sae: "Reset indikator servis CBS (Condition Based Service) • OBD-II live data • Repair manual • TSB • Wiring diagram pelumasan" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/BMW LL Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (RWD/AWD xDrive)", sae: "Prosedur reset CBS, ECU parameter, repair manual, TSB — basis modul servis otomatis BMW" }
                 }
             ],
             "MINI": [
@@ -1486,6 +1818,151 @@
                     engine: { spec: "2.0L TFSI / 3.0L V6 TDI", capacity: "5.2L - 8.2L", sae: "Mobil 1 0W-40 / Fuchs TITAN GT1 PRO C-3" },
                     transmission: { spec: "S-Tronic / Tiptronic", capacity: "6.0 - 9.0 Liter", sae: "Fuchs FFL-2 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "Quattro", capacity: "1.0 Liter", sae: "API GL-5 75W-90" }
+                },
+
+                // ================== AUDI MASTER DATA v2.5 (Passenger • SUV • Performance • Hybrid • Quattro) ==================
+                // Data presisi per model: SAE + VW Approval, kapasitas oli, transmisi (S-Tronic/Tiptronic/Multitronic) & gardan Quattro/RS.
+                {
+                    model: "Audi A1 1.4 TFSI",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.4L EA211 TFSI Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ200)", capacity: "7,0 Liter", sae: "Audi/VW S-Tronic Fluid (Gear Oil)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Audi A3 1.4 TFSI",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.4L EA211 TFSI Turbo (COD)", capacity: "4,3 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ200)", capacity: "7,0 Liter", sae: "Audi/VW S-Tronic Fluid (Gear Oil)" },
+                    differential: { spec: "FWD / Quattro", capacity: "Quattro Belakang: 0,8L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A4 2.0 TFSI",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3B TFSI Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,2 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "FWD / Quattro (Ultra)", capacity: "Quattro Belakang: 0,9L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A5 2.0 TFSI",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3B TFSI Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,2 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro (Ultra)", capacity: "Belakang 0,9L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A6 2.0 TFSI",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3B TFSI Turbo", capacity: "5,2 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,5 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro (Ultra)", capacity: "Belakang 1,0L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A7",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L EA839 V6 TFSI Turbo Mild-Hybrid", capacity: "6,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,5 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro", capacity: "Belakang 1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A8",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.0L EA839 V6 TFSI Turbo Mild-Hybrid", capacity: "7,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro", capacity: "Belakang 1,2 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q2",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.4L EA211 TFSI Turbo", capacity: "4,3 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ200)", capacity: "7,0 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "FWD / Quattro", capacity: "Quattro Belakang: 0,8L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q3",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3B TFSI Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ381)", capacity: "7,2 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro", capacity: "Belakang 0,8 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q5 Quattro",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3 TFSI Turbo", capacity: "5,2 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,5 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro (Ultra)", capacity: "Belakang 1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q7 Quattro",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.0L EA839 V6 TFSI / 3.0L EA897 V6 TDI", capacity: "6,8 Liter", sae: "0W-20 Bensin (VW 508.00) / 5W-30 TDI (VW 507.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro", capacity: "Belakang 1,2L / Transfer 0,9L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q8 Quattro",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L EA839 V6 TFSI Turbo Mild-Hybrid", capacity: "6,8 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro", capacity: "Belakang 1,2L / Transfer 0,9L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi TT",
+                    year: "2015 - 2023",
+                    engine: { spec: "2.0L EA888 Gen 3 TFSI Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "6-Speed S-Tronic (DQ250)", capacity: "7,0 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro", capacity: "Belakang 0,8 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi RS3",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.5L DAZA 5-Silinder TFSI Turbo (Performance)", capacity: "5,7 Liter", sae: "0W-30 (API SP / ACEA C3 / VW 504.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ500)", capacity: "7,5 Liter", sae: "Audi S-Tronic Fluid (Performance)" },
+                    differential: { spec: "Quattro Sport", capacity: "Belakang 1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi RS4",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.9L EA839 V6 Bi-Turbo (Performance)", capacity: "6,0 Liter", sae: "0W-30 (API SP / ACEA C3 / VW 504.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro Sport", capacity: "Belakang 1,2 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi RS5",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.9L EA839 V6 Bi-Turbo (Performance)", capacity: "6,0 Liter", sae: "0W-30 (API SP / ACEA C3 / VW 504.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro Sport", capacity: "Belakang 1,2 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi RS6",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "4.0L EA825 V8 Bi-Turbo (Performance)", capacity: "9,0 Liter", sae: "0W-30 (API SP / ACEA C3 / VW 504.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,5 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro Sport (Sport Differential)", capacity: "Belakang 1,5 Liter", sae: "SAE 75W-140 (GL-5)" }
+                },
+                {
+                    model: "Audi R8 V10",
+                    year: "2016 - 2023",
+                    engine: { spec: "5.2L CEUC V10 FSI (Supercar)", capacity: "10,0 Liter", sae: "5W-40 (API SP / ACEA A3/B4 / VW 511.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL800)", capacity: "10,0 Liter", sae: "Audi R8 S-Tronic Fluid" },
+                    differential: { spec: "Quattro Performance (AWD)", capacity: "Belakang 1,6 Liter", sae: "SAE 75W-140 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS AUDI ----------
+                {
+                    model: "📖 Referensi Standar Oli Audi (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "VW Approval: VW 502.00 (5W-40), VW 504.00 (0W-30), VW 507.00 (5W-30 Diesel), VW 508.00 (0W-20), VW 509.00 (0W-20 Diesel), VW 511.00 (5W-40 RS/R8)", capacity: "TFSI (Bensin): 0W-20/0W-30/5W-40 • TDI (Diesel): 5W-30/0W-20 (EA288, EA897, V6 TDI)", sae: "API SP • ACEA C3 • ACEA A3/B4 • ACEA C5 (VW 508.00) • VW/Audi Approval resmi" },
+                    transmission: { spec: "S-Tronic Dual Clutch (A3, A4, A5, TT, RS3, Q3, Q5): 7-7,5L • Interval 60.000 km", capacity: "Tiptronic ZF 8HP (A6, A7, A8, Q7, Q8, RS4, RS5, RS6): 8-10L • Multitronic CVT (A4/A6 gen lama): ±7L", sae: "Manual Gear Oil 75W-80/90 GL-4/GL-5 (TT Manual, A3 Manual) • R8: S-Tronic Fluid 10L" },
+                    differential: { spec: "Gardan: SAE 75W-90 / 75W-140 (GL-5) — Audi Quattro, RS Series, SUV AWD", capacity: "Kapasitas: Q3 0,8L • Q5 1,0L • Q7/Q8 1,2L • RS6 1,5L • R8 1,6L", sae: "Transfer Case Quattro: Audi Transfer Gear Oil SAE 75W-90 GL-5 — kapasitas 0,7-1,2L • Interval 60.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Audi",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000-15.000 km • Coolant 80.000 km • Busi Iridium 60.000 km", capacity: "Interval S-Tronic / Tiptronic / Multitronic / Gardan / Transfer Case: 60.000 km", sae: "Per teknologi: TFSI 0W-20 (VW 508.00) • TDI 5W-30 (VW 507.00) • Quattro 0W-20 • RS Performance 0W-30 (VW 504.00) • R8 V10 5W-40 (VW 511.00) • Mild Hybrid 0W-20" },
+                    transmission: { spec: "Master Mesin: TFSI (CZEA, CZDA, CYRB, EA888 Gen 3/4), TDI (EA288, EA897, V6 TDI)", capacity: "Performance (DAZA RS3, CEUC R8, DCBA RS6, DKMB RS5, EA839 V6 Bi-Turbo)", sae: "S-Tronic dual clutch fluid low viscosity • Tiptronic ZF Lifeguard 8 high temp protection" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas drain & fill + overhaul, SAE/API/ACEA/VW Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/AWD Quattro/Performance AWD)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Audi" }
                 }
             ],
             "Porsche": [

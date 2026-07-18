@@ -2,6 +2,28 @@
 Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
 Support by **DRCARDATA**.
 
+## Versi 2.5 — Update Juli 2026
+
+### 🚗 Master Data Lexus, BMW & Audi (Premium • Performance • Quattro/xDrive)
+*(Daihatsu sudah lengkap sejak v2.4 — data identik, tidak diduplikasi.)*
+
+**Lexus** — 24 model dengan spesifikasi presisi (SAE + API SP + kapasitas):
+- **Passenger/Hybrid:** CT200h, UX200, UX250h AWD, IS300, IS350, ES250, ES300h, GS300, GS450h, LS500, LS500h
+- **SUV:** NX250, NX350 AWD, NX350h AWD, RX350, RX350 AWD, RX500h, GX460, LX570, LX600
+- **Performance/F Sport:** LC500, RC350, RC F, IS500 F Sport
+- **Referensi:** Standar Oli (ATF WS / Direct Shift / Hybrid Transaxle) + Interval Servis & Master Kode Mesin (Dynamic Force A25A/M20A, GR, V35A, UR, Hybrid)
+
+**BMW** — 18 model dengan spesifikasi presisi (SAE + BMW Longlife LL + kapasitas):
+- **Passenger:** 116i, 118i, 120i, 320i, 330i, 520i, 530i, 730Li, Z4
+- **SUV (xDrive):** X1 sDrive, X3 xDrive, X5 xDrive, X7 xDrive
+- **M Performance:** M2, M3 Competition, M4 Competition, M5, M8
+- **Referensi:** Standar Oli (ZF Lifeguard 8 / M DCT / M Differential 75W-140 LSD) + Interval Servis & Master Kode Mesin (B/N/S-Series, CBS reset)
+
+**Audi** — 18 model dengan spesifikasi presisi (SAE + VW Approval + kapasitas):
+- **Passenger/SUV:** A1, A3, A4, A5, A6, A7, A8, Q2, Q3, Q5 Quattro, Q7 Quattro, Q8 Quattro, TT
+- **RS Performance:** RS3, RS4, RS5, RS6, R8 V10 (Supercar)
+- **Referensi:** Standar Oli (S-Tronic / Tiptronic ZF / Multitronic, VW 502/504/507/508/511) + Interval Servis & Master Kode Mesin (TFSI EA888/EA839, TDI EA288/EA897, RS/R8 DAZA/CEUC/DCBA)
+
 ## Versi 2.4 — Update Juli 2026
 
 ### 🚗 Master Data Suzuki & Daihatsu (Indonesia • Jepang • India • Malaysia)
