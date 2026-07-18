@@ -84,7 +84,7 @@
                 </span>
                 <span class="inline-flex items-center gap-1.5 bg-red-600/10 border border-red-500/30 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-red-400">
                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.366-2.446a1 1 0 00-1.175 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.951-.69l1.286-3.957z"></path></svg>
-                    Update v2.2 • Juli 2026
+                    Update v2.3 • Juli 2026
                 </span>
             </div>
         </header>
@@ -895,6 +895,179 @@
                     engine: { spec: "3.8L Twin-Turbo V6 (VR38DETT)", capacity: "5.0 Liter", sae: "Mobil 1 FS 0W-40 (OEM Endorsed)" },
                     transmission: { spec: "6-Speed Dual Clutch (GR6)", capacity: "9.5 Liter", sae: "Pentosin FFL-4 / Nissan GR6 Fluid" },
                     differential: { spec: "AWD ATTESA E-TS", capacity: "Depan 0.6L / Belakang 1.5L", sae: "Castrol Syntrax / API GL-5 75W-140" }
+                },
+
+                // ================== NISSAN MASTER DATA v2.3 (Asia • Jepang • Eropa • Amerika) ==================
+                // Data presisi per model: SAE + API SP/CK-4, kapasitas oli, transmisi (CVT NS-3/ATF Matic S/Matic D) & gardan AWD/4WD.
+                {
+                    model: "March K13 1.2",
+                    year: "2010 - 2020",
+                    engine: { spec: "1.2L HR12DE 3-Silinder", capacity: "3,1 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "7,1 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "March 1.5",
+                    year: "2010 - 2020",
+                    engine: { spec: "1.5L HR15DE 4-Silinder", capacity: "3,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Livina VL",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.5L HR15DE 4-Silinder", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,2 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Grand Livina",
+                    year: "2007 - 2019",
+                    engine: { spec: "1.5L HR15DE / 1.8L MR18DE", capacity: "3,4 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT", capacity: "7,0 Liter", sae: "Nissan ATF Matic D" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Magnite Turbo",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.0L HRA0 Turbo 3-Silinder", capacity: "3,4 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Serena C27",
+                    year: "2016 - 2022",
+                    engine: { spec: "2.0L MR20DD Direct Injection", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,4 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Serena e-Power",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.2L HR12DDT e-Power (Series Hybrid)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "e-Power Drive Unit", capacity: "Khusus", sae: "Nissan e-Power Drive Unit Fluid" },
+                    differential: { spec: "FWD / e-4ORCE AWD", capacity: "AWD: Genuine PHEV Fluid", sae: "Nissan e-4ORCE Drive Fluid" }
+                },
+                {
+                    model: "X-Trail T31",
+                    year: "2007 - 2013",
+                    engine: { spec: "2.0L MR20DE / 2.5L QR25DE", capacity: "4,6 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "8,0 Liter", sae: "Nissan CVT Fluid NS-2" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,55 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "X-Trail T32",
+                    year: "2013 - 2021",
+                    engine: { spec: "2.0L MR20DD / 2.5L QR25DE", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,2 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,55 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "X-Trail T33 e-Power",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L VC-Turbo e-Power (Series Hybrid)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Hybrid Drive Unit (e-4ORCE)", capacity: "Khusus", sae: "Nissan Hybrid Drive Fluid" },
+                    differential: { spec: "e-4ORCE AWD", capacity: "0,55 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Terra 2.5 Diesel",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.5L YD25DDTi Turbo Diesel", capacity: "6,9 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "7-Speed AT / 6-MT", capacity: "9,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,3L / Transfer 1,7L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Navara NP300",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "2.5L YD25DDTi Turbo Diesel", capacity: "7,0 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "7-Speed AT / 6-MT", capacity: "9,5 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,4L / Transfer 1,8L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Patrol Y62",
+                    year: "2010 - Sekarang",
+                    engine: { spec: "5.6L VK56VD V8 / 4.0L VQ40DE V6", capacity: "6,9 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "7-Speed AT", capacity: "10,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "4WD (LSD)", capacity: "Belakang 1,5L / Transfer 2,0L", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+                {
+                    model: "Teana J32",
+                    year: "2008 - 2014",
+                    engine: { spec: "2.5L VQ25DE / 3.5L VQ35DE V6", capacity: "4,6 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,9 Liter", sae: "Nissan CVT Fluid NS-2" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sylphy",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "1.8L MRA8DE / 1.6L HR16DE", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Altima",
+                    year: "2013 - Sekarang",
+                    engine: { spec: "2.0L MR20DD / 2.5L QR25DE", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,7 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Juke",
+                    year: "2011 - 2021",
+                    engine: { spec: "1.5L HR15DE / 1.6L MR16DDT Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic) / 6-MT", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,6 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Murano AWD",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "3.5L VQ35DD V6", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "8,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "AWD", capacity: "0,7 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Pathfinder AWD",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "3.5L VQ35DD V6", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT", capacity: "9,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "AWD (Intelligent)", capacity: "Belakang 1,0L / Transfer 1,5L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "GT-R R35 (VR38DETT)",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "3.8L Twin-Turbo V6 (VR38DETT)", capacity: "5,1 Liter", sae: "0W-40 (API SP / Mobil 1 FS OEM)" },
+                    transmission: { spec: "6-Speed Dual Clutch (GR6)", capacity: "9,5 Liter", sae: "Nissan GR6 Transmission Fluid" },
+                    differential: { spec: "AWD ATTESA E-TS (LSD)", capacity: "Depan 0,6L / Belakang 1,5L", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "Frontier",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "3.8L VQ38DD V6 / 2.5L YD25 Diesel", capacity: "5,0 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT", capacity: "9,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,0L / Transfer 1,7L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Armada",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "5.6L VK56VD V8", capacity: "6,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "7-Speed AT / 9-Speed AT", capacity: "10,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,5L / Transfer 1,5L", sae: "SAE 75W-90 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS NISSAN ----------
+                {
+                    model: "📖 Referensi Standar Oli Nissan (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-30 / 0W-40 / 5W-40 (API SP)", capacity: "Diesel — SAE 5W-30 / 5W-40 / 10W-30 / 15W-40 (Terra, Navara, Patrol, Frontier)", sae: "API SP • ILSAC GF-6A/6B • ACEA A5/B5 • C3 (Bensin) • API CK-4 • CJ-4 • ACEA C3/E7 (Diesel)" },
+                    transmission: { spec: "CVT NS-1 (gen awal) • CVT NS-2 (X-Trail T31, Teana, Serena awal, Murano awal)", capacity: "CVT NS-3 (Livina, Magnite, X-Trail T32, Sylphy, Serena C27, Altima, Juke, March, Murano): 7-8L • 40.000 km", sae: "ATF Matic D (Grand Livina, gen lama) • ATF Matic S (Terra, Navara, Pathfinder, Patrol, Frontier, Armada): 9-10L • Manual 75W-80/85/90 GL-4/GL-5" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 80W-90 / 75W-140 (GL-5) — X-Trail AWD, Terra, Navara, Patrol, Pathfinder, Murano, Armada, Frontier", capacity: "Transfer Case 4WD: SAE 75W-90 GL-5 — Terra 1,7L / Navara 1,8L / Patrol 2,0L / Pathfinder 1,5L / Frontier 1,7L", sae: "LSD: SAE 75W-140 GL-5 LSD (GT-R R35, Patrol Offroad, 370Z, Navara PRO-4X) — Interval 40.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Nissan",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km (semua mesin bensin, diesel, hybrid, e-Power)", capacity: "Interval CVT/Matic/Manual/Gardan/Transfer/Hybrid Drive: 40.000 km", sae: "CVT NS-3: Low Viscosity Genuine Fluid • Temperatur operasi tinggi • Interval 40.000 km" },
+                    transmission: { spec: "Master Mesin Bensin: HR Series (HR10/12/15/16), MR Series (MR16/18/20), QR Series (QR20/25)", capacity: "VQ Series (VQ25/35/37), VK Series (VK45/56), VR Series (VR30DDTT / VR38DETT GT-R)", sae: "Diesel YD Series (YD22/25) • Hybrid: e-Power Drive System & Hybrid Transaxle System" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas drain & fill + overhaul, SAE/API/ACEA/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant (Long Life Coolant), tipe penggerak (FWD/RWD/AWD/4WD/e-Power)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis untuk e-Power & standar" }
                 }
             ],
             "Infiniti": [

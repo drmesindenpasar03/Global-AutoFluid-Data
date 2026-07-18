@@ -2,6 +2,19 @@
 Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
 Support by **DRCARDATA**.
 
+## Versi 2.3 — Update Juli 2026
+
+### 🚗 Master Data Nissan (Asia • Jepang • Eropa • Amerika)
+
+**Nissan** — 22 model dengan spesifikasi presisi (SAE + API SP/CK-4 + kapasitas):
+- **City/MPV/Hatchback:** March K13 1.2, March 1.5, Livina VL, Grand Livina, Magnite Turbo, Sylphy
+- **MPV/Hybrid e-Power:** Serena C27, Serena e-Power
+- **SUV:** X-Trail T31, X-Trail T32, X-Trail T33 e-Power, Juke, Murano AWD
+- **Pick-up/SUV Diesel/4WD:** Terra 2.5 Diesel, Navara NP300, Patrol Y62, Frontier, Pathfinder AWD, Armada
+- **Sedan/Classic:** Teana J32, Altima
+- **Performance:** GT-R R35 (VR38DETT, GR6 Transmission + LSD)
+- **Referensi:** Standar Oli (CVT NS-1/NS-2/NS-3, ATF Matic D/S, Transfer Case, LSD) + Interval Servis & Master Kode Mesin (HR/MR/QR/VQ/VK/VR-Series, Diesel YD, Hybrid e-Power)
+
 ## Versi 2.2 — Update Juli 2026
 
 ### 🚗 Master Data Honda & Mitsubishi (Indonesia & Global)
