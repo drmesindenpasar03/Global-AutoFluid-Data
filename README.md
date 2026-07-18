@@ -2,6 +2,17 @@
 Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
 Support by **DRCARDATA**.
 
+## Versi 2.1 — Update Juli 2026
+
+### 🚗 Master Data Toyota (Indonesia & Global)
+Penambahan 19 model Toyota dengan spesifikasi presisi (SAE + API/ILSAC/CK-4 + kapasitas) sesuai master data pabrikan:
+- **City Car / LMPV:** Agya 1.2, Avanza 1.3 & 1.5, Veloz, Raize Turbo, Rush, Yaris
+- **Hybrid:** Yaris Cross Hybrid, Innova Zenix Hybrid, Camry Hybrid, Corolla Cross Hybrid
+- **Diesel / SUV / Pikap:** Innova Reborn Diesel, Fortuner Diesel, Hilux Diesel, Land Cruiser 300
+- **Premium:** Alphard 2.5 & 3.5
+- **GR Performance:** GR86, Supra GR
+- **Referensi:** 2 entri panduan (Standar Oli Mesin/Transmisi/Gardan + Interval Servis & 1.000+ Master Kode Mesin, basis modul **DrCARDATA-PRO**)
+
 ## Versi 2.0 — Update Juli 2026
 
 ### ✨ Fitur Baru
