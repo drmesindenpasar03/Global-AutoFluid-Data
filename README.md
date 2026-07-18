@@ -2,6 +2,25 @@
 Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
 Support by **DRCARDATA**.
 
+## Versi 2.4 — Update Juli 2026
+
+### 🚗 Master Data Suzuki & Daihatsu (Indonesia • Jepang • India • Malaysia)
+
+**Suzuki** — 17 model dengan spesifikasi presisi (SAE + API SP + kapasitas):
+- **City/Hatchback/Kei:** Karimun Wagon R 1.0, Karimun Estilo, Ignis 1.2, Baleno Hatchback, Swift 1.2, Ciaz, S-Presso
+- **MPV/Hybrid (SHVS):** Ertiga Hybrid, XL7 Hybrid, Fronx Hybrid
+- **Utility/Komersial:** APV (RWD), Carry Pickup (RWD)
+- **SUV/4WD:** Jimny 3 Door, Jimny 5 Door, Grand Vitara Hybrid (AWD), Vitara Brezza, Escudo 4WD
+- **Referensi:** Standar Oli (ATF 3317/Manual Gear Oil, Transfer Case, Suzuki ECSTAR) + Interval Servis & Master Kode Mesin (K/R/M/G/F-Series, Smart Hybrid SHVS)
+
+**Daihatsu** — 19 model dengan spesifikasi presisi (SAE + API SP + kapasitas):
+- **City/LCGC:** Ayla 1.0, Ayla 1.2, Sigra 1.0, Sigra 1.2, Sirion
+- **Hatchback/Urban:** Rocky 1.0 Turbo (D-CVT), Rocky 1.2 (D-CVT)
+- **SUV/4WD:** Terios (RWD/4WD), Taft 4WD
+- **Komersial/Van:** Luxio, Gran Max 1.3, Gran Max 1.5, Zebra, Hijet Truck, Hijet Cargo
+- **Kei Car Jepang:** Copen, Move, Tanto, Mira
+- **Referensi:** Standar Oli (CVT Fluid FE / D-CVT Fluid FE / ATF WS / Manual Gear Oil) + Interval Servis & Master Kode Mesin (KR/WA/NR/K3/EF/KF/HD-Series)
+
 ## Versi 2.3 — Update Juli 2026
 
 ### 🚗 Master Data Nissan (Asia • Jepang • Eropa • Amerika)
