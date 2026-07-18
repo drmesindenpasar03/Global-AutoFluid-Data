@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Spesifikasi & Kapasitas Oli Kendaraan Global</title>
+    <title>Database Spesifikasi & Kapasitas Oli Kendaraan Global </title>
     <!-- Tailwind CSS untuk styling yang profesional dan responsif -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -36,6 +36,76 @@
         select::-webkit-scrollbar { width: 8px; }
         select::-webkit-scrollbar-track { background: #171717; }
         select::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 4px; }
+        
+        /* Hasil pencarian dengan scroll */
+        #searchResults::-webkit-scrollbar { width: 6px; }
+        #searchResults::-webkit-scrollbar-track { background: #0a0a0a; }
+        #searchResults::-webkit-scrollbar-thumb { background: #404040; border-radius: 3px; }
+
+        /* Elemen khusus cetak (disembunyikan di layar, tampil saat print) */
+        .print-only { display: none !important; }
+
+        /* ===== Optimasi Cetak / Simpan PDF — 1 Halaman A4 Rapi & Profesional ===== */
+        @media print {
+            @page { size: A4; margin: 8mm; }
+
+            html, body {
+                background: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body * { visibility: hidden !important; }
+            #resultContainer, #resultContainer * { visibility: visible !important; }
+
+            #resultContainer {
+                position: absolute !important;
+                left: 0 !important; top: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                font-size: 9.5px !important;
+                line-height: 1.35 !important;
+            }
+
+            /* Tampilkan elemen khusus cetak (mis. "Support by DRCARDATA") */
+            #resultContainer .print-only { display: inline !important; }
+
+            /* Sembunyikan tombol cetak & elemen interaktif */
+            #resultContainer button { display: none !important; }
+
+            /* Header kendaraan — ringkas & profesional */
+            #resultContainer > div:first-of-type {
+                padding: 9px 14px !important;
+                border-radius: 10px 10px 0 0 !important;
+            }
+            #carTitle { font-size: 15px !important; line-height: 1.2 !important; }
+            #carYear { font-size: 9px !important; margin-top: 2px !important; }
+
+            /* Grid spesifikasi — rapat tanpa celah, 2x2 rapi */
+            #resultContainer > div:nth-of-type(2) { gap: 1px !important; }
+            #resultContainer > div:nth-of-type(2) > div {
+                padding: 9px 12px !important;
+                break-inside: avoid !important;
+            }
+            #resultContainer > div:nth-of-type(2) > div > div:first-child { margin-bottom: 8px !important; }
+            #resultContainer h3 { font-size: 11px !important; }
+            #resultContainer svg { width: 15px !important; height: 15px !important; }
+            #resultContainer .font-black.text-xl,
+            #resultContainer .text-xl { font-size: 13px !important; }
+
+            /* Catatan kaki — ringkas */
+            #resultContainer > div:last-of-type {
+                margin-top: 4px !important;
+                gap: 0 !important;
+            }
+            #resultContainer > div:last-of-type > div:first-child {
+                padding: 6px 10px !important;
+                font-size: 8px !important;
+                border-radius: 8px !important;
+            }
+
+            /* Paksa seluruh spesifikasi muat dalam 1 halaman */
+            #resultContainer { max-height: 100vh !important; overflow: hidden !important; }
+        }
     </style>
 </head>
 <body class="selection:bg-red-600 selection:text-white min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-[#050505] to-black relative">
@@ -57,10 +127,40 @@
                 Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
                 <br>Direkomendasikan oleh <span class="text-white font-semibold">FUCHS Titan</span>, <span class="text-red-500 font-semibold">Shell Helix™</span>, <span class="text-white font-semibold">Mobil 1™</span>, <span class="text-red-500 font-semibold">TotalEnergies</span> & <span class="text-white font-semibold">Valvoline™</span>.
             </p>
+
+            <!-- Stats & Version Bar -->
+            <div class="flex flex-wrap items-center justify-center gap-2 md:gap-3 mt-6">
+                <span class="inline-flex items-center gap-2 bg-neutral-900/80 border border-neutral-800 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-neutral-300">
+                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                    <span id="statBrands" class="text-white">0</span>&nbsp;Merk
+                </span>
+                <span class="inline-flex items-center gap-2 bg-neutral-900/80 border border-neutral-800 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-neutral-300">
+                    <svg class="w-3.5 h-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    <span id="statModels" class="text-white">0</span>&nbsp;Model
+                </span>
+                <span class="inline-flex items-center gap-1.5 bg-red-600/10 border border-red-500/30 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-red-400">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.366-2.446a1 1 0 00-1.175 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.951-.69l1.286-3.957z"></path></svg>
+                    Update v2.6 • Juli 2026
+                </span>
+            </div>
         </header>
 
         <!-- Form Pencarian -->
-        <div class="bg-neutral-900/80 backdrop-blur-md rounded-2xl p-6 mb-8 border border-neutral-800 glow-red">
+        <div class="bg-neutral-900/80 backdrop-blur-md rounded-2xl p-6 mb-8 border border-neutral-800 glow-red relative">
+            <!-- Pencarian Cepat -->
+            <div class="mb-5 relative">
+                <label for="searchInput" class="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest font-futuristic">Pencarian Cepat (Ketik Merk / Model)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 pointer-events-none">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </span>
+                    <input id="searchInput" type="text" autocomplete="off" placeholder="Contoh: Hilux, Innova, Tesla, Zeekr, GT-R, Lucid..." class="w-full rounded-xl pl-12 pr-10 p-4 bg-neutral-950 border border-neutral-700 text-white outline-none glow-red-focus transition-all duration-300 placeholder:text-neutral-600" oninput="performSearch()" onfocus="performSearch()">
+                    <button id="clearSearchBtn" type="button" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-red-500 p-1 transition-colors" aria-label="Bersihkan pencarian">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                    <div id="searchResults" class="hidden absolute z-30 left-0 right-0 top-full mt-2 bg-neutral-900 border border-neutral-700 rounded-xl shadow-2xl shadow-black/80 max-h-72 overflow-y-auto divide-y divide-neutral-800"></div>
+                </div>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="brandSelect" class="block text-xs font-bold text-red-500 mb-2 uppercase tracking-widest font-futuristic">Pilih Merk Mobil</label>
@@ -88,15 +188,15 @@
                     <p id="carYear" class="text-red-200 mt-1 font-mono text-sm tracking-widest">Tahun Produksi</p>
                 </div>
                 <div class="mt-4 md:mt-0 relative z-10 bg-black/40 backdrop-blur px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-red-500/30 text-red-100">
-                    Sistem Terkalibrasi
+                    Sistem Terkalibrasi<span class="print-only">&nbsp;• Support by DRCARDATA</span>
                 </div>
             </div>
 
             <!-- Grid Spesifikasi -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-px p-px bg-neutral-800 rounded-b-2xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-px p-px bg-neutral-800 rounded-b-2xl">
                 
                 <!-- Card Mesin -->
-                <div class="bg-neutral-900 p-6 lg:rounded-bl-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
+                <div class="bg-neutral-900 p-6 hover:bg-neutral-800 transition-colors duration-300 relative group">
                     <div class="absolute top-0 left-0 w-full h-1 bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="flex items-center mb-5">
                         <div class="p-2 bg-red-600/10 rounded-lg mr-3 border border-red-500/20 text-red-500">
@@ -146,7 +246,7 @@
                 </div>
 
                 <!-- Card Gardan -->
-                <div class="bg-neutral-900 p-6 lg:rounded-br-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
+                <div class="bg-neutral-900 p-6 md:rounded-bl-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
                     <div class="absolute top-0 left-0 w-full h-1 bg-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="flex items-center mb-5">
                         <div class="p-2 bg-neutral-800 rounded-lg mr-3 border border-neutral-700 text-neutral-400">
@@ -170,11 +270,49 @@
                     </div>
                 </div>
 
+                <!-- Card Servis & Sistem Tambahan -->
+                <div class="bg-neutral-900 p-6 md:rounded-br-2xl hover:bg-neutral-800 transition-colors duration-300 relative group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-amber-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="flex items-center mb-5">
+                        <div class="p-2 bg-amber-500/10 rounded-lg mr-3 border border-amber-500/20 text-amber-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-white font-futuristic">SERVIS &amp; COOLANT</h3>
+                    </div>
+                    <div class="space-y-4 text-sm md:text-base">
+                        <div>
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Interval Penggantian Oli</span>
+                            <span id="svcInterval" class="font-black text-amber-400 text-xl font-futuristic tracking-wider"></span>
+                        </div>
+                        <div class="pt-3 border-t border-neutral-800">
+                            <span class="block text-neutral-500 mb-1 text-xs uppercase tracking-wider">Kapasitas Coolant (Pendingin)</span>
+                            <span id="svcCoolant" class="font-semibold text-neutral-200"></span>
+                        </div>
+                        <div class="bg-black/50 p-3 rounded-lg border border-amber-900/50 mt-2 space-y-2">
+                            <span class="block text-amber-500 font-bold text-[10px] uppercase tracking-widest">Cairan Tambahan</span>
+                            <div class="flex justify-between items-center gap-3 text-xs">
+                                <span class="text-neutral-400">Rem (Brake Fluid)</span>
+                                <span id="svcBrake" class="font-bold text-white text-right"></span>
+                            </div>
+                            <div class="flex justify-between items-center gap-3 text-xs">
+                                <span class="text-neutral-400">AC Refrigerant</span>
+                                <span id="svcAc" class="font-bold text-white text-right"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             
-            <div class="mt-6 p-4 bg-neutral-900 border border-neutral-800 rounded-xl text-xs md:text-sm text-neutral-500 text-center leading-relaxed font-light">
-                *Kapasitas Volume Karter di atas adalah estimasi presisi data global pabrikan (termasuk filter oli).<br>
-                Selalu gunakan *dipstick* untuk memverifikasi level akhir setelah pengisian.
+            <div class="mt-6 flex flex-col md:flex-row gap-3 items-stretch">
+                <div class="flex-1 p-4 bg-neutral-900 border border-neutral-800 rounded-xl text-xs md:text-sm text-neutral-500 leading-relaxed font-light">
+                    *Kapasitas Volume Karter di atas adalah estimasi presisi data global pabrikan (termasuk filter oli).<br>
+                    Interval servis &amp; kapasitas coolant adalah <span class="text-neutral-300 font-medium">rekomendasi umum</span> — selalu rujuk manual pabrikan &amp; gunakan <em>dipstick</em> untuk verifikasi level.
+                </div>
+                <button onclick="printSpec()" class="shrink-0 inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs md:text-sm uppercase tracking-widest rounded-xl px-5 py-3 transition-colors duration-300 glow-red font-futuristic">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Cetak / Simpan PDF
+                </button>
             </div>
         </div>
         
@@ -252,6 +390,165 @@
                     engine: { spec: "3.3L Twin-Turbo Diesel / V8", capacity: "7.5 Liter", sae: "Mobil 1 0W-40 / Shell Helix Ultra Professional" },
                     transmission: { spec: "10-Speed AT", capacity: "10.6 Liter (Kuras)", sae: "Toyota ATF WS / Valvoline L&HD ATF" },
                     differential: { spec: "4WD Full-Time", capacity: "Depan 1.3L / Belakang 4.2L", sae: "API GL-5 75W-85" }
+                },
+                {
+                    model: "Hilux / Rush / Raize",
+                    year: "2011 - Sekarang",
+                    engine: { spec: "2.4L/2.8L GD Diesel / 1.5L 2NR-VE (Rush)", capacity: "7.5L (2.8 GD) / 4.3L (1.5L)", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "6 MT / 6 AT / D-CVT", capacity: "AT: 2.6L (Refill) / CVT: 3.5L", sae: "Toyota ATF WS / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4WD", capacity: "2.6 - 3.0 Liter", sae: "API GL-5 80W-90 / Total Traxium Axle 7" }
+                },
+
+                // ================== TOYOTA MASTER DATA v2.1 (Indonesia & Global) ==================
+                // Data presisi per model: SAE, API/ILSAC/CK-4, kapasitas oli, transmisi & gardan.
+                {
+                    model: "Agya 1.2",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "1.2L 3NR-FE 3-Silinder", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "D-CVT", capacity: "6,5 Liter", sae: "Toyota Genuine CVT FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Avanza 1.3",
+                    year: "2004 - Sekarang",
+                    engine: { spec: "1.3L 1NR-VE Dual VVT-i", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,0 Liter", sae: "Toyota Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Avanza 1.5",
+                    year: "2011 - Sekarang",
+                    engine: { spec: "1.5L 2NR-VE Dual VVT-i", capacity: "3,7 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "D-CVT", capacity: "6,9 Liter", sae: "Toyota Genuine CVT FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Veloz",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "1.5L 2NR-VE Dual VVT-i", capacity: "3,7 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "D-CVT", capacity: "6,9 Liter", sae: "Toyota Genuine CVT FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Raize Turbo",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "1.0L 1KR-VET 3-Silinder Turbo", capacity: "3,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "D-CVT", capacity: "6,0 Liter", sae: "Toyota Genuine CVT FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Rush",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.5L 2NR-VE Dual VVT-i", capacity: "4,0 Liter", sae: "5W-30 (API SN / ILSAC GF-5)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "6,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD", capacity: "1,4 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Yaris",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.5L 2NR-VE Dual VVT-i", capacity: "3,7 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "D-CVT", capacity: "6,0 Liter", sae: "Toyota Genuine CVT FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Yaris Cross Hybrid",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "1.5L M15A-FXE Hybrid", capacity: "4,0 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "3,8 Liter", sae: "Toyota Hybrid Transaxle Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Innova Reborn Diesel",
+                    year: "2016 - 2022",
+                    engine: { spec: "2.4L 2GD-FTV / 2.8L 1GD-FTV VNT Diesel", capacity: "7,0 Liter", sae: "5W-30 (API CK-4 / ACEA C2-C3)" },
+                    transmission: { spec: "6-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD", capacity: "2,8 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Innova Zenix Hybrid",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L M20A-FXS Hybrid", capacity: "4,0 Liter", sae: "0W-8 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "3,8 Liter", sae: "Toyota Hybrid Transaxle Fluid" },
+                    differential: { spec: "FWD / e-Four AWD", capacity: "1,0 Liter (AWD)", sae: "Toyota ATF WS" }
+                },
+                {
+                    model: "Fortuner Diesel",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.4L 2GD-FTV / 2.8L 1GD-FTV Diesel", capacity: "7,5 Liter", sae: "5W-30 (API CK-4 / ACEA C2-C3)" },
+                    transmission: { spec: "6-Speed AT", capacity: "10,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 3,0L / Transfer 1,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Hilux Diesel",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.4L 2GD-FTV / 2.8L 1GD-FTV Diesel", capacity: "7,0 Liter", sae: "5W-30 (API CK-4 / ACEA C2-C3)" },
+                    transmission: { spec: "6-Speed AT / 6-MT", capacity: "9,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 3,0L / Transfer 1,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Land Cruiser 300",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "3.3L F33A-FTV V6 Twin-Turbo Diesel / 3.5L V35A-FTS V6 Twin-Turbo", capacity: "7,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "10-Speed AT", capacity: "11,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "4WD Full-Time", capacity: "Depan 1,9L / Belakang 4,0L / Transfer 2,0L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Camry Hybrid",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.5L A25A-FXS Hybrid", capacity: "4,5 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,2 Liter", sae: "Toyota Hybrid ATF (WS)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Alphard 2.5",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.5L A25A-FKS Dynamic Force", capacity: "4,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "D-CVT (Super CVT)", capacity: "7,0 Liter", sae: "Toyota Genuine CVT FE" },
+                    differential: { spec: "FWD / e-Four AWD", capacity: "1,0 Liter (AWD)", sae: "Toyota ATF WS" }
+                },
+                {
+                    model: "Alphard 3.5",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "3.5L 2GR-FKS V6 D-4S", capacity: "6,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Corolla Cross Hybrid",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.8L 2ZR-FXE / M20A-FXE Hybrid", capacity: "4,0 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "3,8 Liter", sae: "Toyota Hybrid Transaxle Fluid" },
+                    differential: { spec: "FWD / e-Four AWD", capacity: "1,0 Liter (AWD)", sae: "Toyota ATF WS" }
+                },
+                {
+                    model: "GR86",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.4L FA24D Boxer (Subaru) D-4S", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed Manual / 6-Speed AT", capacity: "3,0 Liter (MT)", sae: "Toyota Manual Gear Oil 75W-90 (GL-5)" },
+                    differential: { spec: "RWD (LSD)", capacity: "1,1 Liter", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+                {
+                    model: "Supra GR",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L B58B30 Turbo I6 (BMW)", capacity: "6,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed ZF 8HP AT", capacity: "8,0 Liter", sae: "ZF Lifeguard 8 (Toyota ATF)" },
+                    differential: { spec: "RWD (LSD)", capacity: "1,1 Liter", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS TOYOTA ----------
+                {
+                    model: "📖 Referensi Standar Oli Toyota (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-8 / 0W-16 / 0W-20 / 5W-20 / 5W-30 / 10W-30", capacity: "Diesel — SAE 5W-30 / 10W-30 / 15W-40", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B (Bensin) • API CK-4 • CJ-4 • ACEA C2/C3 (Diesel)" },
+                    transmission: { spec: "Manual: Gear Oil 75W-85 / 75W-90 (GL-4/GL-5)", capacity: "Auto/CVT: ATF T-IV, ATF WS, CVT FE, CVT TC, Type T, Dexron III", sae: "Hybrid: ATF WS / Hybrid Transaxle Fluid (Prius, Camry, Corolla, Innova Zenix, Yaris Cross)" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 80W-90 / 85W-140 (GL-5)", capacity: "Transfer Case 4WD: SAE 75W-85 / 75W-90 (Fortuner, Hilux, Land Cruiser, Prado)", sae: "LSD: SAE 75W-90 GL-5 LSD (GR Supra, GR86, Land Cruiser, Tacoma/Tundra TRD)" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Toyota",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin (Bensin & Diesel): 10.000 km", capacity: "Interval Oli CVT / Matic / Manual / Gardan / Transfer / Hybrid / LSD: 40.000 km", sae: "Catatan: Toyota CVT FE interval 40.000-80.000 km (suhu -40°C s.d 150°C)" },
+                    transmission: { spec: "Master Mesin Bensin: A, NZ, NR, ZR, AR, GR, TR Series", capacity: "Diesel: GD, KD Series • Dynamic-Force M20A / A25A • Hybrid A25A-FXS / M15A-FXE", sae: "Lainnya: FA24 Boxer (GR86) • BMW B58 (GR Supra) — 1.000+ kode mesin Toyota" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN decoder, kode mesin, torsi baut, part number", capacity: "Filter oli, drain plug gasket, coolant, prosedur & repair manual, TSB, OBD2", sae: "Live parameter ECU + reset maintenance reminder untuk servis otomatis" }
                 }
             ],
             "Lexus": [
@@ -268,6 +565,193 @@
                     engine: { spec: "5.7L V8 / 3.5L V6 Twin-Turbo", capacity: "7.5 Liter", sae: "Shell Helix Ultra 5W-30 / Mobil 1 0W-40" },
                     transmission: { spec: "8-Speed / 10-Speed AT", capacity: "10.5 Liter (Kuras)", sae: "Toyota ATF WS / Valvoline L&HD ATF" },
                     differential: { spec: "4WD", capacity: "Depan 1.4L / Belakang 4.2L", sae: "API GL-5 75W-85" }
+                },
+
+                // ================== LEXUS MASTER DATA v2.5 (Passenger • SUV • Hybrid • F Sport) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (ATF WS / Direct Shift / Hybrid) & gardan AWD/4WD.
+                {
+                    model: "CT200h",
+                    year: "2011 - 2022",
+                    engine: { spec: "1.8L 2ZR-FXE Hybrid", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,0 Liter", sae: "Lexus/Toyota Hybrid Transaxle Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "UX200",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L M20A-FKS Dynamic Force", capacity: "4,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Direct Shift CVT (Launch Gear)", capacity: "6,9 Liter", sae: "Toyota Genuine CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "UX250h AWD",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L M20A-FXS Hybrid (e-Four)", capacity: "4,2 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,0 Liter", sae: "Lexus Hybrid Transaxle Fluid" },
+                    differential: { spec: "AWD (e-Four)", capacity: "Belakang: 0,4 Liter", sae: "Toyota ATF WS" }
+                },
+                {
+                    model: "IS300",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.0L 8AR-FTS Turbo / 2.5L 2GR-FSE V6", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,5 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "IS350",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.5L 2GR-FKS V6 D-4S", capacity: "6,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD / AWD", capacity: "AWD Belakang: 0,5 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "ES250",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.5L A25A-FKS Dynamic Force", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "7,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "ES300h",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.5L A25A-FXS Hybrid", capacity: "4,5 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,0 Liter", sae: "Lexus Hybrid Transaxle Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "GS300",
+                    year: "2016 - 2020",
+                    engine: { spec: "2.0L 8AR-FTS Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "GS450h",
+                    year: "2012 - 2018",
+                    engine: { spec: "3.5L 2GR-FXS Hybrid V6", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Hybrid Multi-Stage Transmission", capacity: "4,0 Liter", sae: "Lexus Hybrid Fluid" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "LS500",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.5L V35A-FTS Twin-Turbo V6", capacity: "6,1 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "10-Speed AT (Direct Shift)", capacity: "9,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD / AWD", capacity: "AWD Belakang: 0,7 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "LS500h",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.5L 8GR-FXS Hybrid V6", capacity: "6,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Hybrid Multi-Stage Transmission", capacity: "5,0 Liter", sae: "Lexus Hybrid Multi-Stage Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "AWD Belakang: 0,7 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "NX250",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.5L A25A-FKS Dynamic Force", capacity: "4,5 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "7,0 Liter", sae: "Toyota Direct Shift ATF" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "NX350 AWD",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.4L T24A-FTS Turbo Hybrid", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT (Direct Shift)", capacity: "7,5 Liter", sae: "Toyota Direct Shift ATF" },
+                    differential: { spec: "AWD", capacity: "0,6 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "NX350h AWD",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.5L A25A-FXS Hybrid (e-Four)", capacity: "4,5 Liter", sae: "0W-16 (API SP / ILSAC GF-6B)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "4,0 Liter", sae: "Lexus Hybrid Fluid" },
+                    differential: { spec: "AWD (e-Four)", capacity: "0,6 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "RX350",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "2.4L T24A-FTS Turbo / 2.5L A25A-FKS", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "RX350 AWD",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "2.4L T24A-FTS Turbo (Direct4 AWD)", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT (Direct Shift)", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "AWD (Direct4)", capacity: "0,8 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "RX500h",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "2.4L T24A-FTS Hybrid Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT (Hybrid Direct Shift)", capacity: "4,0 Liter", sae: "Lexus Hybrid Fluid" },
+                    differential: { spec: "AWD (Direct4 + e-Axle)", capacity: "0,8 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "GX460",
+                    year: "2010 - 2023",
+                    engine: { spec: "4.6L 1UR-FE V8", capacity: "7,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT", capacity: "10,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "4WD Full-Time", capacity: "Belakang 1,5L / Transfer 1,5L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "LX570",
+                    year: "2008 - 2021",
+                    engine: { spec: "5.7L 3UR-FE V8", capacity: "7,9 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "11,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "4WD Full-Time", capacity: "Belakang 1,6L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "LX600",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "3.5L V35A-FTS Twin-Turbo V6", capacity: "7,7 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "10-Speed AT", capacity: "11,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "4WD Full-Time", capacity: "Belakang 1,6L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "LC500",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "5.0L 2UR-GSE V8 (Performance)", capacity: "8,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "10-Speed AT (Direct Shift)", capacity: "8,0 Liter", sae: "Toyota Direct Shift ATF" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "RC350",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "3.5L 2GR-FKS V6 D-4S", capacity: "6,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD / AWD", capacity: "Belakang 1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "RC F",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "5.0L 2UR-GSE V8 (Performance)", capacity: "8,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD (Torsten LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "IS500 F Sport",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "5.0L 2UR-FSE V8 (Performance)", capacity: "8,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Toyota ATF WS" },
+                    differential: { spec: "RWD (Torsten LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS LEXUS ----------
+                {
+                    model: "📖 Referensi Standar Oli Lexus (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-30 (API SP) • Hybrid: 0W-16 (CT200h, UX250h, ES300h, NX350h, RX500h, LS500h)", capacity: "Toyota Genuine Motor Oil + ILSAC GF-6A/6B", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B • V8 Performance & F Sport: 0W-20 High Performance" },
+                    transmission: { spec: "Toyota ATF WS (IS, ES, RX, GX, LX, RC, GS): 7-11L • Direct Shift ATF (NX250, NX350, LC500): 7-8L", capacity: "Hybrid Transaxle Fluid (CT200h, UX250h, ES300h, NX350h, RX500h): 4-5L • Interval 40.000-60.000 km", sae: "Hybrid Multi-Stage Transmission Fluid (GS450h, LS500h): 4-5L • Direct Shift CVT Fluid FE (UX200): 6,9L" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 (GL-5) — NX AWD, RX AWD, GX460, LX570/600, LC500, RC350 • 75W-85: 0,6-1,6L", capacity: "Kapasitas: NX AWD 0,6L • RX AWD 0,8L • GX460 1,5L • LX570/600 1,6L • LC500 1,0L • RC F / IS500 1,2L", sae: "LSD: SAE 75W-140 GL-5 LSD (RC F, IS500 F Sport, LC500 Performance) • Transfer Case: GX460 1,5L / LX570 1,8L / LX600 1,8L (SAE 75W-90 GL-5)" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Lexus",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 80.000 km • Busi Iridium 100.000 km", capacity: "Interval ATF WS / Direct Shift: 40.000-60.000 km • Hybrid Fluid: 40.000 km", sae: "Per teknologi: Dynamic Force 0W-16 • Hybrid 0W-16 • V6 Twin-Turbo 0W-20 • V8 Performance 0W-20 • AWD 0W-20 • F Sport 0W-20" },
+                    transmission: { spec: "Master Mesin: Dynamic Force (A25A-FKS/FXS, M20A-FKS/FXS), GR Series (2GR-FKS/FSE), V35A (V35A-FTS Twin-Turbo)", capacity: "UR Series (2UR-GSE Performance, 3UR-FE, 2UR-FSE), 1UR-FE • Turbo: 8AR-FTS, T24A-FTS", sae: "Hybrid Series (2AR-FXE, A25A-FXS, M20A-FXS, 8GR-FXS) — Teknologi e-Four & Direct4 AWD" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/RWD/AWD/Hybrid AWD/Direct4)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Lexus" }
                 }
             ],
             "Honda": [
@@ -284,6 +768,172 @@
                     engine: { spec: "1.5L VTEC Turbo", capacity: "4.2 Liter", sae: "Mobil 1 0W-20 / Fuchs TITAN GT1 FLEX 5" },
                     transmission: { spec: "CVT", capacity: "3.7 Liter (Refill)", sae: "Honda HCF-2 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD / AWD", capacity: "AWD (Dual Pump): 1.0L", sae: "Honda DPSF" }
+                },
+                {
+                    model: "HR-V / BR-V / Mobilio",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.5L i-VTEC / 1.5L VTEC Turbo", capacity: "3.6 - 4.2 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 / Shell Helix ECO" },
+                    transmission: { spec: "CVT / 6MT", capacity: "3.5 - 3.7 Liter (CVT)", sae: "Honda HCF-2 / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+
+                // ================== HONDA MASTER DATA v2.2 (Indonesia & Global) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (CVTF/ATF DW-1/MTF) & gardan AWD.
+                {
+                    model: "Brio 1.2",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.2L L12B i-VTEC 4-Silinder", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Brio RS",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.2L L12B / 1.5L L15Z i-VTEC", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Mobilio",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.5L L15Z i-VTEC", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Jazz GK5",
+                    year: "2014 - 2020",
+                    engine: { spec: "1.5L L15A / L15B Earth Dreams i-VTEC", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "City Hatchback",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "1.5L L15Z Earth Dreams DOHC i-VTEC", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "City Sedan",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.5L L15Z Earth Dreams DOHC i-VTEC", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Civic Turbo",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.5L L15B7 VTEC Turbo Earth Dreams", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "6,5 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Civic Type R (FK8/FL5)",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L K20C1 VTEC Turbo", capacity: "5,7 Liter", sae: "0W-30 (API SP / High Performance)" },
+                    transmission: { spec: "6-Speed Manual", capacity: "2,2 Liter", sae: "Honda MTF-III 75W-80 (GL-4)" },
+                    differential: { spec: "FWD (LSD)", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Accord 1.5 Turbo",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.5L L15B7 VTEC Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,7 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Accord 2.0 Hybrid",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.0L LFA / LFB Atkinson i-MMD Hybrid", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "-", sae: "Honda e-CVT Hybrid Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "CR-V 1.5 Turbo",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L L15B7 VTEC Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,7 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "CR-V AWD",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L L15B7 VTEC Turbo (Real Time AWD)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,7 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "AWD (Real Time)", capacity: "1,2 Liter", sae: "Honda Dual Pump Fluid II (DPSF)" }
+                },
+                {
+                    model: "HR-V",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.5L L15B / 1.8L R18Z i-VTEC", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "WR-V",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L L15Z i-VTEC", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "BR-V",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.5L L15B i-VTEC", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Odyssey",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "2.4L K24W Earth Dreams / 3.5L J35 V6", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 10-Speed AT", capacity: "6,5 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Pilot AWD",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.5L J35 V6 SOHC i-VTEC", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT / 10-Speed AT", capacity: "8,0 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "AWD (Intelligent VTM-4/i-VTM4)", capacity: "1,8 Liter", sae: "Honda Dual Pump Fluid II / DPSF" }
+                },
+                {
+                    model: "Passport AWD",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.5L J35 V6 SOHC i-VTEC", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT", capacity: "8,0 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "AWD (i-VTM4)", capacity: "1,8 Liter", sae: "Honda Dual Pump Fluid II / DPSF" }
+                },
+                {
+                    model: "Ridgeline AWD",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "3.5L J35 V6 SOHC i-VTEC", capacity: "5,4 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT", capacity: "8,5 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "AWD (i-VTM4)", capacity: "1,9 Liter", sae: "Honda Dual Pump Fluid II / DPSF" }
+                },
+                {
+                    model: "NSX Hybrid (Gen 2)",
+                    year: "2016 - 2022",
+                    engine: { spec: "3.5L J30 Twin-Turbo V6 + 3-Motor Sport Hybrid", capacity: "5,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed DCT (Sport Hybrid)", capacity: "Khusus", sae: "Honda Hybrid DCT Fluid" },
+                    differential: { spec: "SH-AWD (Sport Hybrid)", capacity: "-", sae: "Sistem khusus multi-motor" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS HONDA ----------
+                {
+                    model: "📖 Referensi Standar Oli Honda (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-20 / 5W-30 / 0W-30 (Type R)", capacity: "Turbo (L15B7/K20C1/K24W): 0W-20 API SP ILSAC GF-6", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B • Type R: 0W-30 High Performance" },
+                    transmission: { spec: "CVTF (Brio, Mobilio, Jazz, HR-V, WR-V, BR-V, City, CR-V): Honda HCF-2", capacity: "ATF DW-1 (Civic, Odyssey, Pilot, Passport, Ridgeline, Accord): 6,5-8,5L • 40.000 km", sae: "MTF-III 75W-80 GL-4 (Civic Type R, S2000, Integra) • e-CVT Hybrid Fluid (Accord/CR-V Hybrid)" },
+                    differential: { spec: "Gardan AWD: Honda Dual Pump Fluid II / DPSF (CR-V, Pilot, Passport, Ridgeline, Element)", capacity: "CR-V ±1,2L • Pilot/Passport ±1,8L • Interval 40.000 km", sae: "Real Time AWD: Rear Differential, Transfer Unit, AWD Clutch Pack (Synthetic Fluid)" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Honda",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km (semua teknologi mesin)", capacity: "Interval Matic/CVT/Gardan AWD/Manual/Hybrid/Differential: 40.000 km", sae: "Standar per teknologi: SOHC/DOHC i-VTEC 0W-20 • Earth Dreams 0W-20 • Turbo 0W-20 • Type R 0W-30 • Hybrid 0W-16/0W-20" },
+                    transmission: { spec: "Master Mesin: L-Series (L12B/L13Z/L15Z/L15B/L15B7), R-Series (R18A/R20A)", capacity: "K-Series (K20A/K20C1/K24A/K24W), J-Series (J35/J37), Earth Dreams Turbo & Hybrid (LEB/LFA)", sae: "Suhu kerja Honda CVTF & ATF DW-1: -40°C s.d 150°C (Low Friction)" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, busi + celah, refrigeran AC", sae: "Repair manual, OBD-II live data, TSB, maintenance minder reset untuk servis otomatis" }
                 }
             ],
             "Acura": [
@@ -309,6 +959,144 @@
                     engine: { spec: "1.0L K10B / 0.8L / 1.2L", capacity: "2.8 - 3.1 Liter", sae: "SAE 0W-16 / 0W-20 (Fuchs TITAN / Mobil Super)" },
                     transmission: { spec: "5-Speed Manual / AGS", capacity: "2.2 Liter", sae: "API GL-4 75W-90" },
                     differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+
+                // ================== SUZUKI MASTER DATA v2.4 (Indonesia • Jepang • India • Eropa) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (ATF 3317/Manual Gear Oil) & gardan AWD/4WD.
+                {
+                    model: "Karimun Wagon R 1.0",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.0L K10B VVT 3-Silinder", capacity: "3,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "AGS (Auto Gear Shift)", capacity: "4,8 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Karimun Estilo",
+                    year: "2008 - 2014",
+                    engine: { spec: "1.0L K10B VVT", capacity: "3,2 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,2 Liter", sae: "Suzuki Manual Gear Oil 75W-80 (GL-4)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Ignis 1.2",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.2L K12M Dualjet VVT", capacity: "3,1 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "AGS / 5-MT", capacity: "5,2 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Baleno Hatchback",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.4L K14B VVT", capacity: "3,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT / CVT", capacity: "5,5 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Swift 1.2",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.2L K12M Dualjet VVT", capacity: "3,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "AGS / CVT", capacity: "5,5 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Ertiga Hybrid",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L K15C Smart Hybrid (SHVS)", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT / 5-MT", capacity: "5,8 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "XL7 Hybrid",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.5L K15C Smart Hybrid (SHVS)", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT / 5-MT", capacity: "5,8 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Fronx Hybrid",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "1.0L R06A Turbo Smart Hybrid", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT / 5-MT", capacity: "5,8 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Ciaz",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.4L K14B VVT", capacity: "3,4 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "5,5 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "S-Presso",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.0L K10C VVT 3-Silinder", capacity: "3,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual / AGS", capacity: "2,2 Liter", sae: "Suzuki Manual Gear Oil 75W-80 (GL-4)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "APV",
+                    year: "2004 - 2019",
+                    engine: { spec: "1.5L G15A / 1.6L M16A SOHC", capacity: "3,8 Liter", sae: "10W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual / 4-MT", capacity: "2,3 Liter", sae: "Suzuki Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "1,3 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Carry Pickup",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.5L K15B VVT", capacity: "3,2 Liter", sae: "10W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "1,8 Liter", sae: "Suzuki Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "1,2 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Jimny 3 Door",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.5L K15B DOHC VVT", capacity: "3,9 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "5,5 Liter", sae: "Suzuki ATF 3317 / Manual Gear Oil 75W-85" },
+                    differential: { spec: "4WD Part-Time (RWD Base)", capacity: "Depan 0,6L / Belakang 1,0L / Transfer 1,4L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Jimny 5 Door",
+                    year: "2024 - Sekarang",
+                    engine: { spec: "1.5L K15B DOHC VVT", capacity: "3,9 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "5,5 Liter", sae: "Suzuki ATF 3317 / Manual Gear Oil 75W-85" },
+                    differential: { spec: "4WD Part-Time (RWD Base)", capacity: "Depan 0,6L / Belakang 1,0L / Transfer 1,4L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Grand Vitara Hybrid",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L K15C Smart Hybrid (SHVS)", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT", capacity: "6,0 Liter", sae: "Suzuki 6AT Fluid" },
+                    differential: { spec: "AWD (AllGrip)", capacity: "0,9 Liter / Transfer 1,4L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Vitara Brezza",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.5L K15B VVT", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT / 5-MT", capacity: "5,5 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,9 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Escudo 4WD",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.4L K14B Boosterjet Turbo / 1.6L", capacity: "4,0 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "6-Speed AT / 5-MT", capacity: "6,0 Liter", sae: "Suzuki ATF 3317" },
+                    differential: { spec: "4WD (AllGrip)", capacity: "Belakang 1,0L / Transfer 1,6L", sae: "SAE 75W-90 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS SUZUKI ----------
+                {
+                    model: "📖 Referensi Standar Oli Suzuki (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-30 / 10W-30 (API SP)", capacity: "Suzuki Genuine Oil ECSTAR: F9000 0W-20 / F7000 5W-30 / Diesel 5W-30 / Premium 10W-30", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B • Cocok mesin Dualjet & Smart Hybrid (SHVS)" },
+                    transmission: { spec: "Suzuki ATF 3317 (Ignis, Ertiga, XL7, Baleno, Swift, Jimny AT, Grand Vitara, Ciaz, Fronx): 4,8-6L • 40.000 km", capacity: "Manual Gear Oil 75W-80 / 75W-85 / 75W-90 (GL-4/GL-5) — APV, Carry, Jimny MT, Escudo, S-Presso, Estilo", sae: "Grand Vitara: 6AT Fluid • ATF 3317 temperatur operasi tinggi (Genuine ATF)" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 80W-90 (GL-5) — Jimny, Escudo, Grand Vitara AWD, APV, Carry, XL7 AWD", capacity: "Kapasitas: Jimny Depan 0,6L/Belakang 1,0L • Grand Vitara 0,9L • Escudo 1,0L • Carry 1,2L • APV 1,3L", sae: "Transfer Case 4WD: SAE 75W-90 GL-4/GL-5 — Jimny 1,4L / Escudo 1,6L / Grand Vitara 1,4L • Interval 40.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Suzuki",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 80.000 km • Busi Iridium 100.000 km", capacity: "Interval ATF/Manual/Gardan/Transfer Case: 40.000 km", sae: "Per teknologi: VVT 0W-20 • Dualjet 0W-20 • Smart Hybrid 0W-20 • DOHC 0W-20 • SOHC 5W-30 • Off-Road (Jimny) 0W-20 • Utility 10W-30" },
+                    transmission: { spec: "Master Mesin: K-Series (K10B/K12M/K14B/K15B/K15C Smart Hybrid), R-Series (R06A)", capacity: "M-Series (M13A/M15A/M16A), G-Series (G10/G13B/G16B), F-Series (F10A/F8D)", sae: "Hybrid: K15C Smart Hybrid, Dualjet Hybrid, SHVS (Smart Hybrid Vehicle by Suzuki)" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas drain & fill + overhaul, SAE/API/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/RWD/AWD/4WD)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis SHVS" }
                 }
             ],
             "Mitsubishi": [
@@ -325,6 +1113,144 @@
                     engine: { spec: "1.5L 4A91", capacity: "4.0 Liter", sae: "Shell Helix ECO 0W-20 / Total Quartz GF6" },
                     transmission: { spec: "CVT / 4AT", capacity: "4.0 Liter (Refill)", sae: "CVTF-J4 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+
+                // ================== MITSUBISHI MASTER DATA v2.2 (Indonesia & Global) ==================
+                // Data presisi per model: SAE + API SP/CK-4, kapasitas oli, transmisi (CVTF-J/ATF SP-III/MTF) & gardan AWD/4WD.
+                {
+                    model: "Xpander",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L 4A91 MIVEC 4-Silinder", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 5-MT", capacity: "7,1 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Xpander Cross",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.5L 4A91 MIVEC 4-Silinder", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "7,1 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Xforce",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "1.5L 4A91 MIVEC 4-Silinder", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Mode Motion Yaw)", capacity: "7,1 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,6 Liter", sae: "Mitsubishi DPSF (AWD)" }
+                },
+                {
+                    model: "Mirage",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "1.0L / 1.2L 3A92 3-Silinder MIVEC", capacity: "3,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "6,0 Liter", sae: "Mitsubishi CVTF-J1 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Attrage",
+                    year: "2013 - Sekarang",
+                    engine: { spec: "1.2L 3A92 3-Silinder MIVEC", capacity: "3,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "6,0 Liter", sae: "Mitsubishi CVTF-J1 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Outlander Sport / ASX",
+                    year: "2010 - Sekarang",
+                    engine: { spec: "2.0L 4B10 / 1.6L 4A92 MIVEC", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "7,0 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD / 4WD", capacity: "AWD: 1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Outlander PHEV",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "2.0L 4B10 MIVEC + Dual Motor Hybrid (PHEV)", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Hybrid Drive (e-AXle)", capacity: "Khusus", sae: "Mitsubishi Hybrid Drive Fluid" },
+                    differential: { spec: "e-AWD (Front & Rear Motor)", capacity: "Belakang: Genuine PHEV Fluid", sae: "Mitsubishi Genuine Drive Unit Fluid" }
+                },
+                {
+                    model: "Pajero Sport Diesel",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.4L 4N15 MIVEC Turbo Diesel", capacity: "7,5 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "8-Speed AT / 6-MT", capacity: "9,7 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 2,6L / Transfer 1,5-2,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Triton Diesel",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "2.4L 4N15 / 4N16 MIVEC Turbo Diesel", capacity: "7,5 Liter", sae: "5W-30 (API CK-4 / ACEA C3 / E7)" },
+                    transmission: { spec: "6-Speed AT / 6-MT", capacity: "9,5 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 2,6L / Transfer 1,5-2,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Delica Diesel",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "2.2L 4N14 MIVEC Turbo Diesel", capacity: "6,5 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "4WD", capacity: "Depan 1,8L / Belakang 2,5L / Transfer 1,5L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "L300 Diesel Euro 4",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.5L 4D56 / 2.4L 4N15 Turbo Diesel", capacity: "6,0 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,7 Liter", sae: "Mitsubishi Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "2,3 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Galant",
+                    year: "2007 - 2012",
+                    engine: { spec: "2.4L 4B12 MIVEC 4-Silinder", capacity: "4,5 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT / INVECS-III CVT", capacity: "7,5 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Eclipse Cross",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.5L 4B40 MIVEC Turbo / 2.2L 4N14 Diesel", capacity: "4,3 Liter", sae: "0W-20 (Bensin) / 5W-30 (Diesel API CK-4)" },
+                    transmission: { spec: "CVT (Step Variator)", capacity: "7,0 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD / AWD (S-AWC)", capacity: "AWD: 1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Lancer EX",
+                    year: "2008 - 2017",
+                    engine: { spec: "1.6L 4A92 / 1.8L 4B10 / 2.0L 4B11 MIVEC", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "INVECS-III CVT", capacity: "7,0 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Lancer Evolution X",
+                    year: "2008 - 2016",
+                    engine: { spec: "2.0L 4B11T MIVEC Turbo (Performance)", capacity: "4,5 Liter", sae: "5W-30 (API SP / Performance Engine)" },
+                    transmission: { spec: "Twin Clutch SST (TC-SST)", capacity: "6,0 Liter", sae: "Mitsubishi SST / DCT Fluid" },
+                    differential: { spec: "AWD S-AWC (ACD + AYC)", capacity: "Depan 1,5L / Belakang 1,5L", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+                {
+                    model: "Pajero Full Size",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "3.2L 4M41 DI-D / 3.8L 6G75 V6", capacity: "8,0 Liter", sae: "5W-30 (API CK-4 / ACEA C3 / E7)" },
+                    transmission: { spec: "5-Speed INVECS-II AT", capacity: "10,0 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "4WD Full-Time (SS4-II)", capacity: "Depan 2,0L / Belakang 3,5L / Transfer 2,4L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Montero Sport",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.4L 4N15 MIVEC Turbo Diesel", capacity: "7,5 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "8-Speed AT", capacity: "9,7 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 2,6L / Transfer 1,5-2,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS MITSUBISHI ----------
+                {
+                    model: "📖 Referensi Standar Oli Mitsubishi (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-20 / 5W-30 / 10W-30 (MIVEC/Turbo)", capacity: "Diesel — SAE 5W-30 / 10W-30 / 15W-40 (Turbo/Euro 4)", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B • API CK-4 • CJ-4 • ACEA C3/E7 (Diesel)" },
+                    transmission: { spec: "CVTF-J1 (Mirage, Attrage) • CVTF-J4 (Xpander, Xforce, Eclipse Cross, Outlander, Lancer)", capacity: "ATF SP-III (Pajero, Triton, Delica, Montero, Galant): 8-10L • SST Fluid (Evo X): 6L", sae: "Manual Gear Oil 75W-85 / 75W-90 GL-4 • Hybrid Drive Fluid (Outlander PHEV) — Interval 40.000 km" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 80W-90 / 85W-140 (GL-5) — Pajero, Triton, Delica, Montero", capacity: "Transfer Case 4WD: SAE 75W-85 / 75W-90 — kapasitas rata-rata 1,5-2,2L", sae: "LSD: SAE 75W-90 / 80W-90 GL-5 LSD (Lancer Evo, Pajero, Triton, Pajero Sport Dakar 4WD)" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Mitsubishi",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km (MIVEC, Turbo, Diesel, Hybrid, Performance)", capacity: "Interval Matic/CVT/Gardan/Transfer/Manual/LSD/Hybrid: 40.000 km", sae: "Per teknologi: MIVEC 0W-20 • MIVEC Turbo 0W-20 • Turbo Diesel 5W-30 • Euro 4 Diesel 5W-30 • Hybrid 0W-20 • Performance 5W-30" },
+                    transmission: { spec: "Master Mesin: 4A Series (4A90/91/92), 4B Series (4B10/11/12), 4J Series (4J10/11/12)", capacity: "4G Series (4G13/15/18/63/64/69) • Diesel 4D56/4M40/4N15/4N16 • Hybrid 4B12/PHEV Drive", sae: "CVTF suhu kerja -40°C s.d 150°C • ATF SP-III temperatur kerja tinggi (Low Friction)" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, refrigeran AC, busi + celah", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, maintenance reminder reset" }
                 }
             ],
             "Datsun": [
@@ -350,6 +1276,179 @@
                     engine: { spec: "3.8L Twin-Turbo V6 (VR38DETT)", capacity: "5.0 Liter", sae: "Mobil 1 FS 0W-40 (OEM Endorsed)" },
                     transmission: { spec: "6-Speed Dual Clutch (GR6)", capacity: "9.5 Liter", sae: "Pentosin FFL-4 / Nissan GR6 Fluid" },
                     differential: { spec: "AWD ATTESA E-TS", capacity: "Depan 0.6L / Belakang 1.5L", sae: "Castrol Syntrax / API GL-5 75W-140" }
+                },
+
+                // ================== NISSAN MASTER DATA v2.3 (Asia • Jepang • Eropa • Amerika) ==================
+                // Data presisi per model: SAE + API SP/CK-4, kapasitas oli, transmisi (CVT NS-3/ATF Matic S/Matic D) & gardan AWD/4WD.
+                {
+                    model: "March K13 1.2",
+                    year: "2010 - 2020",
+                    engine: { spec: "1.2L HR12DE 3-Silinder", capacity: "3,1 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "7,1 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "March 1.5",
+                    year: "2010 - 2020",
+                    engine: { spec: "1.5L HR15DE 4-Silinder", capacity: "3,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Livina VL",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.5L HR15DE 4-Silinder", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,2 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Grand Livina",
+                    year: "2007 - 2019",
+                    engine: { spec: "1.5L HR15DE / 1.8L MR18DE", capacity: "3,4 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT", capacity: "7,0 Liter", sae: "Nissan ATF Matic D" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Magnite Turbo",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.0L HRA0 Turbo 3-Silinder", capacity: "3,4 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Serena C27",
+                    year: "2016 - 2022",
+                    engine: { spec: "2.0L MR20DD Direct Injection", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,4 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Serena e-Power",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.2L HR12DDT e-Power (Series Hybrid)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "e-Power Drive Unit", capacity: "Khusus", sae: "Nissan e-Power Drive Unit Fluid" },
+                    differential: { spec: "FWD / e-4ORCE AWD", capacity: "AWD: Genuine PHEV Fluid", sae: "Nissan e-4ORCE Drive Fluid" }
+                },
+                {
+                    model: "X-Trail T31",
+                    year: "2007 - 2013",
+                    engine: { spec: "2.0L MR20DE / 2.5L QR25DE", capacity: "4,6 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "8,0 Liter", sae: "Nissan CVT Fluid NS-2" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,55 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "X-Trail T32",
+                    year: "2013 - 2021",
+                    engine: { spec: "2.0L MR20DD / 2.5L QR25DE", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,2 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,55 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "X-Trail T33 e-Power",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L VC-Turbo e-Power (Series Hybrid)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Hybrid Drive Unit (e-4ORCE)", capacity: "Khusus", sae: "Nissan Hybrid Drive Fluid" },
+                    differential: { spec: "e-4ORCE AWD", capacity: "0,55 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Terra 2.5 Diesel",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.5L YD25DDTi Turbo Diesel", capacity: "6,9 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "7-Speed AT / 6-MT", capacity: "9,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,3L / Transfer 1,7L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Navara NP300",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "2.5L YD25DDTi Turbo Diesel", capacity: "7,0 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "7-Speed AT / 6-MT", capacity: "9,5 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,4L / Transfer 1,8L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Patrol Y62",
+                    year: "2010 - Sekarang",
+                    engine: { spec: "5.6L VK56VD V8 / 4.0L VQ40DE V6", capacity: "6,9 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "7-Speed AT", capacity: "10,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "4WD (LSD)", capacity: "Belakang 1,5L / Transfer 2,0L", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+                {
+                    model: "Teana J32",
+                    year: "2008 - 2014",
+                    engine: { spec: "2.5L VQ25DE / 3.5L VQ35DE V6", capacity: "4,6 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,9 Liter", sae: "Nissan CVT Fluid NS-2" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sylphy",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "1.8L MRA8DE / 1.6L HR16DE", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Altima",
+                    year: "2013 - Sekarang",
+                    engine: { spec: "2.0L MR20DD / 2.5L QR25DE", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,7 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Juke",
+                    year: "2011 - 2021",
+                    engine: { spec: "1.5L HR15DE / 1.6L MR16DDT Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic) / 6-MT", capacity: "7,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,6 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Murano AWD",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "3.5L VQ35DD V6", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Xtronic)", capacity: "8,0 Liter", sae: "Nissan CVT Fluid NS-3" },
+                    differential: { spec: "AWD", capacity: "0,7 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Pathfinder AWD",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "3.5L VQ35DD V6", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT", capacity: "9,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "AWD (Intelligent)", capacity: "Belakang 1,0L / Transfer 1,5L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "GT-R R35 (VR38DETT)",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "3.8L Twin-Turbo V6 (VR38DETT)", capacity: "5,1 Liter", sae: "0W-40 (API SP / Mobil 1 FS OEM)" },
+                    transmission: { spec: "6-Speed Dual Clutch (GR6)", capacity: "9,5 Liter", sae: "Nissan GR6 Transmission Fluid" },
+                    differential: { spec: "AWD ATTESA E-TS (LSD)", capacity: "Depan 0,6L / Belakang 1,5L", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "Frontier",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "3.8L VQ38DD V6 / 2.5L YD25 Diesel", capacity: "5,0 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT", capacity: "9,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,0L / Transfer 1,7L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Armada",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "5.6L VK56VD V8", capacity: "6,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "7-Speed AT / 9-Speed AT", capacity: "10,0 Liter", sae: "Nissan ATF Matic S" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,5L / Transfer 1,5L", sae: "SAE 75W-90 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS NISSAN ----------
+                {
+                    model: "📖 Referensi Standar Oli Nissan (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-30 / 0W-40 / 5W-40 (API SP)", capacity: "Diesel — SAE 5W-30 / 5W-40 / 10W-30 / 15W-40 (Terra, Navara, Patrol, Frontier)", sae: "API SP • ILSAC GF-6A/6B • ACEA A5/B5 • C3 (Bensin) • API CK-4 • CJ-4 • ACEA C3/E7 (Diesel)" },
+                    transmission: { spec: "CVT NS-1 (gen awal) • CVT NS-2 (X-Trail T31, Teana, Serena awal, Murano awal)", capacity: "CVT NS-3 (Livina, Magnite, X-Trail T32, Sylphy, Serena C27, Altima, Juke, March, Murano): 7-8L • 40.000 km", sae: "ATF Matic D (Grand Livina, gen lama) • ATF Matic S (Terra, Navara, Pathfinder, Patrol, Frontier, Armada): 9-10L • Manual 75W-80/85/90 GL-4/GL-5" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 80W-90 / 75W-140 (GL-5) — X-Trail AWD, Terra, Navara, Patrol, Pathfinder, Murano, Armada, Frontier", capacity: "Transfer Case 4WD: SAE 75W-90 GL-5 — Terra 1,7L / Navara 1,8L / Patrol 2,0L / Pathfinder 1,5L / Frontier 1,7L", sae: "LSD: SAE 75W-140 GL-5 LSD (GT-R R35, Patrol Offroad, 370Z, Navara PRO-4X) — Interval 40.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Nissan",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km (semua mesin bensin, diesel, hybrid, e-Power)", capacity: "Interval CVT/Matic/Manual/Gardan/Transfer/Hybrid Drive: 40.000 km", sae: "CVT NS-3: Low Viscosity Genuine Fluid • Temperatur operasi tinggi • Interval 40.000 km" },
+                    transmission: { spec: "Master Mesin Bensin: HR Series (HR10/12/15/16), MR Series (MR16/18/20), QR Series (QR20/25)", capacity: "VQ Series (VQ25/35/37), VK Series (VK45/56), VR Series (VR30DDTT / VR38DETT GT-R)", sae: "Diesel YD Series (YD22/25) • Hybrid: e-Power Drive System & Hybrid Transaxle System" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas drain & fill + overhaul, SAE/API/ACEA/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant (Long Life Coolant), tipe penggerak (FWD/RWD/AWD/4WD/e-Power)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis untuk e-Power & standar" }
                 }
             ],
             "Infiniti": [
@@ -386,6 +1485,158 @@
                     engine: { spec: "1.0L / 1.2L / 1.5L", capacity: "3.0 Liter - 4.0 Liter", sae: "Shell Helix HX7 / Fuchs TITAN Flex" },
                     transmission: { spec: "MT / 4-Speed AT / D-CVT", capacity: "2.5L (AT) / 3.5L (CVT)", sae: "Daihatsu ATF / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD / RWD", capacity: "2.2 Liter (RWD)", sae: "Total Traxium Axle 7 80W-90" }
+                },
+
+                // ================== DAIHATSU MASTER DATA v2.4 (Indonesia • Jepang • Malaysia) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (CVT FE/D-CVT/ATF WS/MTF) & gardan RWD/4WD.
+                {
+                    model: "Ayla 1.0",
+                    year: "2013 - Sekarang",
+                    engine: { spec: "1.0L 1KR-DE 3-Silinder", capacity: "2,7 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 5-MT", capacity: "6,0 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Ayla 1.2",
+                    year: "2013 - Sekarang",
+                    engine: { spec: "1.2L WA-VE 3-Silinder", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 5-MT", capacity: "6,5 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sigra 1.0",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.0L 1KR-VE 3-Silinder", capacity: "3,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 5-MT", capacity: "6,0 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sigra 1.2",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.2L WA-VE 3-Silinder", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 5-MT", capacity: "6,5 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sirion",
+                    year: "2010 - Sekarang",
+                    engine: { spec: "1.0L 1KR-DE / 1.3L K3-VE", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "6,5 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Rocky 1.0 Turbo",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.0L 1KR-VET 3-Silinder Turbo", capacity: "3,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "D-CVT (Dual Mode CVT)", capacity: "6,5 Liter", sae: "Daihatsu D-CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Rocky 1.2",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.2L WA-VE 3-Silinder", capacity: "3,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "D-CVT (Dual Mode CVT)", capacity: "6,5 Liter", sae: "Daihatsu D-CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Terios",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L 2NR-VE Dual VVT-i 4-Silinder", capacity: "4,0 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "7,0 Liter", sae: "Daihatsu ATF WS" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 1,2L / Transfer 1,2L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Luxio",
+                    year: "2009 - 2016",
+                    engine: { spec: "1.5L 3SZ-VE 4-Silinder", capacity: "3,8 Liter", sae: "10W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,4 Liter", sae: "Daihatsu Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "1,3 Liter", sae: "SAE 80W-90 (GL-5)" }
+                },
+                {
+                    model: "Gran Max 1.3",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "1.3L K3-VE 4-Silinder", capacity: "3,2 Liter", sae: "10W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,2 Liter", sae: "Daihatsu Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "1,2 Liter", sae: "SAE 80W-90 (GL-5)" }
+                },
+                {
+                    model: "Gran Max 1.5",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "1.5L 3SZ-VE 4-Silinder", capacity: "3,5 Liter", sae: "10W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,2 Liter", sae: "Daihatsu Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "1,2 Liter", sae: "SAE 80W-90 (GL-5)" }
+                },
+                {
+                    model: "Zebra",
+                    year: "1999 - 2011",
+                    engine: { spec: "1.3L HC-E / 1.6L HD-E 4-Silinder", capacity: "3,5 Liter", sae: "10W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,0 Liter", sae: "Daihatsu Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 80W-90 (GL-5)" }
+                },
+                {
+                    model: "Taft 4WD",
+                    year: "1984 - 1993 (Klasik)",
+                    engine: { spec: "2.0L DG Diesel / 1.6L CL Bensin", capacity: "3,8 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT / 4-MT", capacity: "5,5 Liter", sae: "Daihatsu ATF / Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "4WD Part-Time", capacity: "Belakang 1,0L / Transfer 1,3L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Copen",
+                    year: "2002 - 2019 (Kei Car)",
+                    engine: { spec: "0.66L JB-DET Turbo 3-Silinder (Kei)", capacity: "2,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 5-MT", capacity: "5,5 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Move",
+                    year: "2010 - 2019 (Kei Car)",
+                    engine: { spec: "0.66L KF-DET Turbo / KF-VE (Kei)", capacity: "2,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "5,5 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Tanto",
+                    year: "2010 - 2019 (Kei Car)",
+                    engine: { spec: "0.66L KF-VE / KF-DET (Kei)", capacity: "2,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "5,5 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Mira",
+                    year: "2010 - 2018 (Kei Car)",
+                    engine: { spec: "0.66L KF-VE 3-Silinder (Kei)", capacity: "2,7 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "5,5 Liter", sae: "Daihatsu CVT Fluid FE" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Hijet Truck",
+                    year: "2010 - Sekarang (Komersial)",
+                    engine: { spec: "0.66L EF-VE / 1.0L 1KR-VE", capacity: "3,0 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,0 Liter", sae: "Daihatsu Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "1,1 Liter", sae: "SAE 80W-90 (GL-5)" }
+                },
+                {
+                    model: "Hijet Cargo",
+                    year: "2010 - Sekarang (Komersial)",
+                    engine: { spec: "0.66L EF-VE / 1.0L 1KR-VE", capacity: "3,0 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,0 Liter", sae: "Daihatsu Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "1,1 Liter", sae: "SAE 80W-90 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS DAIHATSU ----------
+                {
+                    model: "📖 Referensi Standar Oli Daihatsu (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin Modern — SAE 0W-16 / 0W-20 / 5W-30 (API SP) — Ayla, Sigra, Rocky, Sirion, Copen, Move, Tanto, Mira", capacity: "Mesin Komersial — SAE 5W-30 / 10W-30 — Gran Max, Luxio, Zebra, Hijet, Taft", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B • Kei Car & modern: 0W-20 • Komersial: 5W-30/10W-30" },
+                    transmission: { spec: "CVT Fluid FE (Ayla CVT, Sigra CVT, Sirion, Move, Mira, Tanto, Copen): Genuine CVT FE • 40.000 km", capacity: "D-CVT Fluid FE (Rocky 1.0 Turbo, Rocky 1.2): Low viscosity, friction modifier khusus D-CVT • ATF WS (Terios, SUV/MPV): 7L", sae: "Manual Gear Oil 75W-80 / 75W-85 / 75W-90 (GL-4/GL-5) — Gran Max, Luxio, Zebra, Hijet, Taft, Terios Manual" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 80W-90 (GL-5) — Terios, Taft, Gran Max, Luxio, Zebra, Hijet", capacity: "Kapasitas: Terios 1,2L • Gran Max 1,2L • Luxio 1,3L • Zebra 1,0L • Taft 1,0L • Hijet 1,1L", sae: "Transfer Case 4WD: SAE 75W-90 GL-5 — Taft 1,3L / Terios 4WD 1,2L • Interval 40.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Daihatsu",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 80.000 km • Busi Iridium 100.000 km", capacity: "Interval CVT/Matic/Manual/Gardan/Transfer Case: 40.000 km", sae: "Per teknologi: Dual VVT-i 0W-20 • Turbo 0W-20 • VVT-i 0W-20 • D-CVT 0W-20 • DOHC 5W-30 • SOHC 10W-30 • Kei Car 0W-20" },
+                    transmission: { spec: "Master Mesin: KR-Series (1KR-DE/VE/VET Turbo), WA-Series (WA-VE/VEX), NR-Series (2NR-VE)", capacity: "K3-Series (K3-VE/VE2/VET), EF-Series (EF-VE/DET), KF-Series (KF-VE/DET), HD-Series (HD-C/E)", sae: "CVT FE temperatur kerja tinggi (Genuine CVT) • D-CVT friction modifier khusus (low viscosity, fuel economy)" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas drain & fill + overhaul, SAE/API/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/RWD/AWD/4WD)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis untuk servis otomatis" }
                 }
             ],
             "Isuzu": [
@@ -415,6 +1666,151 @@
                     engine: { spec: "2.0L 4-Cyl / 3.0L 6-Cyl", capacity: "5.2L - 6.5L", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 (BMW LL-17 FE)" },
                     transmission: { spec: "8-Speed ZF", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "RWD / xDrive", capacity: "1.0 Liter", sae: "Fuchs TITAN SINTOPOID FE 75W-85" }
+                },
+
+                // ================== BMW MASTER DATA v2.5 (Passenger • M Series • SUV • Performance) ==================
+                // Data presisi per model: SAE + BMW Longlife (LL), kapasitas oli, transmisi (ZF Lifeguard/DCT/Manual) & gardan xDrive/M Differential.
+                {
+                    model: "116i (F20)",
+                    year: "2015 - 2021",
+                    engine: { spec: "1.5L B38 3-Silinder Turbo", capacity: "4,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP45)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "118i",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.5L B38 3-Silinder Turbo", capacity: "4,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP45)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "120i",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,0 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "320i (F30)",
+                    year: "2012 - 2019",
+                    engine: { spec: "2.0L N20 / B48 4-Silinder Turbo", capacity: "5,0 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP45)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "330i (G20)",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "520i (G30)",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "530i",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "730Li",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.0L B58 Inline-6 Turbo", capacity: "6,5 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "9,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,2 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "X1 sDrive",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.5L B38 / 2.0L B48 Turbo", capacity: "5,0 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "X3 xDrive",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.0L B48 4-Silinder Turbo", capacity: "5,25 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "AWD (xDrive)", capacity: "Transfer 0,8L / Belakang 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "X5 xDrive",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L B58 Inline-6 Turbo / 4.4L V8", capacity: "6,5 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "9,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "AWD (xDrive)", capacity: "Transfer 0,9L / Belakang 0,9L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "X7 xDrive",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L B58 Inline-6 / 4.4L V8", capacity: "6,5 Liter", sae: "0W-30 (API SP / ACEA C3 / BMW LL-04)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "9,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "AWD (xDrive)", capacity: "Transfer 0,9L / Belakang 0,9L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "M2",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.0L N55 / S55 Inline-6 Twin-Turbo (M)", capacity: "6,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "7-Speed M DCT", capacity: "7,5 Liter", sae: "BMW M DCT Fluid" },
+                    differential: { spec: "RWD (M Differential LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "M3 Competition",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "3.0L S58 Inline-6 Twin-Turbo (M)", capacity: "6,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP M)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 (M)" },
+                    differential: { spec: "RWD / M xDrive (LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "M4 Competition",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "3.0L S58 Inline-6 Twin-Turbo (M)", capacity: "6,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP M)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 (M)" },
+                    differential: { spec: "RWD / M xDrive (LSD)", capacity: "1,2 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "M5",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "4.4L S63 V8 Twin-Turbo (M)", capacity: "9,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP M)", capacity: "10,0 Liter", sae: "ZF Lifeguard 8 (M)" },
+                    differential: { spec: "M xDrive (LSD)", capacity: "1,5 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "M8",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "4.4L S63 V8 Twin-Turbo (M)", capacity: "9,5 Liter", sae: "0W-30 (M TwinPower Turbo / BMW LL-01)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP M)", capacity: "10,0 Liter", sae: "ZF Lifeguard 8 (M)" },
+                    differential: { spec: "M xDrive (LSD)", capacity: "1,5 Liter", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "Z4",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L B48 / 3.0L B58 Turbo (Roadster)", capacity: "5,25 Liter", sae: "0W-20 (BMW LL-17 FE+)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8" },
+                    differential: { spec: "RWD", capacity: "1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS BMW ----------
+                {
+                    model: "📖 Referensi Standar Oli BMW (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "BMW Longlife: LL-01 (5W-30), LL-04 (0W-30/5W-30), LL-12 FE (0W-30), LL-17 FE+ (0W-20), M TwinPower Turbo (0W-30)", capacity: "Bensin Modern: 0W-20/0W-30 (BMW LL-17 FE+/LL-04) • Diesel N57/B57: 5W-30/0W-30 LL-04", sae: "API SP • ACEA C3 • ACEA A3/B4 • BMW Approved Longlife — per kode mesin (B38/B48/B58/N-series/S-series)" },
+                    transmission: { spec: "ZF Lifeguard 6 (BMW E-Series lama) • ZF Lifeguard 8 (F/G/X-Series, M Performance): 8-10L • 60.000-80.000 km", capacity: "BMW M DCT Fluid (M2, M3, M4, M5 tertentu): low viscosity, high temp protection", sae: "Manual Gear Oil 75W-80/85/90 GL-4 (M3 Manual, Z4 Manual, 1-Series Manual) — Genuine BMW MTF" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 75W-140 (GL-5) — X-Series xDrive, M Performance, M Series, Rear Differential", capacity: "BMW M Differential Fluid (M2/M3/M4/M5/M8): SAE 75W-140 GL-5 LSD — M2/M3/M4 1,2L, M5/M8 1,5L", sae: "Transfer Case xDrive: BMW Transfer Case Fluid / ATC Transfer Oil — kapasitas 0,7-1,0L • Interval 60.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin BMW",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000-15.000 km (CBS Condition Based Service) • Coolant 80.000 km", capacity: "Interval Matic (ZF Lifeguard) / DCT / Manual / Gardan / Transfer Case: 60.000 km", sae: "Per teknologi: TwinPower Turbo 0W-30 • M TwinPower Turbo 0W-30 • EfficientDynamics 0W-20 • xDrive 0W-30 • BMW Diesel 5W-30 • Hybrid Plug-in 0W-20" },
+                    transmission: { spec: "Master Mesin: B-Series (B38/B46/B48/B57/B58), N-Series (N13/N20/N46/N52/N54/N55/N57)", capacity: "S-Series BMW M (S55/S58/S63/S65/S85) • Twin-Turbo & TwinPower Turbo", sae: "Reset indikator servis CBS (Condition Based Service) • OBD-II live data • Repair manual • TSB • Wiring diagram pelumasan" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/BMW LL Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (RWD/AWD xDrive)", sae: "Prosedur reset CBS, ECU parameter, repair manual, TSB — basis modul servis otomatis BMW" }
                 }
             ],
             "MINI": [
@@ -478,6 +1874,151 @@
                     engine: { spec: "2.0L TFSI / 3.0L V6 TDI", capacity: "5.2L - 8.2L", sae: "Mobil 1 0W-40 / Fuchs TITAN GT1 PRO C-3" },
                     transmission: { spec: "S-Tronic / Tiptronic", capacity: "6.0 - 9.0 Liter", sae: "Fuchs FFL-2 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "Quattro", capacity: "1.0 Liter", sae: "API GL-5 75W-90" }
+                },
+
+                // ================== AUDI MASTER DATA v2.5 (Passenger • SUV • Performance • Hybrid • Quattro) ==================
+                // Data presisi per model: SAE + VW Approval, kapasitas oli, transmisi (S-Tronic/Tiptronic/Multitronic) & gardan Quattro/RS.
+                {
+                    model: "Audi A1 1.4 TFSI",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.4L EA211 TFSI Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ200)", capacity: "7,0 Liter", sae: "Audi/VW S-Tronic Fluid (Gear Oil)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Audi A3 1.4 TFSI",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.4L EA211 TFSI Turbo (COD)", capacity: "4,3 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ200)", capacity: "7,0 Liter", sae: "Audi/VW S-Tronic Fluid (Gear Oil)" },
+                    differential: { spec: "FWD / Quattro", capacity: "Quattro Belakang: 0,8L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A4 2.0 TFSI",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3B TFSI Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,2 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "FWD / Quattro (Ultra)", capacity: "Quattro Belakang: 0,9L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A5 2.0 TFSI",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3B TFSI Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,2 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro (Ultra)", capacity: "Belakang 0,9L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A6 2.0 TFSI",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3B TFSI Turbo", capacity: "5,2 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,5 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro (Ultra)", capacity: "Belakang 1,0L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A7",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L EA839 V6 TFSI Turbo Mild-Hybrid", capacity: "6,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,5 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro", capacity: "Belakang 1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi A8",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.0L EA839 V6 TFSI Turbo Mild-Hybrid", capacity: "7,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro", capacity: "Belakang 1,2 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q2",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.4L EA211 TFSI Turbo", capacity: "4,3 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ200)", capacity: "7,0 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "FWD / Quattro", capacity: "Quattro Belakang: 0,8L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q3",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3B TFSI Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ381)", capacity: "7,2 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro", capacity: "Belakang 0,8 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q5 Quattro",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L EA888 Gen 3 TFSI Turbo", capacity: "5,2 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL382)", capacity: "7,5 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro (Ultra)", capacity: "Belakang 1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q7 Quattro",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.0L EA839 V6 TFSI / 3.0L EA897 V6 TDI", capacity: "6,8 Liter", sae: "0W-20 Bensin (VW 508.00) / 5W-30 TDI (VW 507.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro", capacity: "Belakang 1,2L / Transfer 0,9L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi Q8 Quattro",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.0L EA839 V6 TFSI Turbo Mild-Hybrid", capacity: "6,8 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro", capacity: "Belakang 1,2L / Transfer 0,9L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi TT",
+                    year: "2015 - 2023",
+                    engine: { spec: "2.0L EA888 Gen 3 TFSI Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ACEA C5 / VW 508.00)" },
+                    transmission: { spec: "6-Speed S-Tronic (DQ250)", capacity: "7,0 Liter", sae: "Audi S-Tronic Fluid" },
+                    differential: { spec: "Quattro", capacity: "Belakang 0,8 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi RS3",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.5L DAZA 5-Silinder TFSI Turbo (Performance)", capacity: "5,7 Liter", sae: "0W-30 (API SP / ACEA C3 / VW 504.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DQ500)", capacity: "7,5 Liter", sae: "Audi S-Tronic Fluid (Performance)" },
+                    differential: { spec: "Quattro Sport", capacity: "Belakang 1,0 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi RS4",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.9L EA839 V6 Bi-Turbo (Performance)", capacity: "6,0 Liter", sae: "0W-30 (API SP / ACEA C3 / VW 504.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro Sport", capacity: "Belakang 1,2 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi RS5",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.9L EA839 V6 Bi-Turbo (Performance)", capacity: "6,0 Liter", sae: "0W-30 (API SP / ACEA C3 / VW 504.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro Sport", capacity: "Belakang 1,2 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Audi RS6",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "4.0L EA825 V8 Bi-Turbo (Performance)", capacity: "9,0 Liter", sae: "0W-30 (API SP / ACEA C3 / VW 504.00)" },
+                    transmission: { spec: "8-Speed Tiptronic (ZF 8HP)", capacity: "9,5 Liter", sae: "ZF Lifeguard 8 / Audi ATF" },
+                    differential: { spec: "Quattro Sport (Sport Differential)", capacity: "Belakang 1,5 Liter", sae: "SAE 75W-140 (GL-5)" }
+                },
+                {
+                    model: "Audi R8 V10",
+                    year: "2016 - 2023",
+                    engine: { spec: "5.2L CEUC V10 FSI (Supercar)", capacity: "10,0 Liter", sae: "5W-40 (API SP / ACEA A3/B4 / VW 511.00)" },
+                    transmission: { spec: "7-Speed S-Tronic (DL800)", capacity: "10,0 Liter", sae: "Audi R8 S-Tronic Fluid" },
+                    differential: { spec: "Quattro Performance (AWD)", capacity: "Belakang 1,6 Liter", sae: "SAE 75W-140 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS AUDI ----------
+                {
+                    model: "📖 Referensi Standar Oli Audi (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "VW Approval: VW 502.00 (5W-40), VW 504.00 (0W-30), VW 507.00 (5W-30 Diesel), VW 508.00 (0W-20), VW 509.00 (0W-20 Diesel), VW 511.00 (5W-40 RS/R8)", capacity: "TFSI (Bensin): 0W-20/0W-30/5W-40 • TDI (Diesel): 5W-30/0W-20 (EA288, EA897, V6 TDI)", sae: "API SP • ACEA C3 • ACEA A3/B4 • ACEA C5 (VW 508.00) • VW/Audi Approval resmi" },
+                    transmission: { spec: "S-Tronic Dual Clutch (A3, A4, A5, TT, RS3, Q3, Q5): 7-7,5L • Interval 60.000 km", capacity: "Tiptronic ZF 8HP (A6, A7, A8, Q7, Q8, RS4, RS5, RS6): 8-10L • Multitronic CVT (A4/A6 gen lama): ±7L", sae: "Manual Gear Oil 75W-80/90 GL-4/GL-5 (TT Manual, A3 Manual) • R8: S-Tronic Fluid 10L" },
+                    differential: { spec: "Gardan: SAE 75W-90 / 75W-140 (GL-5) — Audi Quattro, RS Series, SUV AWD", capacity: "Kapasitas: Q3 0,8L • Q5 1,0L • Q7/Q8 1,2L • RS6 1,5L • R8 1,6L", sae: "Transfer Case Quattro: Audi Transfer Gear Oil SAE 75W-90 GL-5 — kapasitas 0,7-1,2L • Interval 60.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Audi",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000-15.000 km • Coolant 80.000 km • Busi Iridium 60.000 km", capacity: "Interval S-Tronic / Tiptronic / Multitronic / Gardan / Transfer Case: 60.000 km", sae: "Per teknologi: TFSI 0W-20 (VW 508.00) • TDI 5W-30 (VW 507.00) • Quattro 0W-20 • RS Performance 0W-30 (VW 504.00) • R8 V10 5W-40 (VW 511.00) • Mild Hybrid 0W-20" },
+                    transmission: { spec: "Master Mesin: TFSI (CZEA, CZDA, CYRB, EA888 Gen 3/4), TDI (EA288, EA897, V6 TDI)", capacity: "Performance (DAZA RS3, CEUC R8, DCBA RS6, DKMB RS5, EA839 V6 Bi-Turbo)", sae: "S-Tronic dual clutch fluid low viscosity • Tiptronic ZF Lifeguard 8 high temp protection" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas drain & fill + overhaul, SAE/API/ACEA/VW Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/AWD Quattro/Performance AWD)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Audi" }
                 }
             ],
             "Porsche": [
@@ -764,6 +2305,116 @@
                     engine: { spec: "3.6L Pentastar V6 / 2.0L Turbo", capacity: "5.6 Liter (V6) / 4.7 Liter (2.0T)", sae: "Shell Helix Ultra 5W-30 / Mobil 1 0W-40" },
                     transmission: { spec: "5-Speed AT / 8-Speed ZF", capacity: "8.5 Liter", sae: "Mopar ATF+4 / Valvoline L&HD ATF CVT (ZF)" },
                     differential: { spec: "4WD (Dana Axles)", capacity: "Depan 1.4L / Belakang 1.6L", sae: "API GL-5 75W-85 / 75W-140" }
+                },
+
+                // ================== JEEP MASTER DATA v2.6 (SUV • Off-Road • 4x4 • Hybrid 4xe • Performance) ==================
+                // Data presisi per model: SAE + Chrysler MS / Mopar Approval, kapasitas oli, transmisi (ZF 8HP/9-Speed/Hybrid) & gardan/transfer case 4x4.
+                {
+                    model: "Renegade 1.4 Turbo",
+                    year: "2015 - 2022",
+                    engine: { spec: "1.4L GME T4 Turbo 4-Silinder", capacity: "4,0 Liter", sae: "0W-30 (API SP / ACEA C5 / Chrysler MS-6395)" },
+                    transmission: { spec: "9-Speed Automatic", capacity: "7,7 Liter", sae: "Mopar ATF 9-Speed" },
+                    differential: { spec: "4x4 (Jeep Active Drive)", capacity: "Belakang 0,8L / Transfer 1,0L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Compass 1.4 Turbo",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.4L GME T4 Turbo 4-Silinder", capacity: "4,5 Liter", sae: "0W-30 (API SP / ACEA C5 / Chrysler MS-6395)" },
+                    transmission: { spec: "9-Speed Automatic", capacity: "7,7 Liter", sae: "Mopar ATF 9-Speed" },
+                    differential: { spec: "4x4 (Jeep Active Drive)", capacity: "Belakang 0,8L / Transfer 1,0L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Cherokee 2.4",
+                    year: "2014 - 2023",
+                    engine: { spec: "2.4L Tigershark MultiAir 4-Silinder", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "9-Speed Automatic", capacity: "8,0 Liter", sae: "Mopar ATF 9-Speed" },
+                    differential: { spec: "4x4 (Jeep Active Drive II)", capacity: "Belakang 0,9L / Transfer 1,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Grand Cherokee 3.6",
+                    year: "2011 - 2021",
+                    engine: { spec: "3.6L Pentastar V6", capacity: "5,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4WD (Quadra-Trac II)", capacity: "Belakang 1,2L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Grand Cherokee 5.7 HEMI",
+                    year: "2011 - 2021",
+                    engine: { spec: "5.7L HEMI V8 (Eagle)", capacity: "6,6 Liter", sae: "5W-20 (API SP / Chrysler MS-12633)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4WD (Quadra-Drive II / LSD)", capacity: "Belakang 1,3L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5 LSD)" }
+                },
+                {
+                    model: "Grand Cherokee 4xe",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L GME T4 Turbo + Dual Motor PHEV", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "Hybrid Transmission (PHEV)", capacity: "8,5 Liter", sae: "Mopar Hybrid Transmission Fluid" },
+                    differential: { spec: "4xe AWD (Quadra-Trac II)", capacity: "Belakang 1,2L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Wrangler JL 2.0 Turbo",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.0L GME T4 Turbo 4-Silinder", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Command-Trac)", capacity: "Depan 1,5L / Belakang 1,5L / Transfer 2,0L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Wrangler JL 3.6 Pentastar",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.6L Pentastar V6", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75) / 6-MT", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Command-Trac)", capacity: "Depan 1,5L / Belakang 1,5L / Transfer 2,0L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Wrangler Rubicon",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.6L Pentastar V6 / 2.0L GME Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Rock-Trac Dana 44 LSD)", capacity: "Depan 1,7L / Belakang 1,7L / Transfer 2,0L", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "Wrangler Rubicon 392",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "6.4L 392 HEMI V8 (Performance)", capacity: "7,0 Liter", sae: "0W-40 (API SP / Chrysler MS-12633)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP95)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Rock-Trac Dana 44 LSD)", capacity: "Depan 1,8L / Belakang 1,8L / Transfer 2,0L", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "Gladiator",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "3.6L Pentastar V6 / 3.0L EcoDiesel", capacity: "5,0 Liter", sae: "0W-20 (Bensin) / 5W-40 (Diesel EcoDiesel)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75) / 6-MT", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Command-Trac / Rock-Trac)", capacity: "Depan 1,7L / Belakang 1,7L / Transfer 2,0L", sae: "SAE 75W-140 (GL-5)" }
+                },
+                {
+                    model: "Wagoneer",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "5.7L HEMI V8 eTorque / 3.0L Hurricane Turbo", capacity: "7,0 Liter", sae: "0W-20 (API SP / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4WD (Quadra-Trac II)", capacity: "Belakang 1,6L / Transfer 1,8L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Grand Wagoneer",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "6.4L HEMI V8 / 3.0L Hurricane Twin-Turbo", capacity: "7,2 Liter", sae: "0W-40 (API SP / Chrysler MS-12633)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP95)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4WD (Quadra-Drive II / LSD)", capacity: "Belakang 1,7L / Transfer 1,8L", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS JEEP ----------
+                {
+                    model: "📖 Referensi Standar Oli Jeep (Mesin • Transmisi • Gardan • Transfer Case)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-20 / 0W-30 / 5W-20 / 0W-40 (API SP) • Chrysler MS-6395 • MS-12633 (HEMI)", capacity: "GME Turbo 0W-30 • Pentastar V6 0W-20 • HEMI V8 / Rubicon 392 / Grand Wagoneer 0W-40 • EcoDiesel 3.0 5W-40 • Hybrid 4xe 0W-20", sae: "API SP • ACEA C5 • Chrysler MS-6395 • MS-12633 • Full Synthetic Oil" },
+                    transmission: { spec: "ZF 8HP ATF (Wrangler, Grand Cherokee, Gladiator, Wagoneer): 8-9L • 60.000 km • Hybrid Transmission Fluid (4xe): 8,5L", capacity: "9-Speed Automatic Fluid (Compass, Renegade, Cherokee): ±7,7L • Manual Gear Oil 75W-85/90 GL-4 (Wrangler/Gladiator Manual): ±2,3L", sae: "Mopar ATF 9-Speed • ZF Lifeguard 8 • Mopar Hybrid Transmission Fluid • Interval 60.000 km" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 75W-140 (GL-5) — Wrangler, Gladiator, Grand Cherokee, Wagoneer, Rubicon • LSD 75W-140 + Additive (Rubicon, Gladiator, Grand Wagoneer)", capacity: "Kapasitas Gardan: Compass 0,8L • Cherokee 0,9L • Grand Cherokee 1,2L • Wrangler 1,5L • Rubicon/Gladiator 1,7L • Wagoneer 1,6L • Grand Wagoneer 1,7L", sae: "Transfer Case (Command-Trac/Rock-Trac/Quadra-Trac/Selec-Trac/Quadra-Drive II): Mopar Fluid / ATF+4 / SAE 75W-90 — Wrangler 2,0L / Gladiator 2,0L / Grand Cherokee 1,8L / Wagoneer 1,8L • Interval 40.000-60.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Jeep",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 80.000 km • Busi 60.000 km", capacity: "Interval Transmisi (ZF 8HP / 9-Speed / Hybrid / Manual): 60.000 km • Gardan & Transfer Case: 40.000 km", sae: "Per teknologi: Pentastar V6 0W-20 • GME Turbo 0W-30 • HEMI V8 0W-40 • EcoDiesel 5W-40 • Hybrid 4xe 0W-20 • Rubicon Performance 0W-40" },
+                    transmission: { spec: "Master Mesin: GME Series (GME T4 1.3/2.0 Turbo), Pentastar Series (3.6 V6)", capacity: "HEMI Series (5.7 / 6.4 / 392 HEMI), Diesel Series (EcoDiesel 3.0 V6), Hurricane 3.0 Turbo", sae: "Hybrid Series (4xe Plug-in Hybrid — Wrangler 4xe & Grand Cherokee 4xe) • Sistem penggerak 4x2/4x4/AWD/PHEV" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/Chrysler-Mopar Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe transfer case (Command-Trac/Rock-Trac/Selec-Trac/Quadra-Trac/Quadra-Drive II)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Jeep" }
                 }
             ],
             "Dodge": [
@@ -784,6 +2435,38 @@
                     differential: { spec: "RWD / 4WD", capacity: "1.2 - 1.5L", sae: "API GL-5 75W-90 / 75W-140" }
                 }
             ],
+            "Lucid": [
+                {
+                    model: "Air (Pure / Touring / GT / Sapphire)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Dual / Tri-Motor EV (480 - 1234 hp)", capacity: "-", sae: "Tidak ada oli mesin (Lucid Battery Coolant + Thermal)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1.5 - 2.0 Liter per Unit", sae: "Lucid Drive Unit Fluid / Shell E-Fluids" },
+                    differential: { spec: "e-AWD / RWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                },
+                {
+                    model: "Gravity (Electric SUV)",
+                    year: "2024 - Sekarang",
+                    engine: { spec: "Dual-Motor EV (~800 hp)", capacity: "-", sae: "Tidak ada oli mesin (Lucid Thermal Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1.5 - 2.0 Liter per Unit", sae: "Lucid Drive Unit Fluid / Shell E-Fluids" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
+            "Rivian": [
+                {
+                    model: "R1T / R1S (Quad / Dual Motor)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Quad / Dual-Motor EV", capacity: "-", sae: "Tidak ada oli mesin (Rivian Coolant)" },
+                    transmission: { spec: "Reduction Gear (Per Axle)", capacity: "1.3 Liter per Unit", sae: "Rivian Gear Oil / Castrol EV Fluid" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                },
+                {
+                    model: "R2 / R3 (Next-Gen Platform EV)",
+                    year: "2025 - Sekarang",
+                    engine: { spec: "Dual / Tri-Motor EV", capacity: "-", sae: "Tidak ada oli mesin" },
+                    transmission: { spec: "Reduction Gear", capacity: "1.3 - 1.5 Liter per Unit", sae: "Rivian Gear Oil / Shell E-Fluids" },
+                    differential: { spec: "e-AWD / RWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
 
             // ================== KOREA SELATAN ==================
             "Hyundai": [
@@ -800,6 +2483,144 @@
                     engine: { spec: "2.2L CRDi Diesel / 2.5L Turbo", capacity: "6.5L - 7.6L", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Mobil 1" },
                     transmission: { spec: "8-Speed AT / 8-DCT", capacity: "5.0 - 7.0 Liter", sae: "Hyundai SP-IV / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD / AWD", capacity: "AWD Belakang 0.7L", sae: "Fuchs TITAN SINTOPOID 75W-90" }
+                },
+
+                // ================== HYUNDAI MASTER DATA v2.6 (Passenger • SUV • MPV • Hybrid • EV • N Series) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (ATF SP-IV/IVT/DCT/Hybrid) & gardan AWD HTRAC.
+                {
+                    model: "Grand i10",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.2L Kappa MPI 4-Silinder", capacity: "3,4 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "6,7 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Stargazer",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Smartstream MPI 4-Silinder", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "IVT (Intelligent Variable)", capacity: "6,8 Liter", sae: "Hyundai IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Stargazer X",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "1.5L Smartstream MPI 4-Silinder", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "IVT (Intelligent Variable)", capacity: "6,8 Liter", sae: "Hyundai IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Venue",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.0L / 1.2L Kappa / 1.5L Smartstream", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "IVT / 5-MT", capacity: "6,8 Liter", sae: "Hyundai IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Kona",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.6L Gamma T-GDI Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "7-Speed DCT", capacity: "7,0 Liter", sae: "Hyundai DCT Fluid" },
+                    differential: { spec: "FWD / AWD (HTRAC)", capacity: "AWD Belakang 0,7L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Tucson",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "2.5L Smartstream MPI / 1.6T Hybrid", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,0 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "FWD / AWD (HTRAC)", capacity: "Belakang 0,8L / Transfer 0,6L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Santa Fe",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.5L Smartstream GDI / 2.2L Diesel / Hybrid", capacity: "5,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,5 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "AWD (HTRAC)", capacity: "Belakang 1,0L / Transfer 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Palisade",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "3.8L Lambda II V6 / 2.2L Diesel", capacity: "6,5 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "AWD (HTRAC)", capacity: "Belakang 1,0L / Transfer 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Elantra",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "1.6L Smartstream MPI 4-Silinder", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "IVT (Intelligent Variable)", capacity: "6,8 Liter", sae: "Hyundai IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sonata",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "2.5L Smartstream GDI 4-Silinder", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,0 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Ioniq Hybrid",
+                    year: "2017 - 2022",
+                    engine: { spec: "1.6L GDI Hybrid (Electric Motor)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "6-Speed Hybrid DCT", capacity: "7,0 Liter", sae: "Hyundai Hybrid DCT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Ioniq 5 AWD (EV)",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (E-GMP EV)", capacity: "-", sae: "Tidak ada oli mesin (E-GMP Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1,0 Liter per Axle", sae: "Hyundai/Kia EV Reduction Gear Oil" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "Ioniq 6 AWD (EV)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (E-GMP EV)", capacity: "-", sae: "Tidak ada oli mesin (E-GMP Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1,0 Liter per Axle", sae: "Hyundai/Kia EV Reduction Gear Oil" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "Kona Electric (EV)",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "Motor Listrik Sinkron (EV)", capacity: "-", sae: "Tidak ada oli mesin (Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear", capacity: "1,0 Liter", sae: "Hyundai/Kia EV Reduction Gear Oil" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "Veloster Turbo",
+                    year: "2019 - 2022",
+                    engine: { spec: "1.6L Gamma T-GDI Turbo (Performance)", capacity: "4,5 Liter", sae: "5W-30 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "7-Speed DCT / 6-MT", capacity: "7,0 Liter", sae: "Hyundai DCT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Elantra N",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L Smartstream T-GDI Turbo (N Performance)", capacity: "5,0 Liter", sae: "0W-30 (API SP / Hyundai N Performance)" },
+                    transmission: { spec: "8-Speed DCT (N DCT)", capacity: "7,0 Liter", sae: "Hyundai DCT Fluid (N)" },
+                    differential: { spec: "FWD (LSD)", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+                {
+                    model: "Kona N",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L Smartstream T-GDI Turbo (N Performance)", capacity: "5,0 Liter", sae: "0W-30 (API SP / Hyundai N Performance)" },
+                    transmission: { spec: "8-Speed DCT (N DCT)", capacity: "7,0 Liter", sae: "Hyundai DCT Fluid (N)" },
+                    differential: { spec: "FWD (LSD)", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS HYUNDAI ----------
+                {
+                    model: "📖 Referensi Standar Oli Hyundai (Mesin • Transmisi • Gardan • EV)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Smartstream — SAE 0W-20 / 0W-30 / 5W-30 (API SP) • Turbo Performance (N): 0W-30 • ILSAC GF-6A • ACEA C5 • Hyundai Genuine Oil", capacity: "Digunakan pada: Stargazer, Creta, Venue, Tucson, Santa Fe, Palisade, Elantra, Sonata", sae: "Mesin Smartstream 0W-20 • MPI 0W-20 • T-GDI Turbo 0W-30 • Hybrid 0W-20 • N Performance 0W-30 • HTRAC AWD 0W-20 • EV Gear Oil" },
+                    transmission: { spec: "Hyundai ATF SP-IV (Tucson, Santa Fe, Palisade, Sonata): 7-8L • 60.000 km • IVT Fluid (Creta, Stargazer, Venue, Elantra): low viscosity", capacity: "DCT Fluid (Kona, Veloster, Ioniq Hybrid, Elantra N, Kona N): ±7L • Hybrid DCT Fluid (Ioniq Hybrid): Genuine Hyundai Hybrid", sae: "Manual Gear Oil 75W-85/90 GL-4 (Veloster/Elantra Manual, N Series tertentu) • N DCT Fluid (Elantra N, Kona N)" },
+                    differential: { spec: "Gardan AWD HTRAC: SAE 75W-85 / 75W-90 (GL-5) — Tucson AWD, Santa Fe AWD, Palisade • LSD 75W-90 (Elantra N, Kona N)", capacity: "Kapasitas: Tucson 0,8L • Santa Fe 1,0L • Palisade 1,0L • Elantra N 1,0L • Kona N 1,0L • Transfer Case (HTRAC): Tucson 0,6L / Santa Fe 0,8L / Palisade 0,8L", sae: "EV Reduction Gear Oil (Ioniq 5/6, Kona Electric): ±1 Liter per Axle • Coolant 100.000 km • Busi Iridium 100.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Hyundai",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 100.000 km • Busi Iridium 100.000 km", capacity: "Interval ATF SP-IV / IVT / DCT: 60.000 km • Gardan & Transfer Case (HTRAC): 40.000 km • EV Gear Oil sesuai pabrikan", sae: "Per teknologi: Smartstream 0W-20 • MPI 0W-20 • T-GDI Turbo 0W-30 • Hybrid 0W-20 • N Performance 0W-30 • HTRAC AWD 0W-20 • EV Gear Oil" },
+                    transmission: { spec: "Master Mesin: Smartstream (G1.0 T-GDI, G1.5/1.6/2.5/3.5 MPI), Gamma (1.4/1.6), Theta (2.0/2.4)", capacity: "Lambda (3.3/3.5 V6), N Performance (Smartstream 2.0 T-GDI N), EV (E-GMP Motor)", sae: "Hybrid Series (Smartstream Hybrid, Ioniq Hybrid DCT) • HTRAC AWD • E-GMP EV Platform" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/Hyundai Genuine Oil Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/AWD HTRAC/Hybrid/EV)", sae: "Reduction gear oil EV, repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Hyundai" }
                 }
             ],
             "Genesis": [
@@ -818,6 +2639,151 @@
                     engine: { spec: "1.2L / 1.4L Turbo / 2.2L Diesel", capacity: "3.5L (1.2L) / 7.6L (Diesel)", sae: "Fuchs TITAN GT1 / Mobil 1 5W-30" },
                     transmission: { spec: "IVT / 7-DCT / 8-AT", capacity: "4.0 - 6.5 Liter", sae: "Kia SP-IV / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD / AWD", capacity: "AWD 0.7L", sae: "API GL-5 75W-90" }
+                },
+
+                // ================== KIA MASTER DATA v2.6 (Passenger • SUV • MPV • Hybrid • EV • GT Performance) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (ATF SP-IV/IVT/DCT/Hybrid) & gardan AWD/transfer case.
+                {
+                    model: "Picanto 1.2",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.2L Kappa MPI 4-Silinder", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "6,7 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Morning",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.0L Kappa MPI 3-Silinder", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "6,7 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Rio",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.4L / 1.6L Kappa MPI 4-Silinder", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 6-MT", capacity: "6,8 Liter", sae: "Kia IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sonet",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.5L Smartstream MPI 4-Silinder", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 6-MT", capacity: "6,8 Liter", sae: "Kia IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Seltos",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.4L / 1.5L Smartstream / 1.6L T-GDI Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 7-Speed DCT", capacity: "7,0 Liter", sae: "Kia IVT / DCT Fluid" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 0,8L / Transfer 0,6L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Carens",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Smartstream MPI 4-Silinder", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT (Intelligent Variable)", capacity: "6,8 Liter", sae: "Kia IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Cerato",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.6L / 2.0L Smartstream MPI 4-Silinder", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 6-MT", capacity: "7,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Forte",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.6L / 2.0L Smartstream MPI 4-Silinder", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 6-MT", capacity: "7,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "K5",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "2.5L Smartstream GDI / 1.6L T-GDI Turbo", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Stinger 2.0 Turbo",
+                    year: "2018 - 2023",
+                    engine: { spec: "2.0L Theta II Turbo 4-Silinder (GT-Line)", capacity: "5,0 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Kia 8AT Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "Belakang 1,0L / Transfer 0,7L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Stinger GT 3.3 Twin Turbo",
+                    year: "2018 - 2023",
+                    engine: { spec: "3.3L Lambda II Twin-Turbo V6 (GT Performance)", capacity: "6,0 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Kia 8AT Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "Belakang 1,0L / Transfer 0,7L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Sportage",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "1.6L T-GDI Turbo / 2.5L Smartstream / Hybrid", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 0,8L / Transfer 0,6L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Sorento",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "2.5L Smartstream GDI / 2.2L Diesel / Hybrid", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,5 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 1,0L / Transfer 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Telluride",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "3.8L Lambda II V6", capacity: "6,0 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 1,0L / Transfer 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Carnival",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "2.2L CRDi Diesel / 3.5L Lambda V6", capacity: "6,0 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Niro Hybrid",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.6L GDI Hybrid (Electric Motor)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "6-Speed Hybrid DCT", capacity: "7,0 Liter", sae: "Kia Hybrid DCT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "EV6 AWD (EV)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (E-GMP EV)", capacity: "-", sae: "Tidak ada oli mesin (E-GMP Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1,0 Liter per Axle", sae: "Kia/Hyundai EV Reduction Gear Oil" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "EV9 AWD (EV)",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (E-GMP EV)", capacity: "-", sae: "Tidak ada oli mesin (E-GMP Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1,0 Liter per Axle", sae: "Kia/Hyundai EV Reduction Gear Oil" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS KIA ----------
+                {
+                    model: "📖 Referensi Standar Oli Kia (Mesin • Transmisi • Gardan • EV)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Smartstream — SAE 0W-20 / 0W-30 / 5W-30 (API SP) • Turbo GT Series: 0W-30 • ILSAC GF-6A • ACEA C5 • Kia Genuine Oil Specification", capacity: "Digunakan pada: Sonet, Seltos, Sportage, Sorento, Carens, Carnival, K5, Niro Hybrid", sae: "Mesin Smartstream 0W-20 • MPI 0W-20 • Turbo GDI 0W-30 • Hybrid 0W-20 • GT Performance 0W-30 • AWD 0W-20 • EV Gear Oil" },
+                    transmission: { spec: "Kia ATF SP-IV (Picanto, Cerato, K5, Sportage, Sorento, Telluride, Carnival): 7-8L • 60.000 km • IVT Fluid (Sonet, Rio, Carens, Seltos): low viscosity", capacity: "DCT Fluid (Seltos Turbo, Niro Hybrid, GT Series): ±7L • Hybrid Transmission Fluid (Niro Hybrid): Genuine Kia Hybrid", sae: "8AT Fluid (Stinger, Stinger GT): 8L • Manual Gear Oil 75W-85/90 GL-4 (Rio/Cerato/GT Manual)" },
+                    differential: { spec: "Gardan AWD: SAE 75W-85 / 75W-90 (GL-5) — Seltos AWD, Sportage AWD, Sorento AWD, Telluride AWD, Stinger AWD", capacity: "Kapasitas: Seltos 0,8L • Sportage 0,8L • Sorento 1,0L • Telluride 1,0L • Stinger 1,0L • Transfer Case (AWD): Seltos 0,6L / Sportage 0,6L / Sorento 0,8L / Telluride 0,8L", sae: "EV Reduction Gear Oil (EV6, EV9): ±1 Liter per Axle • Coolant 100.000 km • Busi Iridium 100.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Kia",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 100.000 km • Busi Iridium 100.000 km", capacity: "Interval ATF SP-IV / IVT / DCT: 60.000 km • Gardan & Transfer Case (AWD): 40.000 km • EV Gear Oil sesuai pabrikan", sae: "Per teknologi: Smartstream 0W-20 • MPI 0W-20 • Turbo GDI 0W-30 • Hybrid 0W-20 • GT Performance 0W-30 • AWD 0W-20 • EV Gear Oil" },
+                    transmission: { spec: "Master Mesin: Smartstream (G1.5/1.6 MPI, G1.6 T-GDI, G2.5/3.5 MPI), Gamma (1.4/1.6 MPI)", capacity: "Theta (2.0 MPI, Theta II Turbo), Lambda (3.3/3.5 V6), Hybrid (Smartstream Hybrid, Hybrid DCT Series)", sae: "EV (E-GMP Motor — EV6, EV9) • GT Series (Stinger, Stinger GT, GT-Line Series) • AWD HTRAC platform" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/Kia Genuine Oil Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/AWD/Hybrid/EV)", sae: "Reduction gear oil EV, repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Kia" }
                 }
             ],
             "SsangYong": [
@@ -865,6 +2831,94 @@
                     engine: { spec: "2.0L Turbo / Hybrid", capacity: "5.5 Liter", sae: "Shell Helix Ultra 0W-20 / Fuchs TITAN FLEX 5" },
                     transmission: { spec: "7-DCT / 9-Speed AT", capacity: "6.5 - 9.0 Liter", sae: "GWM DCTF / Valvoline L&HD ATF" },
                     differential: { spec: "FWD / 4WD", capacity: "Depan 1.0L / Belakang 2.0L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "Geely": [
+                {
+                    model: "Coolray / Okavango / Tugella",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.5L Turbo 3-Sil / 2.0L Drive-E Turbo", capacity: "4.0L (1.5T) / 5.5L (2.0T)", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed DCT / 6-Speed Aisin AT", capacity: "1.7 - 7.0 Liter", sae: "Geely DCTF / Aisin AW-1 / Valvoline L&HD ATF" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang: 0.8L", sae: "API GL-5 75W-90" }
+                },
+                {
+                    model: "Monjaro (Xingyue L)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L Drive-E Turbo (Volvo Base)", capacity: "5.5 Liter", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed Wet DCT / 8-Speed Aisin AT", capacity: "7.0 Liter", sae: "Geely DCTF / Aisin AW-1" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang: 0.9L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "JETOUR": [
+                {
+                    model: "Dashing / X70 Plus / Ice Magic",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Turbo / 1.6L TGDI", capacity: "4.0 - 4.5 Liter", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix Ultra" },
+                    transmission: { spec: "7-Speed DCT / CVT", capacity: "1.7 - 7.0 Liter (DCT)", sae: "Chery/JETOUR DCTF / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "BAIC": [
+                {
+                    model: "BJ40 Plus / B40",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "2.0L Turbo Bensin", capacity: "5.5 Liter", sae: "Shell Helix Ultra 5W-40 / Mobil 1 0W-40" },
+                    transmission: { spec: "8-Speed ZF AT", capacity: "8.5 Liter", sae: "ZF Lifeguard 8 / Valvoline L&HD ATF" },
+                    differential: { spec: "RWD / 4WD", capacity: "Depan 1.2L / Belakang 1.8L", sae: "API GL-5 75W-90" }
+                }
+            ],
+            "DFSK": [
+                {
+                    model: "Glory 580 / Super Cab / Gelang",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.5L DVVT / 1.5L Turbo", capacity: "3.8 - 4.0 Liter", sae: "Total Quartz 9000 5W-30 / Shell Helix HX7" },
+                    transmission: { spec: "5-Speed MT / CVT", capacity: "4.0 Liter (CVT)", sae: "DFSK CVT Fluid / Valvoline L&HD ATF CVT" },
+                    differential: { spec: "FWD / RWD", capacity: "1.5 Liter (RWD)", sae: "API GL-5 80W-90" }
+                }
+            ],
+            "Haima": [
+                {
+                    model: "8S / S7 / S5",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.6L Turbo HMADO", capacity: "4.5 Liter", sae: "Shell Helix HX7 5W-30 / Total Quartz 9000" },
+                    transmission: { spec: "6-Speed AT", capacity: "6.0 Liter", sae: "Dexron VI / Valvoline L&HD ATF" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                }
+            ],
+            "NIO": [
+                {
+                    model: "ET7 / ET5 / ES6 / EC6",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "Dual Motor Listrik (180 - 480 kW)", capacity: "-", sae: "Tidak ada oli mesin (Battery Swap + Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1.5 Liter per Unit", sae: "Shell E-Fluids / NIO Gear Oil" },
+                    differential: { spec: "e-AWD / RWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
+            "XPeng": [
+                {
+                    model: "P7 / G9 / G6 / P7+",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "Motor Listrik Sinkron Magnet Permanen", capacity: "-", sae: "Tidak ada oli mesin" },
+                    transmission: { spec: "Reduction Gear", capacity: "1.2 - 1.5 Liter per Axle", sae: "Shell E-Fluids / XPeng Gear Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                }
+            ],
+            "Zeekr": [
+                {
+                    model: "Zeekr 001 / X / 007",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Motor Listrik (200 - 580 kW)", capacity: "-", sae: "Tidak ada oli mesin" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1.5 - 2.0 Liter per Unit", sae: "Shell E-Fluids / Zeekr Gear Oil" },
+                    differential: { spec: "RWD / AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                }
+            ],
+            "AITO (Seres / Huawei)": [
+                {
+                    model: "M5 / M7 / M9 (EREV Range Extender)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Turbo Range Extender + Motor", capacity: "4.5 Liter (Range Extender)", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Shell Helix" },
+                    transmission: { spec: "Reduction Gear (Single-Speed)", capacity: "1.5 - 2.0 Liter", sae: "Shell E-Fluids / AITO Gear Fluid" },
+                    differential: { spec: "e-AWD / RWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
                 }
             ],
 
@@ -952,6 +3006,13 @@
                     differential: { spec: "AWD / FWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
                 },
                 {
+                    model: "BYD Han EV / Seal U DM-i / Yangwang U8",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "Dual Motor EV / 2.0T PHEV (Yangwang U8)", capacity: "- / 5.5L (Yangwang U8)", sae: "Shell E-Fluids / Fuchs TITAN GT1 PRO C-3 (PHEV)" },
+                    transmission: { spec: "Reduction Gear / 8-Speed AT (Yangwang)", capacity: "1.2 - 1.5 Liter (EV) / 8.0L (AT)", sae: "Shell E-Fluids / ZF Lifeguard 8" },
+                    differential: { spec: "AWD / e-AWD", capacity: "-", sae: "Menyatu dengan Drive Unit" }
+                },
+                {
                     model: "Hyundai Ioniq 5 / Ioniq 6 / Kia EV6",
                     year: "2021 - Sekarang",
                     engine: { spec: "E-GMP Platform Motor", capacity: "-", sae: "Tidak ada oli mesin (Low Conductivity Coolant)" },
@@ -987,6 +3048,20 @@
                 option.value = brand;
                 option.textContent = brand;
                 brandSelect.appendChild(option);
+            });
+
+            // Hitung & tampilkan statistik database (Fitur Update v2.0)
+            const totalBrands = sortedBrands.length;
+            const totalModels = sortedBrands.reduce((sum, brand) => sum + carDatabase[brand].length, 0);
+            document.getElementById("statBrands").textContent = totalBrands;
+            document.getElementById("statModels").textContent = totalModels;
+
+            // Tutup hasil pencarian saat klik di luar area pencarian
+            document.addEventListener("click", (e) => {
+                const searchArea = document.getElementById("searchInput").parentElement.parentElement;
+                if (!searchArea.contains(e.target)) {
+                    document.getElementById("searchResults").classList.add("hidden");
+                }
             });
         });
 
@@ -1041,11 +3116,155 @@
                 document.getElementById("diffOil").textContent = data.differential.capacity;
                 document.getElementById("diffType").textContent = data.differential.sae;
 
+                // Update Card Servis & Coolant (Fitur Update v2.0)
+                const svc = deriveService(data);
+                document.getElementById("svcInterval").textContent = svc.interval;
+                document.getElementById("svcCoolant").textContent = svc.coolant;
+                document.getElementById("svcBrake").textContent = svc.brake;
+                document.getElementById("svcAc").textContent = svc.ac;
+
                 // Tampilkan container dengan animasi
                 resultContainer.classList.remove("hidden");
             } else {
                 resultContainer.classList.add("hidden");
             }
+        }
+
+        /**
+         * Derivasi interval servis & cairan tambahan berdasarkan tipe mesin.
+         * Merupakan REKOMENDASI UMUM — selalu rujuk manual pabrikan.
+         */
+        function deriveService(car) {
+            const spec = (car.engine.spec || "").toLowerCase();
+            const cap = (car.engine.capacity || "").trim();
+            const sae = (car.engine.sae || "").toLowerCase();
+
+            // Entri referensi/panduan (bukan model spesifik)
+            if ((car.model || "").startsWith("📖")) {
+                return {
+                    interval: "— Panduan Referensi —",
+                    coolant: "Lihat detail standar pada kartu Mesin/Transmisi/Gardan",
+                    brake: "Rujuk manual pabrikan",
+                    ac: "Rujuk manual pabrikan"
+                };
+            }
+
+            // Deteksi kendaraan listrik (EV) murni
+            const evKeywords = ["motor listrik", "dual motor", "tri-motor", "quad-motor", "dual-motor", "e-gmp", "hyper-ev", "sinkron magnet"];
+            const isElectric = cap === "-" || sae.includes("tidak ada oli mesin") || evKeywords.some(k => spec.includes(k));
+
+            // Deteksi karakteristik mesin pembakaran
+            const isDiesel = /diesel|crdi|dci|tdi|cdi|e-xdi|kryotec|mhawk|ecodiesel|ecoblue|2kd|2gd|1kd|4jj|rz4e|4n15|n04c/.test(spec);
+            const isTurbo = /turbo|bi-turbo|twin-turbo|twin turbo|supercharged|twin-charged/.test(spec);
+            const isBig = /v8|v10|v12|w12|w16/.test(spec);
+            const isOld = /karburator/.test(spec);
+
+            let interval, coolant, brake, ac;
+
+            if (isElectric) {
+                interval = "Gear Unit 60.000 km • Coolant 5 thn";
+                coolant = "Battery Coolant Low-Conductivity (cek berkala)";
+                brake = "DOT 4 / Brake-by-Wire (~0.7L)";
+                ac = "R1234yf + Heat Pump (thermal)";
+            } else {
+                if (isOld) interval = "5.000 km / 3 bln (oli mineral)";
+                else if (isBig) interval = "5.000 - 7.500 km / 6 bln";
+                else if (isDiesel) interval = "5.000 - 10.000 km / 6 bln";
+                else if (isTurbo) interval = "5.000 - 7.500 km / 6 bln";
+                else interval = "10.000 km / 6 bln";
+
+                if (isBig) coolant = "~10.0 - 15.0 Liter";
+                else if (isDiesel) coolant = "~7.0 - 10.0 Liter";
+                else if (isTurbo) coolant = "~6.5 - 8.5 Liter";
+                else coolant = "~4.5 - 7.0 Liter";
+
+                brake = "DOT 4 / DOT 5.1 (~0.5L)";
+                ac = "R134a / R1234yf (cek tekanan)";
+            }
+            return { interval, coolant, brake, ac };
+        }
+
+        // ===== Fitur Pencarian Cepat (Update v2.0) =====
+        function performSearch() {
+            const input = document.getElementById("searchInput");
+            const resultsBox = document.getElementById("searchResults");
+            const clearBtn = document.getElementById("clearSearchBtn");
+            const query = input.value.trim().toLowerCase();
+
+            clearBtn.classList.toggle("hidden", query.length === 0);
+
+            if (query.length < 1) {
+                resultsBox.classList.add("hidden");
+                resultsBox.innerHTML = "";
+                return;
+            }
+
+            const matches = [];
+            for (const brand in carDatabase) {
+                carDatabase[brand].forEach((car, index) => {
+                    const haystack = `${brand} ${car.model} ${car.year}`.toLowerCase();
+                    if (haystack.includes(query)) {
+                        matches.push({ brand, index, car });
+                    }
+                });
+            }
+            renderSearchResults(matches.slice(0, 15), query);
+        }
+
+        function renderSearchResults(matches, query) {
+            const resultsBox = document.getElementById("searchResults");
+            if (matches.length === 0) {
+                resultsBox.innerHTML = `<div class="p-4 text-sm text-neutral-500 text-center">Tidak ada hasil untuk "<span class="text-red-400">${escapeHtml(query)}</span>".</div>`;
+                resultsBox.classList.remove("hidden");
+                return;
+            }
+            resultsBox.innerHTML = "";
+            matches.forEach(m => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "w-full text-left px-4 py-3 hover:bg-red-600/10 transition-colors duration-150 flex items-center justify-between gap-3 group";
+                btn.innerHTML = `
+                    <div class="min-w-0">
+                        <div class="text-sm font-bold text-white truncate group-hover:text-red-400 transition-colors">${escapeHtml(m.car.model)}</div>
+                        <div class="text-[11px] text-neutral-500 truncate">${escapeHtml(m.brand)} • ${escapeHtml(m.car.year)}</div>
+                    </div>
+                    <svg class="w-4 h-4 text-neutral-600 group-hover:text-red-500 shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                `;
+                btn.onclick = () => selectSearchResult(m.brand, m.index);
+                resultsBox.appendChild(btn);
+            });
+            resultsBox.classList.remove("hidden");
+        }
+
+        function selectSearchResult(brand, index) {
+            document.getElementById("brandSelect").value = brand;
+            populateModels();
+            document.getElementById("modelSelect").value = String(index);
+            displaySpecs();
+            document.getElementById("searchResults").classList.add("hidden");
+            document.getElementById("resultContainer").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function clearSearch() {
+            const input = document.getElementById("searchInput");
+            input.value = "";
+            document.getElementById("clearSearchBtn").classList.add("hidden");
+            document.getElementById("searchResults").classList.add("hidden");
+            input.focus();
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        // ===== Fitur Cetak / Simpan PDF (Update v2.0) =====
+        function printSpec() {
+            const container = document.getElementById("resultContainer");
+            if (container.classList.contains("hidden")) {
+                alert("Silakan pilih merk & model kendaraan terlebih dahulu sebelum mencetak.");
+                return;
+            }
+            window.print();
         }
     </script>
 </body>
