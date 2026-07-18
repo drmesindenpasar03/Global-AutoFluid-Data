@@ -42,13 +42,69 @@
         #searchResults::-webkit-scrollbar-track { background: #0a0a0a; }
         #searchResults::-webkit-scrollbar-thumb { background: #404040; border-radius: 3px; }
 
-        /* Optimasi Cetak / Simpan PDF */
+        /* Elemen khusus cetak (disembunyikan di layar, tampil saat print) */
+        .print-only { display: none !important; }
+
+        /* ===== Optimasi Cetak / Simpan PDF — 1 Halaman A4 Rapi & Profesional ===== */
         @media print {
-            body { background: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            body * { visibility: hidden; }
-            #resultContainer, #resultContainer * { visibility: visible; }
-            #resultContainer { position: absolute; left: 0; top: 0; width: 100%; }
+            @page { size: A4; margin: 8mm; }
+
+            html, body {
+                background: #ffffff !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body * { visibility: hidden !important; }
+            #resultContainer, #resultContainer * { visibility: visible !important; }
+
+            #resultContainer {
+                position: absolute !important;
+                left: 0 !important; top: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                font-size: 9.5px !important;
+                line-height: 1.35 !important;
+            }
+
+            /* Tampilkan elemen khusus cetak (mis. "Support by DRCARDATA") */
+            #resultContainer .print-only { display: inline !important; }
+
+            /* Sembunyikan tombol cetak & elemen interaktif */
             #resultContainer button { display: none !important; }
+
+            /* Header kendaraan — ringkas & profesional */
+            #resultContainer > div:first-of-type {
+                padding: 9px 14px !important;
+                border-radius: 10px 10px 0 0 !important;
+            }
+            #carTitle { font-size: 15px !important; line-height: 1.2 !important; }
+            #carYear { font-size: 9px !important; margin-top: 2px !important; }
+
+            /* Grid spesifikasi — rapat tanpa celah, 2x2 rapi */
+            #resultContainer > div:nth-of-type(2) { gap: 1px !important; }
+            #resultContainer > div:nth-of-type(2) > div {
+                padding: 9px 12px !important;
+                break-inside: avoid !important;
+            }
+            #resultContainer > div:nth-of-type(2) > div > div:first-child { margin-bottom: 8px !important; }
+            #resultContainer h3 { font-size: 11px !important; }
+            #resultContainer svg { width: 15px !important; height: 15px !important; }
+            #resultContainer .font-black.text-xl,
+            #resultContainer .text-xl { font-size: 13px !important; }
+
+            /* Catatan kaki — ringkas */
+            #resultContainer > div:last-of-type {
+                margin-top: 4px !important;
+                gap: 0 !important;
+            }
+            #resultContainer > div:last-of-type > div:first-child {
+                padding: 6px 10px !important;
+                font-size: 8px !important;
+                border-radius: 8px !important;
+            }
+
+            /* Paksa seluruh spesifikasi muat dalam 1 halaman */
+            #resultContainer { max-height: 100vh !important; overflow: hidden !important; }
         }
     </style>
 </head>
@@ -132,7 +188,7 @@
                     <p id="carYear" class="text-red-200 mt-1 font-mono text-sm tracking-widest">Tahun Produksi</p>
                 </div>
                 <div class="mt-4 md:mt-0 relative z-10 bg-black/40 backdrop-blur px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase border border-red-500/30 text-red-100">
-                    Sistem Terkalibrasi
+                    Sistem Terkalibrasi<span class="print-only">&nbsp;• Support by DRCARDATA</span>
                 </div>
             </div>
 
