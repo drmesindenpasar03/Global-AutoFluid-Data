@@ -2,6 +2,23 @@
 Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
 Support by **DRCARDATA**.
 
+## Versi 2.2 — Update Juli 2026
+
+### 🚗 Master Data Honda & Mitsubishi (Indonesia & Global)
+
+**Honda** — 20 model dengan spesifikasi presisi (SAE + API SP + kapasitas):
+- **City/LMPV:** Brio 1.2, Brio RS, Mobilio, Jazz GK5, City Hatchback, City Sedan, HR-V, WR-V, BR-V
+- **Sedan/Premium:** Civic Turbo, Civic Type R, Accord 1.5 Turbo, Accord 2.0 Hybrid, Odyssey
+- **SUV/Truck (AWD):** CR-V 1.5 Turbo, CR-V AWD, Pilot AWD, Passport AWD, Ridgeline AWD
+- **Supercar Hybrid:** NSX Hybrid (Gen 2)
+- **Referensi:** Standar Oli (CVTF/ATF DW-1/MTF/Dual Pump Fluid II) + Interval Servis & Master Kode Mesin (L/R/K/J-Series, Earth Dreams)
+
+**Mitsubishi** — 17 model dengan spesifikasi presisi (SAE + API SP/CK-4 + kapasitas):
+- **City/MPV/SUV:** Xpander, Xpander Cross, Xforce, Mirage, Attrage, Outlander Sport/ASX, Outlander PHEV, Eclipse Cross, Lancer EX
+- **Diesel/Truck/4WD:** Pajero Sport Diesel, Triton Diesel, Delica Diesel, L300 Diesel Euro 4, Pajero Full Size, Montero Sport
+- **Performance/Classic:** Lancer Evolution X, Galant
+- **Referensi:** Standar Oli (CVTF-J1/J4/ATF SP-III/SST Fluid) + Interval Servis & Master Kode Mesin (4A/4B/4J/4G/Diesel 4D56-4N16/Hybrid PHEV)
+
 ## Versi 2.1 — Update Juli 2026
 
 ### 🚗 Master Data Toyota (Indonesia & Global)

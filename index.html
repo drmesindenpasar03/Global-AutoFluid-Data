@@ -84,7 +84,7 @@
                 </span>
                 <span class="inline-flex items-center gap-1.5 bg-red-600/10 border border-red-500/30 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-red-400">
                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.366-2.446a1 1 0 00-1.175 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.951-.69l1.286-3.957z"></path></svg>
-                    Update v2.1 • Juli 2026
+                    Update v2.2 • Juli 2026
                 </span>
             </div>
         </header>
@@ -532,6 +532,165 @@
                     engine: { spec: "1.5L i-VTEC / 1.5L VTEC Turbo", capacity: "3.6 - 4.2 Liter", sae: "Fuchs TITAN GT1 FLEX 5 0W-20 / Shell Helix ECO" },
                     transmission: { spec: "CVT / 6MT", capacity: "3.5 - 3.7 Liter (CVT)", sae: "Honda HCF-2 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+
+                // ================== HONDA MASTER DATA v2.2 (Indonesia & Global) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (CVTF/ATF DW-1/MTF) & gardan AWD.
+                {
+                    model: "Brio 1.2",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.2L L12B i-VTEC 4-Silinder", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Brio RS",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.2L L12B / 1.5L L15Z i-VTEC", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Mobilio",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.5L L15Z i-VTEC", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Jazz GK5",
+                    year: "2014 - 2020",
+                    engine: { spec: "1.5L L15A / L15B Earth Dreams i-VTEC", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "City Hatchback",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "1.5L L15Z Earth Dreams DOHC i-VTEC", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "City Sedan",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.5L L15Z Earth Dreams DOHC i-VTEC", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Civic Turbo",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.5L L15B7 VTEC Turbo Earth Dreams", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "6,5 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Civic Type R (FK8/FL5)",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "2.0L K20C1 VTEC Turbo", capacity: "5,7 Liter", sae: "0W-30 (API SP / High Performance)" },
+                    transmission: { spec: "6-Speed Manual", capacity: "2,2 Liter", sae: "Honda MTF-III 75W-80 (GL-4)" },
+                    differential: { spec: "FWD (LSD)", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Accord 1.5 Turbo",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.5L L15B7 VTEC Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,7 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Accord 2.0 Hybrid",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.0L LFA / LFB Atkinson i-MMD Hybrid", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "e-CVT (Hybrid Transaxle)", capacity: "-", sae: "Honda e-CVT Hybrid Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "CR-V 1.5 Turbo",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L L15B7 VTEC Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,7 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "CR-V AWD",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L L15B7 VTEC Turbo (Real Time AWD)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,7 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "AWD (Real Time)", capacity: "1,2 Liter", sae: "Honda Dual Pump Fluid II (DPSF)" }
+                },
+                {
+                    model: "HR-V",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "1.5L L15B / 1.8L R18Z i-VTEC", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "WR-V",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L L15Z i-VTEC", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "BR-V",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "1.5L L15B i-VTEC", capacity: "3,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "3,6 Liter", sae: "Honda Genuine CVT Fluid (HCF-2)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Odyssey",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "2.4L K24W Earth Dreams / 3.5L J35 V6", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 10-Speed AT", capacity: "6,5 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Pilot AWD",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "3.5L J35 V6 SOHC i-VTEC", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT / 10-Speed AT", capacity: "8,0 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "AWD (Intelligent VTM-4/i-VTM4)", capacity: "1,8 Liter", sae: "Honda Dual Pump Fluid II / DPSF" }
+                },
+                {
+                    model: "Passport AWD",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "3.5L J35 V6 SOHC i-VTEC", capacity: "5,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT", capacity: "8,0 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "AWD (i-VTM4)", capacity: "1,8 Liter", sae: "Honda Dual Pump Fluid II / DPSF" }
+                },
+                {
+                    model: "Ridgeline AWD",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "3.5L J35 V6 SOHC i-VTEC", capacity: "5,4 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed AT", capacity: "8,5 Liter", sae: "Honda ATF DW-1" },
+                    differential: { spec: "AWD (i-VTM4)", capacity: "1,9 Liter", sae: "Honda Dual Pump Fluid II / DPSF" }
+                },
+                {
+                    model: "NSX Hybrid (Gen 2)",
+                    year: "2016 - 2022",
+                    engine: { spec: "3.5L J30 Twin-Turbo V6 + 3-Motor Sport Hybrid", capacity: "5,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "9-Speed DCT (Sport Hybrid)", capacity: "Khusus", sae: "Honda Hybrid DCT Fluid" },
+                    differential: { spec: "SH-AWD (Sport Hybrid)", capacity: "-", sae: "Sistem khusus multi-motor" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS HONDA ----------
+                {
+                    model: "📖 Referensi Standar Oli Honda (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-20 / 5W-30 / 0W-30 (Type R)", capacity: "Turbo (L15B7/K20C1/K24W): 0W-20 API SP ILSAC GF-6", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B • Type R: 0W-30 High Performance" },
+                    transmission: { spec: "CVTF (Brio, Mobilio, Jazz, HR-V, WR-V, BR-V, City, CR-V): Honda HCF-2", capacity: "ATF DW-1 (Civic, Odyssey, Pilot, Passport, Ridgeline, Accord): 6,5-8,5L • 40.000 km", sae: "MTF-III 75W-80 GL-4 (Civic Type R, S2000, Integra) • e-CVT Hybrid Fluid (Accord/CR-V Hybrid)" },
+                    differential: { spec: "Gardan AWD: Honda Dual Pump Fluid II / DPSF (CR-V, Pilot, Passport, Ridgeline, Element)", capacity: "CR-V ±1,2L • Pilot/Passport ±1,8L • Interval 40.000 km", sae: "Real Time AWD: Rear Differential, Transfer Unit, AWD Clutch Pack (Synthetic Fluid)" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Honda",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km (semua teknologi mesin)", capacity: "Interval Matic/CVT/Gardan AWD/Manual/Hybrid/Differential: 40.000 km", sae: "Standar per teknologi: SOHC/DOHC i-VTEC 0W-20 • Earth Dreams 0W-20 • Turbo 0W-20 • Type R 0W-30 • Hybrid 0W-16/0W-20" },
+                    transmission: { spec: "Master Mesin: L-Series (L12B/L13Z/L15Z/L15B/L15B7), R-Series (R18A/R20A)", capacity: "K-Series (K20A/K20C1/K24A/K24W), J-Series (J35/J37), Earth Dreams Turbo & Hybrid (LEB/LFA)", sae: "Suhu kerja Honda CVTF & ATF DW-1: -40°C s.d 150°C (Low Friction)" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, busi + celah, refrigeran AC", sae: "Repair manual, OBD-II live data, TSB, maintenance minder reset untuk servis otomatis" }
                 }
             ],
             "Acura": [
@@ -573,6 +732,144 @@
                     engine: { spec: "1.5L 4A91", capacity: "4.0 Liter", sae: "Shell Helix ECO 0W-20 / Total Quartz GF6" },
                     transmission: { spec: "CVT / 4AT", capacity: "4.0 Liter (Refill)", sae: "CVTF-J4 / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+
+                // ================== MITSUBISHI MASTER DATA v2.2 (Indonesia & Global) ==================
+                // Data presisi per model: SAE + API SP/CK-4, kapasitas oli, transmisi (CVTF-J/ATF SP-III/MTF) & gardan AWD/4WD.
+                {
+                    model: "Xpander",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.5L 4A91 MIVEC 4-Silinder", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT / 5-MT", capacity: "7,1 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Xpander Cross",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.5L 4A91 MIVEC 4-Silinder", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "7,1 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Xforce",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "1.5L 4A91 MIVEC 4-Silinder", capacity: "4,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT (Mode Motion Yaw)", capacity: "7,1 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD: 0,6 Liter", sae: "Mitsubishi DPSF (AWD)" }
+                },
+                {
+                    model: "Mirage",
+                    year: "2012 - Sekarang",
+                    engine: { spec: "1.0L / 1.2L 3A92 3-Silinder MIVEC", capacity: "3,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "6,0 Liter", sae: "Mitsubishi CVTF-J1 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Attrage",
+                    year: "2013 - Sekarang",
+                    engine: { spec: "1.2L 3A92 3-Silinder MIVEC", capacity: "3,2 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "6,0 Liter", sae: "Mitsubishi CVTF-J1 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Outlander Sport / ASX",
+                    year: "2010 - Sekarang",
+                    engine: { spec: "2.0L 4B10 / 1.6L 4A92 MIVEC", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "CVT", capacity: "7,0 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD / 4WD", capacity: "AWD: 1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Outlander PHEV",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "2.0L 4B10 MIVEC + Dual Motor Hybrid (PHEV)", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "Hybrid Drive (e-AXle)", capacity: "Khusus", sae: "Mitsubishi Hybrid Drive Fluid" },
+                    differential: { spec: "e-AWD (Front & Rear Motor)", capacity: "Belakang: Genuine PHEV Fluid", sae: "Mitsubishi Genuine Drive Unit Fluid" }
+                },
+                {
+                    model: "Pajero Sport Diesel",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.4L 4N15 MIVEC Turbo Diesel", capacity: "7,5 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "8-Speed AT / 6-MT", capacity: "9,7 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 2,6L / Transfer 1,5-2,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Triton Diesel",
+                    year: "2015 - Sekarang",
+                    engine: { spec: "2.4L 4N15 / 4N16 MIVEC Turbo Diesel", capacity: "7,5 Liter", sae: "5W-30 (API CK-4 / ACEA C3 / E7)" },
+                    transmission: { spec: "6-Speed AT / 6-MT", capacity: "9,5 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 2,6L / Transfer 1,5-2,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Delica Diesel",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "2.2L 4N14 MIVEC Turbo Diesel", capacity: "6,5 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "4WD", capacity: "Depan 1,8L / Belakang 2,5L / Transfer 1,5L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "L300 Diesel Euro 4",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.5L 4D56 / 2.4L 4N15 Turbo Diesel", capacity: "6,0 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "5-Speed Manual", capacity: "2,7 Liter", sae: "Mitsubishi Manual Gear Oil 75W-90 (GL-4)" },
+                    differential: { spec: "RWD", capacity: "2,3 Liter", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Galant",
+                    year: "2007 - 2012",
+                    engine: { spec: "2.4L 4B12 MIVEC 4-Silinder", capacity: "4,5 Liter", sae: "5W-30 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "4-Speed AT / INVECS-III CVT", capacity: "7,5 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Eclipse Cross",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "1.5L 4B40 MIVEC Turbo / 2.2L 4N14 Diesel", capacity: "4,3 Liter", sae: "0W-20 (Bensin) / 5W-30 (Diesel API CK-4)" },
+                    transmission: { spec: "CVT (Step Variator)", capacity: "7,0 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD / AWD (S-AWC)", capacity: "AWD: 1,0 Liter", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Lancer EX",
+                    year: "2008 - 2017",
+                    engine: { spec: "1.6L 4A92 / 1.8L 4B10 / 2.0L 4B11 MIVEC", capacity: "4,3 Liter", sae: "0W-20 (API SP / ILSAC GF-6A)" },
+                    transmission: { spec: "INVECS-III CVT", capacity: "7,0 Liter", sae: "Mitsubishi CVTF-J4 (Genuine)" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Lancer Evolution X",
+                    year: "2008 - 2016",
+                    engine: { spec: "2.0L 4B11T MIVEC Turbo (Performance)", capacity: "4,5 Liter", sae: "5W-30 (API SP / Performance Engine)" },
+                    transmission: { spec: "Twin Clutch SST (TC-SST)", capacity: "6,0 Liter", sae: "Mitsubishi SST / DCT Fluid" },
+                    differential: { spec: "AWD S-AWC (ACD + AYC)", capacity: "Depan 1,5L / Belakang 1,5L", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+                {
+                    model: "Pajero Full Size",
+                    year: "2007 - Sekarang",
+                    engine: { spec: "3.2L 4M41 DI-D / 3.8L 6G75 V6", capacity: "8,0 Liter", sae: "5W-30 (API CK-4 / ACEA C3 / E7)" },
+                    transmission: { spec: "5-Speed INVECS-II AT", capacity: "10,0 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "4WD Full-Time (SS4-II)", capacity: "Depan 2,0L / Belakang 3,5L / Transfer 2,4L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Montero Sport",
+                    year: "2016 - Sekarang",
+                    engine: { spec: "2.4L 4N15 MIVEC Turbo Diesel", capacity: "7,5 Liter", sae: "5W-30 (API CK-4 / ACEA C3)" },
+                    transmission: { spec: "8-Speed AT", capacity: "9,7 Liter", sae: "Mitsubishi ATF SP-III" },
+                    differential: { spec: "RWD / 4WD", capacity: "Belakang 2,6L / Transfer 1,5-2,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS MITSUBISHI ----------
+                {
+                    model: "📖 Referensi Standar Oli Mitsubishi (Mesin • Transmisi • Gardan)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-16 / 0W-20 / 5W-20 / 5W-30 / 10W-30 (MIVEC/Turbo)", capacity: "Diesel — SAE 5W-30 / 10W-30 / 15W-40 (Turbo/Euro 4)", sae: "API SP • SN Plus • SN | ILSAC GF-6A/6B • API CK-4 • CJ-4 • ACEA C3/E7 (Diesel)" },
+                    transmission: { spec: "CVTF-J1 (Mirage, Attrage) • CVTF-J4 (Xpander, Xforce, Eclipse Cross, Outlander, Lancer)", capacity: "ATF SP-III (Pajero, Triton, Delica, Montero, Galant): 8-10L • SST Fluid (Evo X): 6L", sae: "Manual Gear Oil 75W-85 / 75W-90 GL-4 • Hybrid Drive Fluid (Outlander PHEV) — Interval 40.000 km" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 80W-90 / 85W-140 (GL-5) — Pajero, Triton, Delica, Montero", capacity: "Transfer Case 4WD: SAE 75W-85 / 75W-90 — kapasitas rata-rata 1,5-2,2L", sae: "LSD: SAE 75W-90 / 80W-90 GL-5 LSD (Lancer Evo, Pajero, Triton, Pajero Sport Dakar 4WD)" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Mitsubishi",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km (MIVEC, Turbo, Diesel, Hybrid, Performance)", capacity: "Interval Matic/CVT/Gardan/Transfer/Manual/LSD/Hybrid: 40.000 km", sae: "Per teknologi: MIVEC 0W-20 • MIVEC Turbo 0W-20 • Turbo Diesel 5W-30 • Euro 4 Diesel 5W-30 • Hybrid 0W-20 • Performance 5W-30" },
+                    transmission: { spec: "Master Mesin: 4A Series (4A90/91/92), 4B Series (4B10/11/12), 4J Series (4J10/11/12)", capacity: "4G Series (4G13/15/18/63/64/69) • Diesel 4D56/4M40/4N15/4N16 • Hybrid 4B12/PHEV Drive", sae: "CVTF suhu kerja -40°C s.d 150°C • ATF SP-III temperatur kerja tinggi (Low Friction)" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/ILSAC", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, refrigeran AC, busi + celah", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, maintenance reminder reset" }
                 }
             ],
             "Datsun": [
