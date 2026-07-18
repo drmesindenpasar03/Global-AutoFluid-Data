@@ -84,7 +84,7 @@
                 </span>
                 <span class="inline-flex items-center gap-1.5 bg-red-600/10 border border-red-500/30 rounded-full px-4 py-2 text-[11px] md:text-xs font-bold tracking-wider uppercase text-red-400">
                     <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.366-2.446a1 1 0 00-1.175 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.063 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.951-.69l1.286-3.957z"></path></svg>
-                    Update v2.5 • Juli 2026
+                    Update v2.6 • Juli 2026
                 </span>
             </div>
         </header>
@@ -2249,6 +2249,116 @@
                     engine: { spec: "3.6L Pentastar V6 / 2.0L Turbo", capacity: "5.6 Liter (V6) / 4.7 Liter (2.0T)", sae: "Shell Helix Ultra 5W-30 / Mobil 1 0W-40" },
                     transmission: { spec: "5-Speed AT / 8-Speed ZF", capacity: "8.5 Liter", sae: "Mopar ATF+4 / Valvoline L&HD ATF CVT (ZF)" },
                     differential: { spec: "4WD (Dana Axles)", capacity: "Depan 1.4L / Belakang 1.6L", sae: "API GL-5 75W-85 / 75W-140" }
+                },
+
+                // ================== JEEP MASTER DATA v2.6 (SUV • Off-Road • 4x4 • Hybrid 4xe • Performance) ==================
+                // Data presisi per model: SAE + Chrysler MS / Mopar Approval, kapasitas oli, transmisi (ZF 8HP/9-Speed/Hybrid) & gardan/transfer case 4x4.
+                {
+                    model: "Renegade 1.4 Turbo",
+                    year: "2015 - 2022",
+                    engine: { spec: "1.4L GME T4 Turbo 4-Silinder", capacity: "4,0 Liter", sae: "0W-30 (API SP / ACEA C5 / Chrysler MS-6395)" },
+                    transmission: { spec: "9-Speed Automatic", capacity: "7,7 Liter", sae: "Mopar ATF 9-Speed" },
+                    differential: { spec: "4x4 (Jeep Active Drive)", capacity: "Belakang 0,8L / Transfer 1,0L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Compass 1.4 Turbo",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.4L GME T4 Turbo 4-Silinder", capacity: "4,5 Liter", sae: "0W-30 (API SP / ACEA C5 / Chrysler MS-6395)" },
+                    transmission: { spec: "9-Speed Automatic", capacity: "7,7 Liter", sae: "Mopar ATF 9-Speed" },
+                    differential: { spec: "4x4 (Jeep Active Drive)", capacity: "Belakang 0,8L / Transfer 1,0L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Cherokee 2.4",
+                    year: "2014 - 2023",
+                    engine: { spec: "2.4L Tigershark MultiAir 4-Silinder", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "9-Speed Automatic", capacity: "8,0 Liter", sae: "Mopar ATF 9-Speed" },
+                    differential: { spec: "4x4 (Jeep Active Drive II)", capacity: "Belakang 0,9L / Transfer 1,2L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Grand Cherokee 3.6",
+                    year: "2011 - 2021",
+                    engine: { spec: "3.6L Pentastar V6", capacity: "5,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4WD (Quadra-Trac II)", capacity: "Belakang 1,2L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Grand Cherokee 5.7 HEMI",
+                    year: "2011 - 2021",
+                    engine: { spec: "5.7L HEMI V8 (Eagle)", capacity: "6,6 Liter", sae: "5W-20 (API SP / Chrysler MS-12633)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4WD (Quadra-Drive II / LSD)", capacity: "Belakang 1,3L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5 LSD)" }
+                },
+                {
+                    model: "Grand Cherokee 4xe",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L GME T4 Turbo + Dual Motor PHEV", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "Hybrid Transmission (PHEV)", capacity: "8,5 Liter", sae: "Mopar Hybrid Transmission Fluid" },
+                    differential: { spec: "4xe AWD (Quadra-Trac II)", capacity: "Belakang 1,2L / Transfer 1,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Wrangler JL 2.0 Turbo",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "2.0L GME T4 Turbo 4-Silinder", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Command-Trac)", capacity: "Depan 1,5L / Belakang 1,5L / Transfer 2,0L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Wrangler JL 3.6 Pentastar",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.6L Pentastar V6", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75) / 6-MT", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Command-Trac)", capacity: "Depan 1,5L / Belakang 1,5L / Transfer 2,0L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Wrangler Rubicon",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "3.6L Pentastar V6 / 2.0L GME Turbo", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Rock-Trac Dana 44 LSD)", capacity: "Depan 1,7L / Belakang 1,7L / Transfer 2,0L", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "Wrangler Rubicon 392",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "6.4L 392 HEMI V8 (Performance)", capacity: "7,0 Liter", sae: "0W-40 (API SP / Chrysler MS-12633)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP95)", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Rock-Trac Dana 44 LSD)", capacity: "Depan 1,8L / Belakang 1,8L / Transfer 2,0L", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+                {
+                    model: "Gladiator",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "3.6L Pentastar V6 / 3.0L EcoDiesel", capacity: "5,0 Liter", sae: "0W-20 (Bensin) / 5W-40 (Diesel EcoDiesel)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75) / 6-MT", capacity: "8,5 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4x4 (Command-Trac / Rock-Trac)", capacity: "Depan 1,7L / Belakang 1,7L / Transfer 2,0L", sae: "SAE 75W-140 (GL-5)" }
+                },
+                {
+                    model: "Wagoneer",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "5.7L HEMI V8 eTorque / 3.0L Hurricane Turbo", capacity: "7,0 Liter", sae: "0W-20 (API SP / Chrysler MS-6395)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP75)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4WD (Quadra-Trac II)", capacity: "Belakang 1,6L / Transfer 1,8L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Grand Wagoneer",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "6.4L HEMI V8 / 3.0L Hurricane Twin-Turbo", capacity: "7,2 Liter", sae: "0W-40 (API SP / Chrysler MS-12633)" },
+                    transmission: { spec: "8-Speed ZF (ZF 8HP95)", capacity: "9,0 Liter", sae: "ZF Lifeguard 8 / Mopar ATF" },
+                    differential: { spec: "4WD (Quadra-Drive II / LSD)", capacity: "Belakang 1,7L / Transfer 1,8L", sae: "SAE 75W-140 (GL-5 LSD)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS JEEP ----------
+                {
+                    model: "📖 Referensi Standar Oli Jeep (Mesin • Transmisi • Gardan • Transfer Case)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Bensin — SAE 0W-20 / 0W-30 / 5W-20 / 0W-40 (API SP) • Chrysler MS-6395 • MS-12633 (HEMI)", capacity: "GME Turbo 0W-30 • Pentastar V6 0W-20 • HEMI V8 / Rubicon 392 / Grand Wagoneer 0W-40 • EcoDiesel 3.0 5W-40 • Hybrid 4xe 0W-20", sae: "API SP • ACEA C5 • Chrysler MS-6395 • MS-12633 • Full Synthetic Oil" },
+                    transmission: { spec: "ZF 8HP ATF (Wrangler, Grand Cherokee, Gladiator, Wagoneer): 8-9L • 60.000 km • Hybrid Transmission Fluid (4xe): 8,5L", capacity: "9-Speed Automatic Fluid (Compass, Renegade, Cherokee): ±7,7L • Manual Gear Oil 75W-85/90 GL-4 (Wrangler/Gladiator Manual): ±2,3L", sae: "Mopar ATF 9-Speed • ZF Lifeguard 8 • Mopar Hybrid Transmission Fluid • Interval 60.000 km" },
+                    differential: { spec: "Gardan: SAE 75W-85 / 75W-90 / 75W-140 (GL-5) — Wrangler, Gladiator, Grand Cherokee, Wagoneer, Rubicon • LSD 75W-140 + Additive (Rubicon, Gladiator, Grand Wagoneer)", capacity: "Kapasitas Gardan: Compass 0,8L • Cherokee 0,9L • Grand Cherokee 1,2L • Wrangler 1,5L • Rubicon/Gladiator 1,7L • Wagoneer 1,6L • Grand Wagoneer 1,7L", sae: "Transfer Case (Command-Trac/Rock-Trac/Quadra-Trac/Selec-Trac/Quadra-Drive II): Mopar Fluid / ATF+4 / SAE 75W-90 — Wrangler 2,0L / Gladiator 2,0L / Grand Cherokee 1,8L / Wagoneer 1,8L • Interval 40.000-60.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Jeep",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 80.000 km • Busi 60.000 km", capacity: "Interval Transmisi (ZF 8HP / 9-Speed / Hybrid / Manual): 60.000 km • Gardan & Transfer Case: 40.000 km", sae: "Per teknologi: Pentastar V6 0W-20 • GME Turbo 0W-30 • HEMI V8 0W-40 • EcoDiesel 5W-40 • Hybrid 4xe 0W-20 • Rubicon Performance 0W-40" },
+                    transmission: { spec: "Master Mesin: GME Series (GME T4 1.3/2.0 Turbo), Pentastar Series (3.6 V6)", capacity: "HEMI Series (5.7 / 6.4 / 392 HEMI), Diesel Series (EcoDiesel 3.0 V6), Hurricane 3.0 Turbo", sae: "Hybrid Series (4xe Plug-in Hybrid — Wrangler 4xe & Grand Cherokee 4xe) • Sistem penggerak 4x2/4x4/AWD/PHEV" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/Chrysler-Mopar Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe transfer case (Command-Trac/Rock-Trac/Selec-Trac/Quadra-Trac/Quadra-Drive II)", sae: "Repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Jeep" }
                 }
             ],
             "Dodge": [
@@ -2317,6 +2427,144 @@
                     engine: { spec: "2.2L CRDi Diesel / 2.5L Turbo", capacity: "6.5L - 7.6L", sae: "Fuchs TITAN GT1 PRO C-3 5W-30 / Mobil 1" },
                     transmission: { spec: "8-Speed AT / 8-DCT", capacity: "5.0 - 7.0 Liter", sae: "Hyundai SP-IV / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD / AWD", capacity: "AWD Belakang 0.7L", sae: "Fuchs TITAN SINTOPOID 75W-90" }
+                },
+
+                // ================== HYUNDAI MASTER DATA v2.6 (Passenger • SUV • MPV • Hybrid • EV • N Series) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (ATF SP-IV/IVT/DCT/Hybrid) & gardan AWD HTRAC.
+                {
+                    model: "Grand i10",
+                    year: "2014 - Sekarang",
+                    engine: { spec: "1.2L Kappa MPI 4-Silinder", capacity: "3,4 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "6,7 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Stargazer",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Smartstream MPI 4-Silinder", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "IVT (Intelligent Variable)", capacity: "6,8 Liter", sae: "Hyundai IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Stargazer X",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "1.5L Smartstream MPI 4-Silinder", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "IVT (Intelligent Variable)", capacity: "6,8 Liter", sae: "Hyundai IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Venue",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.0L / 1.2L Kappa / 1.5L Smartstream", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "IVT / 5-MT", capacity: "6,8 Liter", sae: "Hyundai IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Kona",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.6L Gamma T-GDI Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "7-Speed DCT", capacity: "7,0 Liter", sae: "Hyundai DCT Fluid" },
+                    differential: { spec: "FWD / AWD (HTRAC)", capacity: "AWD Belakang 0,7L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Tucson",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "2.5L Smartstream MPI / 1.6T Hybrid", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,0 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "FWD / AWD (HTRAC)", capacity: "Belakang 0,8L / Transfer 0,6L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Santa Fe",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "2.5L Smartstream GDI / 2.2L Diesel / Hybrid", capacity: "5,5 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,5 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "AWD (HTRAC)", capacity: "Belakang 1,0L / Transfer 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Palisade",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "3.8L Lambda II V6 / 2.2L Diesel", capacity: "6,5 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "AWD (HTRAC)", capacity: "Belakang 1,0L / Transfer 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Elantra",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "1.6L Smartstream MPI 4-Silinder", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "IVT (Intelligent Variable)", capacity: "6,8 Liter", sae: "Hyundai IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sonata",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "2.5L Smartstream GDI 4-Silinder", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,0 Liter", sae: "Hyundai ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Ioniq Hybrid",
+                    year: "2017 - 2022",
+                    engine: { spec: "1.6L GDI Hybrid (Electric Motor)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "6-Speed Hybrid DCT", capacity: "7,0 Liter", sae: "Hyundai Hybrid DCT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Ioniq 5 AWD (EV)",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (E-GMP EV)", capacity: "-", sae: "Tidak ada oli mesin (E-GMP Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1,0 Liter per Axle", sae: "Hyundai/Kia EV Reduction Gear Oil" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "Ioniq 6 AWD (EV)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (E-GMP EV)", capacity: "-", sae: "Tidak ada oli mesin (E-GMP Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1,0 Liter per Axle", sae: "Hyundai/Kia EV Reduction Gear Oil" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "Kona Electric (EV)",
+                    year: "2018 - Sekarang",
+                    engine: { spec: "Motor Listrik Sinkron (EV)", capacity: "-", sae: "Tidak ada oli mesin (Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear", capacity: "1,0 Liter", sae: "Hyundai/Kia EV Reduction Gear Oil" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "Veloster Turbo",
+                    year: "2019 - 2022",
+                    engine: { spec: "1.6L Gamma T-GDI Turbo (Performance)", capacity: "4,5 Liter", sae: "5W-30 (API SP / ILSAC GF-6A / Hyundai Genuine)" },
+                    transmission: { spec: "7-Speed DCT / 6-MT", capacity: "7,0 Liter", sae: "Hyundai DCT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Elantra N",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L Smartstream T-GDI Turbo (N Performance)", capacity: "5,0 Liter", sae: "0W-30 (API SP / Hyundai N Performance)" },
+                    transmission: { spec: "8-Speed DCT (N DCT)", capacity: "7,0 Liter", sae: "Hyundai DCT Fluid (N)" },
+                    differential: { spec: "FWD (LSD)", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+                {
+                    model: "Kona N",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "2.0L Smartstream T-GDI Turbo (N Performance)", capacity: "5,0 Liter", sae: "0W-30 (API SP / Hyundai N Performance)" },
+                    transmission: { spec: "8-Speed DCT (N DCT)", capacity: "7,0 Liter", sae: "Hyundai DCT Fluid (N)" },
+                    differential: { spec: "FWD (LSD)", capacity: "1,0 Liter", sae: "SAE 75W-90 (GL-5 LSD)" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS HYUNDAI ----------
+                {
+                    model: "📖 Referensi Standar Oli Hyundai (Mesin • Transmisi • Gardan • EV)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Smartstream — SAE 0W-20 / 0W-30 / 5W-30 (API SP) • Turbo Performance (N): 0W-30 • ILSAC GF-6A • ACEA C5 • Hyundai Genuine Oil", capacity: "Digunakan pada: Stargazer, Creta, Venue, Tucson, Santa Fe, Palisade, Elantra, Sonata", sae: "Mesin Smartstream 0W-20 • MPI 0W-20 • T-GDI Turbo 0W-30 • Hybrid 0W-20 • N Performance 0W-30 • HTRAC AWD 0W-20 • EV Gear Oil" },
+                    transmission: { spec: "Hyundai ATF SP-IV (Tucson, Santa Fe, Palisade, Sonata): 7-8L • 60.000 km • IVT Fluid (Creta, Stargazer, Venue, Elantra): low viscosity", capacity: "DCT Fluid (Kona, Veloster, Ioniq Hybrid, Elantra N, Kona N): ±7L • Hybrid DCT Fluid (Ioniq Hybrid): Genuine Hyundai Hybrid", sae: "Manual Gear Oil 75W-85/90 GL-4 (Veloster/Elantra Manual, N Series tertentu) • N DCT Fluid (Elantra N, Kona N)" },
+                    differential: { spec: "Gardan AWD HTRAC: SAE 75W-85 / 75W-90 (GL-5) — Tucson AWD, Santa Fe AWD, Palisade • LSD 75W-90 (Elantra N, Kona N)", capacity: "Kapasitas: Tucson 0,8L • Santa Fe 1,0L • Palisade 1,0L • Elantra N 1,0L • Kona N 1,0L • Transfer Case (HTRAC): Tucson 0,6L / Santa Fe 0,8L / Palisade 0,8L", sae: "EV Reduction Gear Oil (Ioniq 5/6, Kona Electric): ±1 Liter per Axle • Coolant 100.000 km • Busi Iridium 100.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Hyundai",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 100.000 km • Busi Iridium 100.000 km", capacity: "Interval ATF SP-IV / IVT / DCT: 60.000 km • Gardan & Transfer Case (HTRAC): 40.000 km • EV Gear Oil sesuai pabrikan", sae: "Per teknologi: Smartstream 0W-20 • MPI 0W-20 • T-GDI Turbo 0W-30 • Hybrid 0W-20 • N Performance 0W-30 • HTRAC AWD 0W-20 • EV Gear Oil" },
+                    transmission: { spec: "Master Mesin: Smartstream (G1.0 T-GDI, G1.5/1.6/2.5/3.5 MPI), Gamma (1.4/1.6), Theta (2.0/2.4)", capacity: "Lambda (3.3/3.5 V6), N Performance (Smartstream 2.0 T-GDI N), EV (E-GMP Motor)", sae: "Hybrid Series (Smartstream Hybrid, Ioniq Hybrid DCT) • HTRAC AWD • E-GMP EV Platform" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/Hyundai Genuine Oil Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/AWD HTRAC/Hybrid/EV)", sae: "Reduction gear oil EV, repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Hyundai" }
                 }
             ],
             "Genesis": [
@@ -2335,6 +2583,151 @@
                     engine: { spec: "1.2L / 1.4L Turbo / 2.2L Diesel", capacity: "3.5L (1.2L) / 7.6L (Diesel)", sae: "Fuchs TITAN GT1 / Mobil 1 5W-30" },
                     transmission: { spec: "IVT / 7-DCT / 8-AT", capacity: "4.0 - 6.5 Liter", sae: "Kia SP-IV / Valvoline L&HD ATF CVT" },
                     differential: { spec: "FWD / AWD", capacity: "AWD 0.7L", sae: "API GL-5 75W-90" }
+                },
+
+                // ================== KIA MASTER DATA v2.6 (Passenger • SUV • MPV • Hybrid • EV • GT Performance) ==================
+                // Data presisi per model: SAE + API SP, kapasitas oli, transmisi (ATF SP-IV/IVT/DCT/Hybrid) & gardan AWD/transfer case.
+                {
+                    model: "Picanto 1.2",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.2L Kappa MPI 4-Silinder", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "6,7 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Morning",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.0L Kappa MPI 3-Silinder", capacity: "3,6 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "4-Speed AT / 5-MT", capacity: "6,7 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Rio",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.4L / 1.6L Kappa MPI 4-Silinder", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 6-MT", capacity: "6,8 Liter", sae: "Kia IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Sonet",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "1.5L Smartstream MPI 4-Silinder", capacity: "3,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 6-MT", capacity: "6,8 Liter", sae: "Kia IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Seltos",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.4L / 1.5L Smartstream / 1.6L T-GDI Turbo", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 7-Speed DCT", capacity: "7,0 Liter", sae: "Kia IVT / DCT Fluid" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 0,8L / Transfer 0,6L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Carens",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "1.5L Smartstream MPI 4-Silinder", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT (Intelligent Variable)", capacity: "6,8 Liter", sae: "Kia IVT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Cerato",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.6L / 2.0L Smartstream MPI 4-Silinder", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 6-MT", capacity: "7,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Forte",
+                    year: "2019 - Sekarang",
+                    engine: { spec: "1.6L / 2.0L Smartstream MPI 4-Silinder", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "IVT / 6-MT", capacity: "7,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "K5",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "2.5L Smartstream GDI / 1.6L T-GDI Turbo", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Stinger 2.0 Turbo",
+                    year: "2018 - 2023",
+                    engine: { spec: "2.0L Theta II Turbo 4-Silinder (GT-Line)", capacity: "5,0 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Kia 8AT Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "Belakang 1,0L / Transfer 0,7L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Stinger GT 3.3 Twin Turbo",
+                    year: "2018 - 2023",
+                    engine: { spec: "3.3L Lambda II Twin-Turbo V6 (GT Performance)", capacity: "6,0 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Kia 8AT Fluid" },
+                    differential: { spec: "RWD / AWD", capacity: "Belakang 1,0L / Transfer 0,7L", sae: "SAE 75W-90 (GL-5)" }
+                },
+                {
+                    model: "Sportage",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "1.6L T-GDI Turbo / 2.5L Smartstream / Hybrid", capacity: "4,8 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 0,8L / Transfer 0,6L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Sorento",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "2.5L Smartstream GDI / 2.2L Diesel / Hybrid", capacity: "5,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "7,5 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 1,0L / Transfer 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Telluride",
+                    year: "2020 - Sekarang",
+                    engine: { spec: "3.8L Lambda II V6", capacity: "6,0 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD / AWD", capacity: "AWD Belakang 1,0L / Transfer 0,8L", sae: "SAE 75W-85 (GL-5)" }
+                },
+                {
+                    model: "Carnival",
+                    year: "2021 - Sekarang",
+                    engine: { spec: "2.2L CRDi Diesel / 3.5L Lambda V6", capacity: "6,0 Liter", sae: "0W-30 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "8-Speed AT", capacity: "8,0 Liter", sae: "Kia ATF SP-IV" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "Niro Hybrid",
+                    year: "2017 - Sekarang",
+                    engine: { spec: "1.6L GDI Hybrid (Electric Motor)", capacity: "4,0 Liter", sae: "0W-20 (API SP / ILSAC GF-6A / Kia Genuine)" },
+                    transmission: { spec: "6-Speed Hybrid DCT", capacity: "7,0 Liter", sae: "Kia Hybrid DCT Fluid" },
+                    differential: { spec: "FWD", capacity: "-", sae: "Menyatu dengan transmisi" }
+                },
+                {
+                    model: "EV6 AWD (EV)",
+                    year: "2022 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (E-GMP EV)", capacity: "-", sae: "Tidak ada oli mesin (E-GMP Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1,0 Liter per Axle", sae: "Kia/Hyundai EV Reduction Gear Oil" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+                {
+                    model: "EV9 AWD (EV)",
+                    year: "2023 - Sekarang",
+                    engine: { spec: "Dual Motor AWD (E-GMP EV)", capacity: "-", sae: "Tidak ada oli mesin (E-GMP Battery Coolant)" },
+                    transmission: { spec: "Reduction Gear (Depan & Belakang)", capacity: "1,0 Liter per Axle", sae: "Kia/Hyundai EV Reduction Gear Oil" },
+                    differential: { spec: "e-AWD", capacity: "-", sae: "Menyatu dengan Reduction Gear" }
+                },
+
+                // ---------- REFERENSI STANDAR & SERVIS KIA ----------
+                {
+                    model: "📖 Referensi Standar Oli Kia (Mesin • Transmisi • Gardan • EV)",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Smartstream — SAE 0W-20 / 0W-30 / 5W-30 (API SP) • Turbo GT Series: 0W-30 • ILSAC GF-6A • ACEA C5 • Kia Genuine Oil Specification", capacity: "Digunakan pada: Sonet, Seltos, Sportage, Sorento, Carens, Carnival, K5, Niro Hybrid", sae: "Mesin Smartstream 0W-20 • MPI 0W-20 • Turbo GDI 0W-30 • Hybrid 0W-20 • GT Performance 0W-30 • AWD 0W-20 • EV Gear Oil" },
+                    transmission: { spec: "Kia ATF SP-IV (Picanto, Cerato, K5, Sportage, Sorento, Telluride, Carnival): 7-8L • 60.000 km • IVT Fluid (Sonet, Rio, Carens, Seltos): low viscosity", capacity: "DCT Fluid (Seltos Turbo, Niro Hybrid, GT Series): ±7L • Hybrid Transmission Fluid (Niro Hybrid): Genuine Kia Hybrid", sae: "8AT Fluid (Stinger, Stinger GT): 8L • Manual Gear Oil 75W-85/90 GL-4 (Rio/Cerato/GT Manual)" },
+                    differential: { spec: "Gardan AWD: SAE 75W-85 / 75W-90 (GL-5) — Seltos AWD, Sportage AWD, Sorento AWD, Telluride AWD, Stinger AWD", capacity: "Kapasitas: Seltos 0,8L • Sportage 0,8L • Sorento 1,0L • Telluride 1,0L • Stinger 1,0L • Transfer Case (AWD): Seltos 0,6L / Sportage 0,6L / Sorento 0,8L / Telluride 0,8L", sae: "EV Reduction Gear Oil (EV6, EV9): ±1 Liter per Axle • Coolant 100.000 km • Busi Iridium 100.000 km" }
+                },
+                {
+                    model: "📖 Interval Servis & Master Kode Mesin Kia",
+                    year: "Panduan Pabrikan",
+                    engine: { spec: "Interval Oli Mesin: 10.000 km • Coolant 100.000 km • Busi Iridium 100.000 km", capacity: "Interval ATF SP-IV / IVT / DCT: 60.000 km • Gardan & Transfer Case (AWD): 40.000 km • EV Gear Oil sesuai pabrikan", sae: "Per teknologi: Smartstream 0W-20 • MPI 0W-20 • Turbo GDI 0W-30 • Hybrid 0W-20 • GT Performance 0W-30 • AWD 0W-20 • EV Gear Oil" },
+                    transmission: { spec: "Master Mesin: Smartstream (G1.5/1.6 MPI, G1.6 T-GDI, G2.5/3.5 MPI), Gamma (1.4/1.6 MPI)", capacity: "Theta (2.0 MPI, Theta II Turbo), Lambda (3.3/3.5 V6), Hybrid (Smartstream Hybrid, Hybrid DCT Series)", sae: "EV (E-GMP Motor — EV6, EV9) • GT Series (Stinger, Stinger GT, GT-Line Series) • AWD HTRAC platform" },
+                    differential: { spec: "Database Bengkel PRO (DrCARDATA): VIN, kode mesin, kapasitas +/- filter, SAE/API/ACEA/Kia Genuine Oil Approval", capacity: "Torsi baut tap oli, part number filter & gasket, coolant, tipe penggerak (FWD/AWD/Hybrid/EV)", sae: "Reduction gear oil EV, repair manual, wiring diagram pelumasan, OBD-II live data, TSB, reset indikator servis Kia" }
                 }
             ],
             "SsangYong": [

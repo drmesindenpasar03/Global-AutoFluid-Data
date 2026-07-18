@@ -2,6 +2,31 @@
 Panduan presisi kapasitas mesin, transmisi, dan gardan untuk otomotif Global (Jepang, Eropa, Amerika, China, EV, hingga Hypercar).
 Support by **DRCARDATA**.
 
+## Versi 2.6 — Update Juli 2026
+
+### 🚗 Master Data Jeep, Hyundai & Kia (SUV • Off-Road • Hybrid 4xe • EV • N/GT Performance)
+
+**Jeep** — 13 model dengan spesifikasi presisi (SAE + Chrysler MS / Mopar Approval + kapasitas):
+- **Compact SUV:** Renegade 1.4 Turbo, Compass 1.4 Turbo, Cherokee 2.4
+- **Grand Cherokee Series:** 3.6 Pentastar, 5.7 HEMI (LSD), 4xe Hybrid PHEV
+- **Wrangler Off-Road:** JL 2.0 Turbo, JL 3.6 Pentastar, Rubicon (Rock-Trac LSD), Rubicon 392 HEMI
+- **Pick-up & Flagship:** Gladiator, Wagoneer, Grand Wagoneer (LSD)
+- **Referensi:** Standar Oli (ZF 8HP / 9-Speed / Hybrid 4xe, Gardan/Transfer Case Command-Trac/Rock-Trac/Quadra-Trac) + Interval Servis & Master Kode Mesin (GME/Pentastar/HEMI/EcoDiesel/4xe)
+
+**Hyundai** — 17 model dengan spesifikasi presisi (SAE + API SP + Hyundai Genuine):
+- **Passenger/MPV:** Grand i10, Stargazer, Stargazer X, Venue, Elantra, Sonata
+- **SUV (HTRAC AWD):** Kona, Tucson, Santa Fe, Palisade
+- **Hybrid/EV:** Ioniq Hybrid, Ioniq 5 AWD, Ioniq 6 AWD, Kona Electric
+- **N Performance:** Veloster Turbo, Elantra N (LSD), Kona N (LSD)
+- **Referensi:** Standar Oli (ATF SP-IV / IVT / DCT / Hybrid, HTRAC AWD, EV Reduction Gear) + Interval Servis & Master Kode Mesin (Smartstream/Gamma/Theta/Lambda/N/E-GMP)
+
+**Kia** — 18 model dengan spesifikasi presisi (SAE + API SP + Kia Genuine):
+- **Passenger/MPV:** Picanto 1.2, Morning, Rio, Sonet, Carens, Cerato, Forte, K5, Carnival
+- **SUV (AWD):** Seltos, Sportage, Sorento, Telluride
+- **GT Performance:** Stinger 2.0 Turbo, Stinger GT 3.3 Twin-Turbo
+- **Hybrid/EV:** Niro Hybrid, EV6 AWD, EV9 AWD
+- **Referensi:** Standar Oli (ATF SP-IV / IVT / DCT / Hybrid / 8AT, AWD Transfer Case, EV Reduction Gear) + Interval Servis & Master Kode Mesin (Smartstream/Gamma/Theta/Lambda/Hybrid/E-GMP)
+
 ## Versi 2.5 — Update Juli 2026
 
 ### 🚗 Master Data Lexus, BMW & Audi (Premium • Performance • Quattro/xDrive)
